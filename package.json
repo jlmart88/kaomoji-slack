@@ -1,0 +1,24 @@
+{
+  "name": "kaomoji-slack",
+  "version": "1.0.0",
+  "description": "A Slack app for kaomoji",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "express": "~4.2.0",
+    "morgan": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "body-parser": "~1.0.0",
+    "debug": "~0.7.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlmart88/kaomoji-slack.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jlmart88/kaomoji-slack/issues"
+  },
+  "homepage": "https://github.com/jlmart88/kaomoji-slack#readme"
+}
