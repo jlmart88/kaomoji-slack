@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 
-var db = mongoose.connect('mongodb://' + config.MONGODB_HOST + '/' + config.MONGODB_DATABASE);
+var db = mongoose.connect(config.MONGODB_URI);
 
 require('./models/kaomoji/bootstrap')(db);
 
