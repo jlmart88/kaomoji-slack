@@ -1,4 +1,4 @@
 module.exports = {
-    mongodbHost: 'localhost',
-    mongodbDatabase: 'kaomoji-slack'
+    MONGODB_HOST: 'localhost',
+    MONGODB_DATABASE: 'kaomoji-slack'
 };

@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var kaomojiSearch = require('../components/kaomoji-search');
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+/* POST kaomoji-search. */
+router.post('/kaomoji-search', function(req, res) {
+    kaomojiSearch.kaomojiSearch(req.db, 'sad')
+        .then(res.send.bind(res))
+        .catch(console.error);
 });
 
 module.exports = router;
