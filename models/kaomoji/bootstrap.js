@@ -6,7 +6,13 @@ module.exports = function(db) {
     var Kaomoji = KaomojiModel(db);
 
     _.each(kaomojiData.kaomojis, kaomoji => {
-        var kaomojiInstance = new Kaomoji(kaomoji);
-        kaomojiInstance.save();
+        try {
+            var kaomojiInstance = new Kaomoji(kaomoji);
+            kaomojiInstance.save().catch(err => {
+                console.log('Couldn\'t create', kaomoji, ', might already be created');
+            });
+        } catch (err) {
+            console.log(err);
+        }
     });
 };

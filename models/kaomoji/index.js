@@ -6,9 +6,7 @@ var Kaomoji = new mongoose.Schema({
         index: true,
         unique: true
     },
-    keywords: {
-        type: String
-    }
+    keywords: String
 });
 
 Kaomoji.index({keywords: 'text'}, {default_language: 'english'});

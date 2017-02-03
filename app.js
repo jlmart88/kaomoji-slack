@@ -3,9 +3,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var kaomoji = require('./routes/kaomoji');
+var oauth = require('./routes/oauth');
 
 var app = express();
 var config = require('./config')(app);
@@ -21,11 +22,12 @@ require('./models/kaomoji/bootstrap')(db);
 
 app.use(function(req, res, next) {
     req.db = db;
+    req.config = config;
     next();
 });
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/kaomoji', kaomoji);
+app.use('/oauth', oauth);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
