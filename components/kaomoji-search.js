@@ -34,7 +34,7 @@ function kaomojiSearch(db, searchTerms, offset) {
     .then(array => {
         if (_.isEmpty(array)) return null;
         if (_.isNil(offset)) offset = 0;
-        if (array.length < offset - 1) offset = 0;
+        offset = offset % array.length;
         return array[offset];
     });
 }

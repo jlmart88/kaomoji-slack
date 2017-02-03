@@ -1,11 +1,13 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
-
 var _ = require('lodash');
 
 var UserTokenModel = require('../../models/oauth/userToken');
 var InteractionCallbackModel = require('../../models/interactionCallback');
+
+var kaomojiSearch = require('../../components/kaomoji-search');
+var kaomojiInteractiveMessage = require('../../components/kaomoji-interactive-message');
 
 
 router.post('/', (req, res) => {
@@ -50,7 +52,40 @@ router.post('/', (req, res) => {
                 });
             } else if (action.name === 'next') {
                 var InteractionCallback = InteractionCallbackModel(req.db);
-                res.send('not implemented');
+                InteractionCallback.findOne({_id: payload.callback_id})
+                    .exec()
+                    .then(interactionCallbackInstance => {
+                        if (_.isNil(interactionCallbackInstance)) throw 'Cannot interact with this message anymore';
+                        return [
+                            InteractionCallback.create({
+                                offset: interactionCallbackInstance.offset + 1, 
+                                search: interactionCallbackInstance.search
+                            }), 
+                            kaomojiSearch.kaomojiSearch(
+                                req.db, 
+                                interactionCallbackInstance.search, 
+                                interactionCallbackInstance.offset
+                            )
+                        ];
+                    })
+                    .spread((newInteractionCallbackInstance, kaomoji) => {
+                        if (_.isNil(kaomoji)) throw 'No kaomoji found :(';
+                        if (_.isNil(newInteractionCallbackInstance)) throw 'Kaomoji experienced an error handling your request';
+
+                        var slackResponse = kaomojiInteractiveMessage.createMessage(newInteractionCallbackInstance, kaomoji.text);
+                        return slackResponse;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        var slackResponse = {
+                            text: err,
+                            response_type: 'ephemeral'
+                        };
+                        return slackResponse;
+                    })
+                    .then(result => {
+                        res.send(result);
+                    });
             } 
         });
 });

@@ -1,9 +1,12 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
+
 var UserTokenModel = require('../../models/oauth/userToken');
 var InteractionCallbackModel = require('../../models/interactionCallback');
+
 var kaomojiSearch = require('../../components/kaomoji-search');
+var kaomojiInteractiveMessage = require('../../components/kaomoji-interactive-message');
 
 var _ = require('lodash');
 
@@ -29,41 +32,12 @@ router.post('/', (req, res) => {
                     return InteractionCallback.create({offset:1, search:req.body.text});
                 })
                 .then(interactionCallbackInstance => {
-                    var callback_id = interactionCallbackInstance.callback_id;
-                    var slackResponse = {
-                        attachments: [
-                            {
-                                text: kaomojiText,
-                                callback_id: callback_id,
-                                attachment_type: 'default',
-                                actions: [
-                                    {
-                                        name: 'send',
-                                        text: 'Send',
-                                        type: 'button',
-                                        style: 'primary',
-                                        value: kaomojiText
-                                    },
-                                    {
-                                        name: 'next',
-                                        text: 'Next',
-                                        type: 'button',
-                                        value: 'next'
-                                    },
-                                    {
-                                        name: 'cancel',
-                                        text: 'Cancel',
-                                        type: 'button',
-                                        value: 'cancel'
-                                    },
-                                ]
-                            }
-                        ]    
-                    };
+                    var slackResponse = kaomojiInteractiveMessage.createMessage(interactionCallbackInstance, kaomojiText);
                     console.log('slackResponse', slackResponse);
                     return slackResponse;
                 })
                 .catch(err => {
+                    console.log(err);
                     var slackResponse = {
                         text: err,
                         response_type: 'ephemeral'
