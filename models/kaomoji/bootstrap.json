@@ -23,6 +23,75 @@
         {
             "text": "(⇀‸↼‶)",
             "keywords": "upset frustrated mad"
+        },
+        {
+            "text": "(◕‿◕)♡",
+            "keywords": "love happy"
+        },
+        {
+            "text": "＼(＾▽＾)／",
+            "keywords": "happy joy praise excited"
+        },
+        {
+            "text": "(｡•́︿•̀｡)",
+            "keywords": "sad upset sorrow"
+        },
+        {
+            "text": "＼(º □ º l|l)/",
+            "keywords": "fear frightened scared shocked"
+        },
+        {
+            "text": "¯\\_(ツ)_/¯",
+            "keywords": "indifferent whatever oh well shrug"
+        },
+        {
+            "text": "╮(︶︿︶)╭",
+            "keywords": "meh indifferent shrug whatever"
+        },
+        {
+            "text": "(￣.￣;)",
+            "keywords": "confused unsure what"
+        },
+        {
+            "text": "(⇀_⇀)",
+            "keywords": "doubt unsure skeptical"
+        },
+        {
+            "text": "(°ロ°) !",
+            "keywords": "surprised shocked"
+        },
+        {
+            "text": "(´• ω •`)ﾉ",
+            "keywords": "hello hi greetings hey wave"
+        },
+        {
+            "text": "(づ ◕‿◕ )づ",
+            "keywords": "hug embrace"
+        },
+        {
+            "text": "(^_−)☆",
+            "keywords": "wink"
+        },
+        {
+            "text": "┬┴┬┴┤(･_├┬┴┬┴",
+            "keywords": "hiding wall peeking shy"
+        },
+        {
+            "text": "(＾• ω •＾)",
+            "keywords": "cat kitty"
+        },
+        {
+            "text": "∪･ｪ･∪",
+            "keywords": "dog doggy puppy"
+        },
+        {
+            "text": "┬─┬ノ( º _ ºノ)",
+            "keywords": "putting table back calm down relax"
+        },
+        {
+            "text": "(´♡‿♡`)",
+            "keywords": "love infatuated"
         }
+        
     ]
 }
