@@ -7,87 +7,78 @@ var UserTokenModel = require('../../models/oauth/userToken');
 var InteractionCallbackModel = require('../../models/interactionCallback');
 
 var kaomojiSearch = require('../../components/kaomoji-search');
-var kaomojiInteractiveMessage = require('../../components/kaomoji-interactive-message');
+var kaomojiInteractions = require('../../components/kaomoji-interactions');
 
 
 router.post('/', (req, res) => {
-    var payload = JSON.parse(req.body.payload);
-    console.log('interaction', payload);
-    // try to get a user token
-    var UserToken = UserTokenModel(req.db);
-    UserToken.findOne({'user.id': payload.user.id})
-        .exec()
-        .then(token => {
-            if (_.isNil(token)) {
-                return res.send('You must <http://12a14799.ngrok.io/oauth/signin|Sign in with Slack> to use the /kaomoji slash command');
-            }
+    
+    console.log('interaction', req.payload);
+    var action = req.payload.actions[0];
+    switch (action.name) {
+        case kaomojiInteractions.INTERACTION_LIST.CANCEL:
+            var slackResponse = {
+                delete_original: true
+            };
+            return res.send(slackResponse);
+        case kaomojiInteractions.INTERACTION_LIST.SEND:
+            var slackResponse = {
+                delete_original: true
+            };
+            res.send(slackResponse);
 
-            var action = payload.actions[0];
-            if (action.name === 'cancel') {
-                var slackResponse = {
-                    delete_original: true
-                };
-                return res.send(slackResponse);
-            } else if (action.name === 'send') {
-                var slackResponse = {
-                    delete_original: true
-                };
-                res.send(slackResponse);
+            return request({
+                url: 'https://slack.com/api/chat.postMessage', //URL to hit
+                qs: {
+                    token: req.token.access_token, 
+                    channel: req.payload.channel.id, 
+                    text: action.value,
+                    as_user: true
+                }, //Query string data
+                method: 'POST', //Specify the method
+            }, function (error, response, body) {
+                if (error) {
+                    console.error(error);
+                } else {
+                    console.log('chat.postMessage response', body);
+                }
+            });
+        case kaomojiInteractions.INTERACTION_LIST.NEXT:
+            var InteractionCallback = InteractionCallbackModel(req.db);
+            return InteractionCallback.findOne({_id: req.payload.callback_id})
+                .exec()
+                .then(interactionCallbackInstance => {
+                    if (_.isNil(interactionCallbackInstance)) throw 'Cannot interact with this message anymore';
+                    return [
+                        InteractionCallback.create({
+                            offset: interactionCallbackInstance.offset + 1, 
+                            search: interactionCallbackInstance.search
+                        }), 
+                        kaomojiSearch.kaomojiSearch(
+                            req.db, 
+                            interactionCallbackInstance.search, 
+                            interactionCallbackInstance.offset
+                        )
+                    ];
+                })
+                .spread((newInteractionCallbackInstance, kaomoji) => {
+                    if (_.isNil(kaomoji)) throw 'No kaomoji found :(';
+                    if (_.isNil(newInteractionCallbackInstance)) throw 'Kaomoji experienced an error handling your request';
 
-                return request({
-                    url: 'https://slack.com/api/chat.postMessage', //URL to hit
-                    qs: {
-                        token: token.access_token, 
-                        channel: payload.channel.id, 
-                        text: action.value,
-                        as_user: true
-                    }, //Query string data
-                    method: 'POST', //Specify the method
-                }, function (error, response, body) {
-                    if (error) {
-                        console.error(error);
-                    } else {
-                        console.log('chat.postMessage response', body);
-                    }
+                    var slackResponse = kaomojiInteractions.createMessage(newInteractionCallbackInstance, kaomoji.text);
+                    return slackResponse;
+                })
+                .catch(err => {
+                    console.log(err);
+                    var slackResponse = {
+                        text: err,
+                        response_type: 'ephemeral'
+                    };
+                    return slackResponse;
+                })
+                .then(result => {
+                    return res.send(result);
                 });
-            } else if (action.name === 'next') {
-                var InteractionCallback = InteractionCallbackModel(req.db);
-                InteractionCallback.findOne({_id: payload.callback_id})
-                    .exec()
-                    .then(interactionCallbackInstance => {
-                        if (_.isNil(interactionCallbackInstance)) throw 'Cannot interact with this message anymore';
-                        return [
-                            InteractionCallback.create({
-                                offset: interactionCallbackInstance.offset + 1, 
-                                search: interactionCallbackInstance.search
-                            }), 
-                            kaomojiSearch.kaomojiSearch(
-                                req.db, 
-                                interactionCallbackInstance.search, 
-                                interactionCallbackInstance.offset
-                            )
-                        ];
-                    })
-                    .spread((newInteractionCallbackInstance, kaomoji) => {
-                        if (_.isNil(kaomoji)) throw 'No kaomoji found :(';
-                        if (_.isNil(newInteractionCallbackInstance)) throw 'Kaomoji experienced an error handling your request';
-
-                        var slackResponse = kaomojiInteractiveMessage.createMessage(newInteractionCallbackInstance, kaomoji.text);
-                        return slackResponse;
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        var slackResponse = {
-                            text: err,
-                            response_type: 'ephemeral'
-                        };
-                        return slackResponse;
-                    })
-                    .then(result => {
-                        res.send(result);
-                    });
-            } 
-        });
+    }    
 });
 
 module.exports = router;

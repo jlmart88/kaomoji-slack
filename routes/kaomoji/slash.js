@@ -1,53 +1,74 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
+var _ = require('lodash');
 
-var UserTokenModel = require('../../models/oauth/userToken');
 var InteractionCallbackModel = require('../../models/interactionCallback');
 
+var kaomojiCommands = require('../../components/kaomoji-commands');
 var kaomojiSearch = require('../../components/kaomoji-search');
-var kaomojiInteractiveMessage = require('../../components/kaomoji-interactive-message');
+var kaomojiInteractions = require('../../components/kaomoji-interactions');
 
 var _ = require('lodash');
 
 /* POST kaomoji-search. */
 router.post('/', (req, res) => {
     console.log('slash', req.body);
-    // try to get a user token
-    var UserToken = UserTokenModel(req.db);
-    UserToken.findOne({'user.id': req.body.user_id})
-        .exec()
-        .then(token => {
-            if (_.isNil(token)) {
-                return res.send('You must <http://12a14799.ngrok.io/oauth/signin|Sign in with Slack> to use the /kaomoji slash command');
-            }
-
-            var kaomojiText;
-            kaomojiSearch.kaomojiSearch(req.db, req.body.text, 0)
-                .then(kaomoji => {
-                    if (_.isNil(kaomoji)) throw 'No kaomoji found :(';
-
-                    kaomojiText = kaomoji.text;
-                    var InteractionCallback = InteractionCallbackModel(req.db);
-                    return InteractionCallback.create({offset:1, search:req.body.text});
-                })
-                .then(interactionCallbackInstance => {
-                    var slackResponse = kaomojiInteractiveMessage.createMessage(interactionCallbackInstance, kaomojiText);
-                    console.log('slackResponse', slackResponse);
-                    return slackResponse;
-                })
-                .catch(err => {
-                    console.log(err);
-                    var slackResponse = {
-                        text: err,
-                        response_type: 'ephemeral'
-                    };
-                    return slackResponse;
-                })
-                .then(result => {
-                    res.send(result);
-                });
-        });
+    var query = req.body.text;
+    if (query[0] === ':') {
+        return _performCommand(req, res, query);
+    } else {
+        return _performInitialKaomojiSearch(req, res, query);
+    }
 });
+
+function _performCommand(req, res, query) {
+    console.log('performing command', query);
+    var response = '';
+
+    switch (query) {
+        case kaomojiCommands.COMMAND_LIST.HELP:
+            response = _composeEphemeralMessage(kaomojiCommands.getHelpText());
+            break;
+        default:
+            response = _composeEphemeralMessage(kaomojiCommands.getDefaultText(query));
+            break;
+    }
+    console.log('command response', response);
+
+    return res.send(response);
+}
+
+function _performInitialKaomojiSearch(req, res, query) {
+    var kaomojiText;
+    kaomojiSearch.kaomojiSearch(req.db, query, 0)
+        .then(kaomoji => {
+            if (_.isNil(kaomoji)) throw 'No kaomoji found :(';
+
+            kaomojiText = kaomoji.text;
+            var InteractionCallback = InteractionCallbackModel(req.db);
+            return InteractionCallback.create({offset:1, search:query});
+        })
+        .then(interactionCallbackInstance => {
+            var slackResponse = kaomojiInteractions.createMessage(interactionCallbackInstance, kaomojiText);
+            console.log('slackResponse', slackResponse);
+            return slackResponse;
+        })
+        .catch(err => {
+            console.error(err);
+            var slackResponse = composeEphemeralMessage(err);
+            return slackResponse;
+        })
+        .then(result => {
+            return res.send(result);
+        });
+}
+
+function _composeEphemeralMessage(message) {
+    return {
+        text: message,
+        response_type: 'ephemeral'
+    };
+}
 
 module.exports = router;

@@ -1,6 +1,14 @@
 var _ = require('lodash');
 
+var INTERACTION_LIST = {
+    SEND: 'send',
+    NEXT: 'next',
+    SAVE: 'save',
+    CANCEL: 'cancel'
+}
+
 module.exports = {
+    INTERACTION_LIST: INTERACTION_LIST,
     createMessage: createMessage
 };
 
@@ -14,20 +22,26 @@ function createMessage(interactionCallbackInstance, kaomojiText) {
                 attachment_type: 'default',
                 actions: [
                     {
-                        name: 'send',
+                        name: INTERACTION_LIST.SEND,
                         text: 'Send',
                         type: 'button',
                         style: 'primary',
                         value: kaomojiText
                     },
                     {
-                        name: 'next',
+                        name: INTERACTION_LIST.NEXT,
                         text: 'Next',
                         type: 'button',
                         value: 'next'
                     },
                     {
-                        name: 'cancel',
+                        name: INTERACTION_LIST.SAVE,
+                        text: 'Save to Shortcuts',
+                        type: 'button',
+                        value: kaomojiText
+                    },
+                    {
+                        name: INTERACTION_LIST.CANCEL,
                         text: 'Cancel',
                         type: 'button',
                         value: 'cancel'
