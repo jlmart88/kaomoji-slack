@@ -1,13 +1,13 @@
-var KaomojiModel = require('../models/kaomoji');
+var KaomojiModel = require('../../models/kaomoji');
 var _ = require('lodash');
 
 module.exports = {
-    kaomojiSearch: kaomojiSearch
+    getNextSearchResult: getNextSearchResult
 };
 
 // given an string of search terms, will return a Promise that resolves with a single kaomoji
 // if no kaomoji match, will return null
-function kaomojiSearch(db, searchTerms, offset) {
+function getNextSearchResult(db, searchTerms, offset) {
     var Kaomoji = KaomojiModel(db);
     
     return Kaomoji.collection.find(

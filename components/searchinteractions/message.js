@@ -1,19 +1,11 @@
-var _ = require('lodash');
-
-var INTERACTION_LIST = {
-    SEND: 'send',
-    NEXT: 'next',
-    SAVE: 'save',
-    CANCEL: 'cancel'
-}
+var interactionConstants = require('../interactions.constants');
 
 module.exports = {
-    INTERACTION_LIST: INTERACTION_LIST,
-    createMessage: createMessage
+    createSearchMessage: createSearchMessage
 };
 
-function createMessage(interactionCallbackInstance, kaomojiText) {
-    var callback_id = interactionCallbackInstance.callback_id;
+function createSearchMessage(searchCallbackInstance, kaomojiText) {
+    var callback_id = searchCallbackInstance.callback_id;
     var interactiveMessage = {
         attachments: [
             {
@@ -22,26 +14,26 @@ function createMessage(interactionCallbackInstance, kaomojiText) {
                 attachment_type: 'default',
                 actions: [
                     {
-                        name: INTERACTION_LIST.SEND,
+                        name: interactionConstants.INTERACTION_LIST.SEND,
                         text: 'Send',
                         type: 'button',
                         style: 'primary',
                         value: kaomojiText
                     },
                     {
-                        name: INTERACTION_LIST.NEXT,
+                        name: interactionConstants.INTERACTION_LIST.NEXT_SEARCH,
                         text: 'Next',
                         type: 'button',
                         value: 'next'
                     },
                     {
-                        name: INTERACTION_LIST.SAVE,
+                        name: interactionConstants.INTERACTION_LIST.SAVE_SHORTCUT,
                         text: 'Save to Shortcuts',
                         type: 'button',
                         value: kaomojiText
                     },
                     {
-                        name: INTERACTION_LIST.CANCEL,
+                        name: interactionConstants.INTERACTION_LIST.CANCEL,
                         text: 'Cancel',
                         type: 'button',
                         value: 'cancel'

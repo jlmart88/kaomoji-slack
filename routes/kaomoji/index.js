@@ -6,7 +6,7 @@ var slash = require('./slash');
 var interaction = require('./interaction');
 
 var UserTokenModel = require('../../models/oauth/userToken');
-var kaomojiCommands = require('../../components/kaomoji-commands');
+var kaomojiCommands = require('../../components/commands');
 
 // parse out the user id
 router.use('/slash', (req, res, next) => {
