@@ -1,4 +1,4 @@
-var KaomojiModel = require('../../models/kaomoji');
+var KaomojiModel = require('.');
 var _ = require('lodash');
 
 module.exports = {

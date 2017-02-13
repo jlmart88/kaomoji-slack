@@ -1,4 +1,4 @@
-var interactionConstants = require('../interactions.constants');
+var interactionConstants = require('../constants');
 
 module.exports = {
     createSearchMessage: createSearchMessage

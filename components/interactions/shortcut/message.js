@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var interactionConstants = require('../interactions.constants');
+var interactionConstants = require('../constants');
 
 module.exports = {
     createShortcutsMessage: createShortcutsMessage
@@ -8,7 +8,7 @@ module.exports = {
 function createShortcutsMessage(shortcuts) {
     if (_.isEmpty(shortcuts)) {
         return {
-            text: 'You have no shortcuts set! Set a shortcut by clicking "Save" on a kaomoji you like.',
+            text: 'You have no shortcuts set! Set a shortcut by clicking *Save to Shortcuts* on a kaomoji you like.',
             response_type: 'ephemeral'
         };
     } 
@@ -58,6 +58,7 @@ function createShortcutsMessage(shortcuts) {
     });
     var interactiveMessage = {
         text: '*Your Kaomoji Shortcuts*',
+        response_type: 'ephemeral',
         attachments: attachments
     };
 

@@ -1,4 +1,4 @@
-var ShortcutModel = require('../../models/shortcut');
+var ShortcutModel = require('.');
 var _ = require('lodash');
 
 var MAX_SHORTCUTS_PER_USER = 15;

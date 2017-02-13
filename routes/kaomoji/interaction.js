@@ -3,9 +3,9 @@ var request = require('request');
 var router = express.Router();
 var _ = require('lodash');
 
-var shortcutInteractions = require('../../components/shortcutInteractions');
-var searchInteractions = require('../../components/searchInteractions');
-var interactionConstants = require('../../components/interactions.constants');
+var shortcutInteractions = require('../../components/interactions/shortcut');
+var searchInteractions = require('../../components/interactions/search');
+var interactionConstants = require('../../components/interactions/constants');
 
 
 router.post('/', (req, res) => {
@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
             return shortcutInteractions.removeShortcut(req, res, action);
 
         case interactionConstants.INTERACTION_LIST.NEXT_SEARCH:
-            return searchInteractions.getNextResult(req, res, action);
+            return searchInteractions.sendSearchMessage(req, res);
     }    
 });
 
