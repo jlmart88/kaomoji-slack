@@ -26,13 +26,13 @@ function isCommandQuery(query) {
 }
 
 function getShortcutsUsageText() {
-    return 'Type `' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.SHORTCUTS + '` or `' + KAOMOJI_SLASH + '` to display all shortcuts you have set.';
+    return 'Type `' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.SHORTCUTS + '` or `' + KAOMOJI_SLASH + '` to display/manage your shortcuts.';
 }
 
 function getHelpText() {
     var helpText = '' + 
         '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.HELP + '` - displays this text' + '\n' +
-        '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.SHORTCUTS + '` or `' + KAOMOJI_SLASH + '` - displays all shortcuts you have set' + '\n' +
+        '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.SHORTCUTS + '` or `' + KAOMOJI_SLASH + '` - display/manage your shortcuts' + '\n' +
         '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.LIST + '` - displays all kaomojis in the database' + '\n' +
         '';
     return helpText;

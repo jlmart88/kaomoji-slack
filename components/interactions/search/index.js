@@ -26,18 +26,19 @@ function sendSearchMessage(req, res, query) {
     return searchParamsCallback.spread((query, offset) => {
             return [
                 interactionCallback.createSearchCallback(req.db, query, offset + 1),
-                kaomoji.getNextSearchResult(
+                kaomoji.getSearchResults(
                     req.db, 
                     query,
-                    offset
+                    offset,
+                    1
                 )
             ];
         })
-        .spread((searchCallback, kaomoji) => {
-            if (_.isNil(kaomoji)) throw 'No kaomoji found for "' + query + '".';
+        .spread((searchCallback, kaomojis) => {
+            if (_.isNil(kaomojis)) throw 'No kaomoji found for "' + query + '".';
             if (_.isNil(searchCallback)) throw 'Kaomoji App experienced an error handling your request';
 
-            var slackResponse = searchMessage.createSearchMessage(searchCallback, kaomoji.text);
+            var slackResponse = searchMessage.createSearchMessage(searchCallback, kaomojis[0].text);
             return slackResponse;
         })
         .catch(err => {

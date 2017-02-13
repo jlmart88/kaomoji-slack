@@ -9,6 +9,7 @@ var kaomojiCommands = require('../../components/commands');
 var kaomoji = require('../../models/kaomoji/service');
 var searchInteractions = require('../../components/interactions/search');
 var shortcutInteractions = require('../../components/interactions/shortcut');
+var listInteractions = require('../../components/interactions/list');
 
 
 /* POST kaomoji-search. */
@@ -31,7 +32,7 @@ function _performCommand(req, res, query) {
         case kaomojiCommands.COMMAND_LIST.SHORTCUTS:
             return shortcutInteractions.sendShortcutsMessage(req, res);
         case kaomojiCommands.COMMAND_LIST.LIST:
-            return res.send('listing not implemented');
+            return listInteractions.sendListMessage(req, res);
         case kaomojiCommands.COMMAND_LIST.HELP:
             response = _composeEphemeralMessage(kaomojiCommands.getHelpText());
             break;

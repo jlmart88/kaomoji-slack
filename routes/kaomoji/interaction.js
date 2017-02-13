@@ -5,6 +5,7 @@ var _ = require('lodash');
 
 var shortcutInteractions = require('../../components/interactions/shortcut');
 var searchInteractions = require('../../components/interactions/search');
+var listInteractions = require('../../components/interactions/list');
 var interactionConstants = require('../../components/interactions/constants');
 
 
@@ -28,6 +29,9 @@ router.post('/', (req, res) => {
 
         case interactionConstants.INTERACTION_LIST.NEXT_SEARCH:
             return searchInteractions.sendSearchMessage(req, res);
+
+        case interactionConstants.INTERACTION_LIST.NEXT_LIST:
+            return listInteractions.sendListMessage(req, res);
     }    
 });
 

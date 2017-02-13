@@ -1,24 +1,15 @@
 var _ = require('lodash');
+
 var interactionConstants = require('../constants');
 
 module.exports = {
-    createShortcutsMessage: createShortcutsMessage
-}
+    createListMessage: createListMessage
+};
 
-function createShortcutsMessage(shortcuts) {
-    if (_.isEmpty(shortcuts)) {
-        return {
-            text: 'You have no shortcuts set! Set a shortcut by clicking *Save to Shortcuts* on a kaomoji you like.',
-            response_type: 'ephemeral'
-        };
-    } 
+function createListMessage(listCallbackInstance, kaomojiTexts) {
+    var callback_id = listCallbackInstance.callback_id;
 
-    var callback_id = 0; // we don't need to create an interaction callback, 
-                         // because this can only be interacted wtih by clicking send or cancel
-
-    console.log('shortcuts', shortcuts);
-    var attachments = _.map(shortcuts, shortcut => {
-        var kaomojiText = shortcut.kaomoji_text;
+    var attachments = _.map(kaomojiTexts, kaomojiText => {
         return {
             text: kaomojiText,
             callback_id: callback_id,
@@ -32,32 +23,36 @@ function createShortcutsMessage(shortcuts) {
                     value: kaomojiText
                 },
                 {
-                    name: interactionConstants.INTERACTION_LIST.REMOVE_SHORTCUT,
-                    text: 'Remove',
+                    name: interactionConstants.INTERACTION_LIST.SAVE_SHORTCUT,
+                    text: 'Save to Shortcuts',
                     type: 'button',
-                    style: 'danger',
-                    value: shortcut._id
+                    value: kaomojiText
                 }
-
             ]
         };
     });
 
     attachments.push({
-        fallback: 'Close',
+        fallback: 'Next or Cancel',
         callback_id: callback_id,
         attachment_type: 'default',
         actions: [
             {
+                name: interactionConstants.INTERACTION_LIST.NEXT_LIST,
+                text: 'Next',
+                type: 'button',
+                value: 'next'
+            },
+            {
                 name: interactionConstants.INTERACTION_LIST.CANCEL,
-                text: 'Close',
+                text: 'Cancel',
                 type: 'button',
                 value: 'cancel'
-            }
+            },
         ]
     });
+
     var interactiveMessage = {
-        text: '*Your Kaomoji Shortcuts*',
         response_type: 'ephemeral',
         attachments: attachments
     };

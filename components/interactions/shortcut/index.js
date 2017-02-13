@@ -33,7 +33,7 @@ function saveShortcut(req, res, action) {
         .then(hasExceeded => { 
             if (hasExceeded) {
                 return res.send({
-                    text: 'You have exceeded the shortcut limit of ' + MAX_SHORTCUTS_PER_USER + ', please remove some to add this as a shortcut.' + '\n' + kaomojiCommands.getShortcutsUsageText(),
+                    text: 'You have reached the shortcut limit of ' + shortcut.MAX_SHORTCUTS_PER_USER + ', remove one to add ' + action.value + ' as a shortcut.' + '\n' + kaomojiCommands.getShortcutsUsageText(),
                     response_type: 'ephemeral',
                     replace_original: false,
                     delete_original: false
