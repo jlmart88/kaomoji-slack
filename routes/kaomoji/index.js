@@ -8,16 +8,27 @@ var interaction = require('./interaction');
 var UserTokenModel = require('../../models/oauth/userToken');
 var kaomojiCommands = require('../../components/commands');
 
-// parse out the user id
+// parse out the user id and verification token
 router.use('/slash', (req, res, next) => {
     req.user = req.body.user_id;
+    req.token = req.body.token;
     next();
 });
 
-// parse out the user id
+// parse out the user id and verification token
 router.use('/interaction', (req, res, next) => {
     req.payload = JSON.parse(req.body.payload);
+    if (_.isNil(req.payload)) return res.status(400).send();
     req.user = req.payload.user.id;
+    req.token = req.payload.token;
+    next();
+})
+
+// check the verification token
+router.use((req, res, next) => {
+    if (req.token !== req.config.SLACK_VERIFICATION_TOKEN) {
+        return res.status(401).send();
+    }
     next();
 })
 
