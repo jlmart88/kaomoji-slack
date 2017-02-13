@@ -12,7 +12,7 @@ var kaomojiCommands = require('../../components/commands');
 router.use('/slash', (req, res, next) => {
     req.user = req.body.user_id;
     req.token = req.body.token;
-    next();
+    return next();
 });
 
 // parse out the user id and verification token
@@ -21,7 +21,7 @@ router.use('/interaction', (req, res, next) => {
     if (_.isNil(req.payload)) return res.status(400).send();
     req.user = req.payload.user.id;
     req.token = req.payload.token;
-    next();
+    return next();
 })
 
 // check the verification token
@@ -29,7 +29,7 @@ router.use((req, res, next) => {
     if (req.token !== req.config.SLACK_VERIFICATION_TOKEN) {
         return res.status(401).send();
     }
-    next();
+    return next();
 })
 
 // attempt to get the user API token and attach it to the request
@@ -41,7 +41,7 @@ router.use((req, res, next) => {
         .exec()
         .then(token => {
             if (_.isNil(token)) {
-                return res.send(kaomojiCommands.getNoUserTokenText());
+                return res.send(kaomojiCommands.getNoUserTokenText(req.config.SERVER_URL));
             }
             console.log('found user token');
             req.token = token;

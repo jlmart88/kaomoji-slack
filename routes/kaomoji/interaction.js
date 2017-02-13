@@ -7,6 +7,8 @@ var shortcutInteractions = require('../../components/interactions/shortcut');
 var searchInteractions = require('../../components/interactions/search');
 var listInteractions = require('../../components/interactions/list');
 var interactionConstants = require('../../components/interactions/constants');
+var oauth = require('../../models/oauth/service');
+var kaomojiCommands = require('../../components/commands');
 
 
 router.post('/', (req, res) => {
@@ -45,10 +47,6 @@ function _cancelInteractiveMessage(req, res) {
 }
 
 function _sendMessageAsUser(req, res, text) {
-    var slackResponse = {
-        delete_original: true
-    };
-    res.send(slackResponse);
 
     return request({
         url: 'https://slack.com/api/chat.postMessage', //URL to hit
@@ -62,8 +60,20 @@ function _sendMessageAsUser(req, res, text) {
     }, function (error, response, body) {
         if (error) {
             console.error(error);
+            res.send(error);
         } else {
             console.log('chat.postMessage response', body);
+            body = JSON.parse(body);
+            if (!body.ok) {
+                return oauth.deleteUserToken(req.db, req.token.id).then(() => {
+                    return res.send(kaomojiCommands.getNoUserTokenText(req.config.SERVER_URL));
+                });
+            } else {
+                var slackResponse = {
+                    delete_original: true
+                };
+                return res.send(slackResponse);
+            }
         }
     });
 }

@@ -44,6 +44,6 @@ function getDefaultText(invalidCommand) {
     return defaultText;
 }
 
-function getNoUserTokenText() {
-    return 'You must <http://12a14799.ngrok.io/oauth/signin|Sign in with Slack> to use the ' + KAOMOJI_SLASH + ' slash command.';
+function getNoUserTokenText(serverUrl) {
+    return 'You must <' + serverUrl + '/oauth/signin|Sign in with Slack> to use the ' + KAOMOJI_SLASH + ' slash command.';
 }

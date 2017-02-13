@@ -62,7 +62,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/signin', (req, res) => {
-    res.redirect('https://slack.com/oauth/authorize?scope=identity.basic&client_id=135222586578.134516452544');
+    res.redirect('https://slack.com/oauth/authorize?scope=identity.basic&client_id=' + req.config.SLACK_CLIENT_ID);
 });
 
 module.exports = router;
