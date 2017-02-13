@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
                 Token.findOneAndUpdate(query, body, {upsert:true, new:true})
                     .exec()
                     .then(doc => {
-                        return res.send('success');
+                        return res.redirect('/success');
                     })
                     .catch(err => {
                         console.error(err);

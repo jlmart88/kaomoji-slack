@@ -18,6 +18,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use((req, res, next) => {
+    req.staticRoot = path.join(__dirname, 'public');
+    next();
+});
 
 var db = mongoose.connect(config.MONGODB_URI);
 
