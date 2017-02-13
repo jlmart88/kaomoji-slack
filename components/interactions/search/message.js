@@ -7,6 +7,7 @@ module.exports = {
 function createSearchMessage(searchCallbackInstance, kaomojiText) {
     var callback_id = searchCallbackInstance.callback_id;
     var interactiveMessage = {
+        response_type: 'ephemeral',
         attachments: [
             {
                 text: kaomojiText,

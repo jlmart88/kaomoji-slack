@@ -1,6 +1,7 @@
 var express = require('express');
 var logger = require('morgan');
 var path = require('path');
+var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -13,6 +14,7 @@ var site = require('./routes/site');
 var app = express();
 var config = require('./config')(app);
 
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
