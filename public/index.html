@@ -18,6 +18,13 @@
       font-family: "Arial";
     }
 
+    .slack_mark {
+      width: 1.4em;
+      position: absolute;
+      margin-left: -.6em;
+      margin-top: -.25em;
+    }
+
     .hidden.menu {
       display: none;
     }
@@ -118,7 +125,12 @@
         </h1>
         <h2 class="kaomoji">(╮°-°)╮┳━━┳ &nbsp;&nbsp;( ╯°□°)╯ ┻━━┻</h2>
         <a href="https://slack.com/oauth/authorize?scope=commands+chat:write:user&client_id=135222586578.134516452544">
-          <div class="ui huge slack button"><i class="slack icon"></i>Add to Slack</div>
+          <div class="ui huge slack button">
+            <i class="icon">
+              <img src="/images/slack_mark.png" class="slack_mark"/>
+              </i>
+              Add to Slack
+          </div>
         </a>
         <a href="#learnmore">
           <div class="ui huge primary button">Learn More<i class="right arrow icon"></i></div>
