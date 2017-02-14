@@ -37,7 +37,7 @@ router.use((req, res, next) => {
     // try to get a user token
     var UserToken = UserTokenModel(req.db);
     console.log('looking for user token');
-    return UserToken.findOne({'user.id': req.user})
+    return UserToken.findOne({'user_id': req.user})
         .exec()
         .then(token => {
             if (_.isNil(token)) {

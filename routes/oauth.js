@@ -1,7 +1,6 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
-var AppTokenModel = require('../models/oauth/appToken');
 var UserTokenModel = require('../models/oauth/userToken');
 var _ = require('lodash');
 
@@ -34,19 +33,12 @@ router.get('/', (req, res) => {
                 body = JSON.parse(body);
                 console.log('oauth', body);
                 var query;
-                var Token;
-                // Determine which token we got back
-                if (_.has(body, 'team_id')) {
-                    console.log('appToken', body.team_id);
-                    Token = AppTokenModel(req.db);
-                    query = {team_id:body.team_id};
-                } else {
-                    console.log('userToken', body.user.id);
-                    Token = UserTokenModel(req.db);
-                    query = {'user.id':body.user.id};
-                }
+                var UserToken = UserTokenModel(req.db);
+                console.log('userToken', body.user_id);    
+                query = {'user_id':body.user_id};
+
                 // Upsert this new token
-                Token.findOneAndUpdate(query, body, {upsert:true, new:true})
+                UserToken.findOneAndUpdate(query, body, {upsert:true, new:true})
                     .exec()
                     .then(doc => {
                         return res.redirect('/success');
@@ -62,7 +54,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/signin', (req, res) => {
-    res.redirect('https://slack.com/oauth/authorize?scope=identity.basic&client_id=' + req.config.SLACK_CLIENT_ID);
+    res.redirect('https://slack.com/oauth/authorize?scope=commands+chat:write:user&client_id=' + req.config.SLACK_CLIENT_ID);
 });
 
 module.exports = router;
