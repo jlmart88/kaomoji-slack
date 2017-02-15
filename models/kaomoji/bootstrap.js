@@ -7,10 +7,11 @@ module.exports = function(db) {
 
     _.each(kaomojiData.kaomojis, kaomoji => {
         try {
-            var kaomojiInstance = new Kaomoji(kaomoji);
-            kaomojiInstance.save().catch(err => {
-                console.log('Couldn\'t create', kaomoji, ', might already be created');
-            });
+            Kaomoji.findOneAndUpdate({text:kaomoji.text}, kaomoji, {upsert: true, new: true})
+                .exec()
+                .catch(err => {
+                    console.error('Couldn\'t upsert', kaomoji, '.');
+                });
         } catch (err) {
             console.log(err);
         }
