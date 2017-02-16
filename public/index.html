@@ -48,6 +48,7 @@
     .masthead h2 {
       font-size: 1.7em;
       font-weight: normal;
+      padding-bottom: 1em;
     }
 
     .ui.vertical.stripe {
@@ -124,22 +125,37 @@
           Kaomoji App 
         </h1>
         <h2 class="kaomoji">(╮°-°)╮┳━━┳ &nbsp;&nbsp;( ╯°□°)╯ ┻━━┻</h2>
-        <a href="https://slack.com/oauth/authorize?scope=commands+chat:write:user&client_id=135222586578.134516452544">
-          <div class="ui huge slack button">
-            <i class="icon">
-              <img src="/images/slack_mark.png" class="slack_mark"/>
-              </i>
-              Add to Slack
+
+        <div class="ui stackable centered grid container">
+          <div class="row">
+            <div class="six wide center aligned column">
+              <a href="https://slack.com/oauth/authorize?scope=commands+chat:write:user&client_id=135222586578.134516452544">
+                <div class="ui huge slack fluid button">
+                  <i class="icon">
+                    <img src="/images/slack_mark.png" class="slack_mark"/>
+                  </i>
+                  Add to Slack
+                </div>
+              </a>
+            </div>
+            <div class="six wide center aligned column">
+              <a href="#learnmore">
+                <div class="ui huge primary fluid button">
+                  Learn More<i class="right arrow icon"></i>
+                </div>
+              </a>
+            </div>
           </div>
-        </a>
-        <a href="#learnmore">
-          <div class="ui huge primary button">Learn More<i class="right arrow icon"></i></div>
-        </a>
-        <p>
-          <a href="https://github.com/jlmart88/kaomoji-slack">
-            <div class="ui github button"><i class="github icon"></i>Github</div>
-          </a>
-        </p>
+          <div class="row">
+            <div class="four wide center aligned column">
+              <a href="https://github.com/jlmart88/kaomoji-slack">
+                <div class="ui large github fluid button">
+                  <i class="github icon"></i>Github
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
