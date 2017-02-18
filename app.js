@@ -28,11 +28,10 @@ app.use((req, res, next) => {
 var db = mongoose.connect(config.MONGODB_URI);
 
 require('./models/kaomoji/bootstrap')(db);
-console.log(app.get('env'));
+
 // force https in production
 if (app.get('env') === 'production') {
     app.use(function(req, res, next) {
-        console.log(req.protocol, req.headers);
         if (req.protocol === 'https' || req.headers['x-forwarded-proto'] === 'https') return next();
         return res.redirect('https://' + req.headers.host + req.url);
     });
