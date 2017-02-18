@@ -3,7 +3,7 @@ var request = require('request');
 var router = express.Router();
 
 router.get('/', (req, res) => {
-    res.sendFile('index.html', {root:req.staticRoot});
+    res.sendFile('home.html', {root:req.staticRoot});
 });
 
 router.get('/privacy', (req, res) => {
