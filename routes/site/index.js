@@ -12,6 +12,10 @@ router.get('/privacy', (req, res) => {
 
 router.get('/success', (req, res) => {
     res.sendFile('success.html', {root:req.staticRoot});
+});
+
+router.get('/faq', (req, res) => {
+    res.sendFile('faq.html', {root:req.staticRoot});
 })
 
 module.exports = router;

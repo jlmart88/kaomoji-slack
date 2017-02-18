@@ -45,5 +45,6 @@ function getDefaultText(invalidCommand) {
 }
 
 function getNoUserTokenText(serverUrl) {
-    return 'You must <' + serverUrl + '/oauth/signin|Sign in with Slack> to use the ' + KAOMOJI_SLASH + ' slash command.';
+    return 'You must <' + serverUrl + '/oauth/signin|Sign in with Slack> to use the ' + KAOMOJI_SLASH + ' slash command. ' +
+        'If this is not working for you, check our <' + serverUrl + '/faq|FAQ> for further help.';
 }

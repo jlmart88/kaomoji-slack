@@ -37,6 +37,11 @@
 .ui.vertical.stripe h3 {
   font-size: 2em;
 }
+
+.ui.vertical.stripe h4 {
+  font-size: 1.5em;
+}
+
 .ui.vertical.stripe .button + h3,
 .ui.vertical.stripe p + h3 {
   margin-top: 3em;
