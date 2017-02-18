@@ -33,7 +33,7 @@ require('./models/kaomoji/bootstrap')(db);
 if (app.get('env') === 'production') {
     app.use(function(req, res, next) {
         if (req.protocol === 'https' || req.headers['x-forwarded-proto'] === 'https') return next();
-        return res.redirect('https://' + req.headers.host + req.url);
+        return res.redirect(301, 'https://' + req.headers.host + req.url);
     });
 }
 
