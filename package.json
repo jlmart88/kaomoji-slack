@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A Slack app for kaomoji",
   "engines": {
-    "node": ">=7.4.0"
+    "node": ">=7.10.1"
   },
   "scripts": {
     "start": "node ./bin/www"
