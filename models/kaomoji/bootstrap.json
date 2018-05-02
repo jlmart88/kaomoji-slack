@@ -2,7 +2,19 @@
     "kaomojis": [
         {
             "text": "(╯°□°)╯︵ ┻━┻",
-            "keywords": "table flip tableflip frustrated"
+            "keywords": "table flip tableflip angry frustrated"
+        },
+        {
+            "text": "┻━┻ ︵╰(°□°)╯︵ ┻━┻",
+            "keywords": "table double flip tableflip angry frustrated"
+        },
+        {
+            "text": "ノ┬─┬ノ ︵ ( \\o°o)\\",
+            "keywords": "table flip tableflip soviet russia"
+        },
+        {
+            "text": "┬─┬ノ( º _ ºノ)",
+            "keywords": "table unflip tableunflip putting back calm down relax"
         },
         {
             "text": "╰( ◕ ᗜ ◕ )╯",
@@ -83,10 +95,6 @@
         {
             "text": "∪･ｪ･∪",
             "keywords": "dog doggy puppy"
-        },
-        {
-            "text": "┬─┬ノ( º _ ºノ)",
-            "keywords": "putting table back calm down relax"
         },
         {
             "text": "(´♡‿♡`)",
@@ -352,7 +360,6 @@
             "text": " m(￢0￢)m",
             "keywords": "apologize sorry"
         },
-
         {
             "text": "(*ノ・ω・）",
             "keywords": "bear animal"
@@ -477,7 +484,6 @@
             "text": "・㉨・",
             "keywords": "bear animal"
         },
-
         {
             "text": "V(=^･ω･^=)v",
             "keywords": "cat animal"
@@ -590,7 +596,6 @@
             "text": "<(*ΦωΦ*)>",
             "keywords": "cat animal"
         },
-
         {
             "text": "(◎-◎；)",
             "keywords": "confused uh what huh"
@@ -699,7 +704,6 @@
             "text": "(⊙_◎)",
             "keywords": "confused uh what huh"
         },
-
         {
             "text": "Dancing",
             "keywords": "dance party"
@@ -912,7 +916,6 @@
             "text": "♪(┌・。・)┌",
             "keywords": "dance party"
         },
-
         {
             "text": "（x_x；）",
             "keywords": "dead rip rest in peace"
@@ -977,7 +980,6 @@
             "text": "(o_-)",
             "keywords": "dead rip rest in peace"
         },
-
         {
             "text": "Defeated",
             "keywords": "defeated give up surrender"
@@ -1086,7 +1088,6 @@
             "text": "(　-。-)",
             "keywords": "defeated give up surrender"
         },
-
         {
             "text": "Uo･ｪ･o",
             "keywords": "dog puppy pupper doggo animal"
@@ -1167,7 +1168,6 @@
             "text": "(〓￣(∵エ∵)￣〓)",
             "keywords": "dog puppy pupper doggo animal"
         },
-
         {
             "text": "ｏ口(・∀・ )",
             "keywords": "drink"
@@ -1228,7 +1228,6 @@
             "text": "且_(・_・ )",
             "keywords": "drink"
         },
-
         {
             "text": "(・｀ω´・)",
             "keywords": "evil plotting sneaky devious"
@@ -1305,7 +1304,6 @@
             "text": "“ψ(｀∇´)ψ",
             "keywords": "evil plotting sneaky devious"
         },
-
         {
             "text": ">=<",
             "keywords": "fish animal"
@@ -1382,7 +1380,6 @@
             "text": "ミ．．ミ",
             "keywords": "fish animal"
         },
-
         {
             "text": "ヽ(∀゜ )人( ゜∀)ノ",
             "keywords": "friends"
@@ -1543,7 +1540,6 @@
             "text": "(°◇°人°◇°)",
             "keywords": "friends"
         },
-
         {
             "text": "( ^_^)／",
             "keywords": "wave greetings hi goodbye bye"
@@ -1728,7 +1724,6 @@
             "text": "ヽ(๏∀๏ )ﾉ",
             "keywords": "wave greetings hi goodbye bye"
         },
-
         {
             "text": "(●´∀｀●)",
             "keywords": "happy joy joyful yay"
@@ -2169,7 +2164,6 @@
             "text": "ʘ‿ʘ",
             "keywords": "happy joy joyful yay"
         },
-
         {
             "text": "|･ω･｀)",
             "keywords": "hide peek"
@@ -2190,7 +2184,6 @@
             "text": "|_・)",
             "keywords": "hide peek"
         },
-
         {
             "text": "(´∀｀)♡",
             "keywords": "infatuation love heart <3"
@@ -2287,7 +2280,6 @@
             "text": "♥╣[-_-]╠♥",
             "keywords": "infatuation love heart <3"
         },
-
         {
             "text": "(´ε｀ )♡",
             "keywords": "kiss"
@@ -2372,7 +2364,6 @@
             "text": " (ΘεΘ;)",
             "keywords": "kiss"
         },
-
         {
             "text": "（・∀・）",
             "keywords": "laugh haha"
@@ -2405,7 +2396,6 @@
             "text": "(*・艸・)",
             "keywords": "laugh haha"
         },
-
         {
             "text": "ヽ（´ー｀）┌",
             "keywords": "mellow whatever meh so what shrug"
@@ -2494,7 +2484,6 @@
             "text": "٩(-̮̮̃•̃)۶",
             "keywords": "mellow whatever meh so what shrug"
         },
-
         {
             "text": "(=ﾟωﾟ)ﾉ",
             "keywords": "animal"
@@ -2683,7 +2672,6 @@
             "text": "]＾：山",
             "keywords": "animal"
         },
-
         {
             "text": "(´Д` )",
             "keywords": ""
@@ -2836,7 +2824,6 @@
             "text": "  ( 　ﾟ,_ゝﾟ)",
             "keywords": ""
         },
-
         {
             "text": "@(o･ｪ･)@",
             "keywords": "monkey animal"
@@ -2857,7 +2844,6 @@
             "text": "@(*^ｪ^)@",
             "keywords": "monkey animal"
         },
-
         {
             "text": "Moustache",
             "keywords": "moustache stache"
@@ -2894,7 +2880,6 @@
             "text": "(￣┏∞┓￣)",
             "keywords": "moustache stache"
         },
-
         {
             "text": "☆⌒(＞。≪)",
             "keywords": "pain ugh urgh ow"
@@ -2939,7 +2924,6 @@
             "text": "ヘ（。□°）ヘ",
             "keywords": "pain ugh urgh ow"
         },
-
         {
             "text": "( ´(00)`)",
             "keywords": "pig animal"
@@ -2996,7 +2980,6 @@
             "text": "(=｀(∞)´=)",
             "keywords": "pig animal"
         },
-
         {
             "text": "（ ; ; ）",
             "keywords": "sad crying tears upset"
@@ -3209,7 +3192,6 @@
             "text": " (╥_╥)",
             "keywords": "sad crying tears upset"
         },
-
         {
             "text": "(ノдヽ)",
             "keywords": "scared shy"
@@ -3230,7 +3212,6 @@
             "text": "（／．＼）",
             "keywords": "scared shy"
         },
-
         {
             "text": "( ꒪Д꒪)ノ",
             "keywords": "surprise shock what no way open mouth"
@@ -3307,7 +3288,6 @@
             "text": "（・□・；）",
             "keywords": "surprise shock what no way open mouth"
         },
-
         {
             "text": "(^_^;)",
             "keywords": "shy embarrassed bashful"
@@ -3392,7 +3372,6 @@
             "text": "(╯ಊ╰)",
             "keywords": "shy embarrassed bashful"
         },
-
         {
             "text": "ヾ(´□｀* )ノ",
             "keywords": "singing"
@@ -3437,7 +3416,6 @@
             "text": "(ﾉ´▽｀)ﾉ♪",
             "keywords": "singing"
         },
-
         {
             "text": "Σ(￣。￣ノ)ノ",
             "keywords": "sleepy tired yawning wake up"
@@ -3538,7 +3516,6 @@
             "text": "(_ _)ヾ(‘ロ‘)",
             "keywords": "sleepy tired yawning wake up"
         },
-
         {
             "text": "ー(￣～￣)ξ",
             "keywords": "smug"
@@ -3587,7 +3564,6 @@
             "text": "<(￣︶￣)>",
             "keywords": "smug"
         },
-
         {
             "text": "Winking",
             "keywords": "smug"
@@ -3644,7 +3620,6 @@
             "text": " (･ｪ-)",
             "keywords": "smug"
         },
-
         {
             "text": "(ーー;)",
             "keywords": "worried"
@@ -3717,7 +3692,6 @@
             "text": "｡:ﾟ*+;(●´･д･`●);+*ﾟ:｡",
             "keywords": "worried"
         },
-
         {
             "text": "φ(￣ー￣ )ノ",
             "keywords": "writing"
@@ -3786,7 +3760,6 @@
             "text": "〆(・∀・＠)",
             "keywords": "writing"
         },
-
         {
             "text": "(╯°□°）╯︵ ┻━┻",
             "keywords": ""
@@ -3923,7 +3896,6 @@
             "text": " (☞ﾟ∀ﾟ)☞",
             "keywords": ""
         },
-
         {
             "text": "('-'*)ｵﾊﾖ♪",
             "keywords": "good morning"
@@ -4092,7 +4064,6 @@
             "text": "~~~ヾ(〓￣(∵エ∵)￣〓)ｵﾊﾖｳ!!",
             "keywords": "good morning"
         },
-
         {
             "text": "^-^*)/ｺﾝﾁｬ!",
             "keywords": "good afternoon"
@@ -4301,7 +4272,6 @@
             "text": "o( ´_ゝ｀)ﾉ ｱﾆｮﾊｾﾖ♪♪",
             "keywords": "good afternoon"
         },
-
         {
             "text": "こ(^0^)ん(^_^)ば(^▽^)ん(^_^)わ(^○^)",
             "keywords": "good evening"
@@ -4414,7 +4384,6 @@
             "text": "▽･ｪ･▽ﾉ\\\"\\\"ｺﾝﾊﾞﾝﾜﾝ♪",
             "keywords": "good evening"
         },
-
         {
             "text": "(￣○￣)お(￣◇￣)や(￣o￣)す(￣ｰ￣)ノみ♪",
             "keywords": "good night"
@@ -4639,7 +4608,6 @@
             "text": "||寝室||Ю　o(▽｀ o) =3 =3 =3 ｵﾔｽﾐｰ♪",
             "keywords": "good night"
         },
-
         {
             "text": "・。・゜゜・☆彡*:.。.:*・゜Xmas+.(○・艸)(艸・●)゜+.☆彡・゜・。・*:.。.:*・゜",
             "keywords": "merry christmas holiday"
@@ -4744,7 +4712,6 @@
             "text": "∈・｀*┘ミ-ヽ(m｀*)＞*_［†+。:.゜Merry Christmas゜.:。+†］",
             "keywords": "merry christmas holiday"
         },
-
         {
             "text": "｡+｡ﾟ☆ｧｹｵﾒ(p*'v`*q)ｺﾄｮﾛ☆ﾟ｡+｡",
             "keywords": "new year"
