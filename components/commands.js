@@ -3,7 +3,7 @@ var _ = require('lodash');
 
 var KAOMOJI_SLASH = '/kaomoji';
 
-var COMMAND_PREFIX = ':';
+var COMMAND_PREFIX = '!';
 
 var COMMAND_LIST = {
     HELP: COMMAND_PREFIX + 'help',
