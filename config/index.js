@@ -1,5 +1,5 @@
-module.exports = function(app) {
-    var config = require('./base');
+module.exports = function () {
+  var config = require('./base');
 
-    return config;
+  return config;
 };

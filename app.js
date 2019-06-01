@@ -5,6 +5,7 @@ var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var debug = require('debug')('kaomoji-slack');
 mongoose.Promise = require('bluebird');
 
 var kaomoji = require('./routes/kaomoji');
@@ -12,7 +13,7 @@ var oauth = require('./routes/oauth');
 var site = require('./routes/site');
 
 var app = express();
-var config = require('./config')(app);
+var config = require('./config')();
 
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(logger('dev'));
@@ -21,8 +22,8 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
-    req.staticRoot = path.join(__dirname, 'public');
-    next();
+  req.staticRoot = path.join(__dirname, 'public');
+  next();
 });
 
 var db = mongoose.connect(config.MONGODB_URI);
@@ -31,16 +32,16 @@ require('./models/kaomoji/bootstrap')(db);
 
 // force https in production
 if (app.get('env') === 'production') {
-    app.use(function(req, res, next) {
-        if (req.protocol === 'https' || req.headers['x-forwarded-proto'] === 'https') return next();
-        return res.redirect(301, 'https://' + req.headers.host + req.url);
-    });
+  app.use(function (req, res, next) {
+    if (req.protocol === 'https' || req.headers['x-forwarded-proto'] === 'https') return next();
+    return res.redirect(301, 'https://' + req.headers.host + req.url);
+  });
 }
 
-app.use(function(req, res, next) {
-    req.db = db;
-    req.config = config;
-    next();
+app.use(function (req, res, next) {
+  req.db = db;
+  req.config = config;
+  next();
 });
 
 app.use('/kaomoji', kaomoji);
@@ -48,10 +49,10 @@ app.use('/oauth', oauth);
 app.use('/', site);
 
 /// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+app.use(function (req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 /// error handlers
@@ -59,23 +60,25 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.send({
-            message: err.message,
-            error: err
-        });
+  app.use(function (err, req, res, next) {
+    debug('Error while handling request:');
+    debug(err);
+    res.status(err.status || 500);
+    res.send({
+      message: err.message,
+      error: err
     });
+  });
 }
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.send({
-        message: err.message,
-        error: {}
-    });
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.send({
+    message: err.message,
+    error: {}
+  });
 });
 
 

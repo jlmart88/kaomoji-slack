@@ -1,7 +1,11 @@
 var express = require('express');
+var crypto = require('crypto');
+var qs = require('qs');
+var moment = require('moment');
 var router = express.Router();
 var _ = require('lodash');
 
+var config = require('../../config')();
 var slash = require('./slash');
 var interaction = require('./interaction');
 
@@ -24,10 +28,31 @@ router.use('/interaction', (req, res, next) => {
     return next();
 })
 
-// check the verification token
+// check the signature
 router.use((req, res, next) => {
-    if (req.token !== req.config.SLACK_VERIFICATION_TOKEN) {
-        return res.status(401).send();
+    if (!config.SLACK_SIGNING_SECRET) {
+        return res.status(500).send('Missing SLACK_SIGNING_SECRET');
+    }
+
+    var timestamp = req.header('X-Slack-Request-Timestamp');
+    if (moment.unix(timestamp).add(5, 'minutes').isBefore(moment())) {
+      // The request timestamp is more than five minutes from local time.
+      // It could be a replay attack, so let's ignore it.
+      return res.status(401).send('Ignoring old request');
+    }
+
+    var body = qs.stringify(req.body, { format:'RFC1738' });
+    var sig_basestring = 'v0:' + timestamp + ':' + body;
+    var hmac = crypto.createHmac('sha256', config.SLACK_SIGNING_SECRET)
+      .update(sig_basestring)
+      .digest('hex')
+      .toString();
+
+    var my_signature = Buffer.from('v0=' + hmac);
+    var received_signature = Buffer.from(req.header('X-Slack-Signature'));
+    var valid = crypto.timingSafeEqual(my_signature, received_signature);
+    if (!valid) {
+        return res.status(401).send('Invalid X-Slack-Signature header');
     }
     return next();
 })

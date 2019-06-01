@@ -17,8 +17,10 @@
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "lodash": "^4.17.11",
+    "moment": "^2.24.0",
     "mongoose": "^4.8.1",
     "morgan": "^1.9.1",
+    "qs": "^6.7.0",
     "request": "^2.88.0",
     "static-favicon": "^1.0.0"
   },
