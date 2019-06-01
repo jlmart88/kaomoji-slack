@@ -14,41 +14,41 @@ var listInteractions = require('../../components/interactions/list');
 
 /* POST kaomoji-search. */
 router.post('/', (req, res) => {
-    console.log('slash', req.body);
-    var query = req.body.text;
-    if (kaomojiCommands.isCommandQuery(query)) {
-        return _performCommand(req, res, query);
-    } else {
-        return searchInteractions.sendSearchMessage(req, res, query);
-    }
+  console.log('slash', req.body);
+  var query = req.body.text;
+  if (kaomojiCommands.isCommandQuery(query)) {
+    return _performCommand(req, res, query);
+  } else {
+    return searchInteractions.sendSearchMessage(req, res, query);
+  }
 });
 
 function _performCommand(req, res, query) {
-    console.log('performing command', query);
-    var response = '';
+  console.log('performing command', query);
+  var response = '';
 
-    switch (query) {
-        case kaomojiCommands.COMMAND_LIST.EMPTY:
-        case kaomojiCommands.COMMAND_LIST.SHORTCUTS:
-            return shortcutInteractions.sendShortcutsMessage(req, res);
-        case kaomojiCommands.COMMAND_LIST.LIST:
-            return listInteractions.sendListMessage(req, res);
-        case kaomojiCommands.COMMAND_LIST.HELP:
-            response = _composeEphemeralMessage(kaomojiCommands.getHelpText());
-            break;
-        default:
-            response = _composeEphemeralMessage(kaomojiCommands.getDefaultText(query));
-            break;
-    }
-    console.log('command response', response);
-    return res.send(response);
+  switch (query) {
+    case kaomojiCommands.COMMAND_LIST.EMPTY:
+    case kaomojiCommands.COMMAND_LIST.SHORTCUTS:
+      return shortcutInteractions.sendShortcutsMessage(req, res);
+    case kaomojiCommands.COMMAND_LIST.LIST:
+      return listInteractions.sendListMessage(req, res);
+    case kaomojiCommands.COMMAND_LIST.HELP:
+      response = _composeEphemeralMessage(kaomojiCommands.getHelpText());
+      break;
+    default:
+      response = _composeEphemeralMessage(kaomojiCommands.getDefaultText(query));
+      break;
+  }
+  console.log('command response', response);
+  return res.send(response);
 }
 
 function _composeEphemeralMessage(message) {
-    return {
-        text: message,
-        response_type: 'ephemeral'
-    };
+  return {
+    text: message,
+    response_type: 'ephemeral'
+  };
 }
 
 module.exports = router;

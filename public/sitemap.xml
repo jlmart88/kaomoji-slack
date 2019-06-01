@@ -2,42 +2,42 @@
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-   <url>
+    <url>
 
-      <loc>https://www.kaomoji.io/</loc>
+        <loc>https://www.kaomoji.io/</loc>
 
-      <changefreq>monthly</changefreq>
+        <changefreq>monthly</changefreq>
 
-      <priority>1.0</priority>
+        <priority>1.0</priority>
 
-   </url>
+    </url>
 
-   <url>
+    <url>
 
-      <loc>https://www.kaomoji.io/privacy/</loc>
+        <loc>https://www.kaomoji.io/privacy/</loc>
 
-      <changefreq>monthly</changefreq>
+        <changefreq>monthly</changefreq>
 
-   </url>
+    </url>
 
-   <url>
+    <url>
 
-      <loc>https://www.kaomoji.io/faq/</loc>
+        <loc>https://www.kaomoji.io/faq/</loc>
 
-      <changefreq>monthly</changefreq>
+        <changefreq>monthly</changefreq>
 
-      <priority>0.8</priority>
+        <priority>0.8</priority>
 
-   </url>
+    </url>
 
-   <url>
+    <url>
 
-      <loc>https://www.kaomoji.io/success/</loc>
+        <loc>https://www.kaomoji.io/success/</loc>
 
-      <changefreq>never</changefreq>
+        <changefreq>never</changefreq>
 
-      <priority>0.0</priority>
+        <priority>0.0</priority>
 
-   </url>
+    </url>
 
 </urlset>

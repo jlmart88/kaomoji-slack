@@ -4,42 +4,42 @@ var _ = require('lodash');
 var MAX_SHORTCUTS_PER_USER = 10;
 
 module.exports = {
-    MAX_SHORTCUTS_PER_USER: MAX_SHORTCUTS_PER_USER,
-    createShortcut: createShortcut,
-    removeShortcut: removeShortcut,
-    getShortcutsForUser: getShortcutsForUser,
-    hasUserExceededShortcutLimit: hasUserExceededShortcutLimit
+  MAX_SHORTCUTS_PER_USER: MAX_SHORTCUTS_PER_USER,
+  createShortcut: createShortcut,
+  removeShortcut: removeShortcut,
+  getShortcutsForUser: getShortcutsForUser,
+  hasUserExceededShortcutLimit: hasUserExceededShortcutLimit
 };
 
 function createShortcut(db, userId, kaomojiText) {
-    var Shortcut = ShortcutModel(db);
+  var Shortcut = ShortcutModel(db);
 
-    return Shortcut.create({user_id: userId, kaomoji_text:kaomojiText});
+  return Shortcut.create({user_id: userId, kaomoji_text: kaomojiText});
 }
 
 function removeShortcut(db, id) {
-    var Shortcut = ShortcutModel(db);
+  var Shortcut = ShortcutModel(db);
 
-    return Shortcut.remove({_id: id});
+  return Shortcut.remove({_id: id});
 }
 
 // given an userId, will return all of the shortcuts set by that user, or null if there are no shortcuts set
 function getShortcutsForUser(db, userId) {
-    var Shortcut = ShortcutModel(db);
-    
-    return Shortcut.collection.find({user_id: userId})
-        .toArray()
-        .then(array => {
-            if (_.isEmpty(array)) return null;
-            return array;
-        });
+  var Shortcut = ShortcutModel(db);
+
+  return Shortcut.collection.find({user_id: userId})
+    .toArray()
+    .then(array => {
+      if (_.isEmpty(array)) return null;
+      return array;
+    });
 }
 
 function hasUserExceededShortcutLimit(db, userId) {
-    var Shortcut = ShortcutModel(db);
+  var Shortcut = ShortcutModel(db);
 
-    return Shortcut.collection.count({user_id: userId})
-        .then(count => {
-            return count >= MAX_SHORTCUTS_PER_USER;
-        });
+  return Shortcut.collection.count({user_id: userId})
+    .then(count => {
+      return count >= MAX_SHORTCUTS_PER_USER;
+    });
 }
