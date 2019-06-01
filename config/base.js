@@ -2,5 +2,7 @@ module.exports = {
     SLACK_CLIENT_ID: process.env.SLACK_CLIENT_ID,
     SLACK_CLIENT_SECRET: process.env.SLACK_CLIENT_SECRET,
     SLACK_VERIFICATION_TOKEN: process.env.SLACK_VERIFICATION_TOKEN,
-    SERVER_URL: process.env.SERVER_URL
+    SLACK_SIGNING_TOKEN: process.env.SLACK_SIGNING_TOKEN,
+    SERVER_URL: process.env.SERVER_URL,
+    MONGODB_URI: process.env.MONGODB_URI
 };

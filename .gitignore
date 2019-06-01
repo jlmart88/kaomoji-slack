@@ -38,3 +38,6 @@ jspm_packages
 
 # Webstorm
 .idea
+
+env_files/*
+!env_files/example.env
