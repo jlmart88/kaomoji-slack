@@ -26,9 +26,13 @@ app.use((req, res, next) => {
   next();
 });
 
-var db = mongoose.connect(config.MONGODB_URI);
+var db;
 
-require('./models/kaomoji/bootstrap')(db);
+mongoose.connect(config.MONGODB_URI).then(function (result) {
+  db = result;
+  require('./models/kaomoji/bootstrap')(db);
+});
+
 
 // force https in production
 if (app.get('env') === 'production') {
