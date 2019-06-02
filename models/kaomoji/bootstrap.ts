@@ -1,10 +1,10 @@
-import * as mongoose from 'mongoose';
-const kaomojiData = require('./bootstrap.json');
-import KaomojiModel from 'kaomoji/models//kaomoji';
+import KaomojiModel from 'kaomoji/models/kaomoji';
+import kaomojiData from './bootstrap-data.json';
 import _ from 'lodash';
 
-export default function (db: typeof mongoose) {
-  var Kaomoji = KaomojiModel(db);
+
+export const bootstrapDB = () => {
+  const Kaomoji = KaomojiModel;
 
   _.each(kaomojiData.kaomojis, kaomoji => {
     try {

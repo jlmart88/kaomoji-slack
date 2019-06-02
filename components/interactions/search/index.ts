@@ -1,22 +1,20 @@
-import { Request, Response } from 'kaomoji/node_modules/@types/express';
+import { SearchCallbackModel } from 'kaomoji/models/interactionCallback/searchCallback';
+import { KaomojiModel } from 'kaomoji/models/kaomoji';
+import { Request, Response } from 'express';
 
 import _ from 'lodash';
 
-var searchMessage = require('./message');
-var interactionCallback = require('kaomoji/models/interactionCallback/service');
-var kaomoji = require('kaomoji/models/kaomoji/service');
+import searchMessage from './message';
+import interactionCallback from 'kaomoji/models/interactionCallback/service';
+import kaomoji from 'kaomoji/models/kaomoji/service';
 
-var Promise = require('bluebird');
+import Promise from 'bluebird';
 
-export default {
-  sendSearchMessage: sendSearchMessage
-}
-
-function sendSearchMessage(req: Request, res: Response, query?: string) {
-  var searchParamsCallback;
+export function sendSearchMessage(req: Request, res: Response, query?: string) {
+  let searchParamsCallback;
   if (_.isNil(query)) {
-    var searchCallbackId = req.payload.callback_id;
-    searchParamsCallback = interactionCallback.getSearchCallback(req.db, searchCallbackId)
+    const searchCallbackId = req.payload.callback_id;
+    searchParamsCallback = interactionCallback.getSearchCallback(searchCallbackId)
       .then(searchCallback => {
         if (_.isNil(searchCallback)) throw 'Cannot interact with this message anymore';
         return [searchCallback.query, searchCallback.offset];
@@ -25,28 +23,28 @@ function sendSearchMessage(req: Request, res: Response, query?: string) {
     searchParamsCallback = Promise.resolve([query, 0]);
   }
 
-  return searchParamsCallback.spread((query, offset) => {
-    return [
-      interactionCallback.createSearchCallback(req.db, query, offset + 1),
-      kaomoji.getSearchResults(
-        req.db,
-        query,
-        offset,
-        1
-      )
-    ];
-  })
-    .spread((searchCallback, kaomojis) => {
-      if (_.isNil(kaomojis)) throw 'No kaomoji found for "' + query + '".';
-      if (_.isNil(searchCallback)) throw 'Kaomoji App experienced an error handling your request';
-
-      var slackResponse = searchMessage.createSearchMessage(searchCallback, kaomojis[0].text);
-      return slackResponse;
+  return searchParamsCallback
+    .spread((query, offset) => {
+      return [
+        interactionCallback.createSearchCallback(query as string, offset as number + 1),
+        kaomoji.getSearchResults(
+          query as string,
+          offset as number,
+          1
+        )
+      ];
     })
-    .catch(err => {
+    .spread(((searchCallback: SearchCallbackModel, kaomojis: KaomojiModel[] | null) => {
+      if (_.isNil(kaomojis)) throw Error('No kaomoji found for "' + query + '".');
+      if (_.isNil(searchCallback)) throw Error('Kaomoji App experienced an error handling your request');
+
+      const slackResponse = searchMessage.createSearchMessage(searchCallback, kaomojis[0].text);
+      return slackResponse;
+    }) as any)
+    .catch((err: Error) => {
       console.log(err);
-      var slackResponse = {
-        text: err,
+      const slackResponse = {
+        text: err.message,
         response_type: 'ephemeral'
       };
       return slackResponse;

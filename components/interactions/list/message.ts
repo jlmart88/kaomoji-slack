@@ -1,37 +1,37 @@
+import { INTERACTION_LIST } from 'kaomoji/components/interactions/constants';
+import { ListCallbackModel } from 'kaomoji/models/interactionCallback/listCallback';
 import { MessageAttachment } from 'kaomoji/node_modules/@slack/types';
 import _ from 'lodash';
-
-var interactionConstants = require('kaomoji/constants');
 
 export default {
   createListMessage: createListMessage
 };
 
-function createListMessage(listCallbackInstance, kaomojiTexts: string[]) {
-  var callback_id = listCallbackInstance.callback_id;
+function createListMessage(listCallbackInstance: ListCallbackModel, kaomojiTexts: string[]) {
+  const callback_id = listCallbackInstance.callback_id;
 
-  var attachments: MessageAttachment[] = _.map(kaomojiTexts, kaomojiText => {
+  const attachments: MessageAttachment[] = _.map(kaomojiTexts, kaomojiText => {
     const attachment: MessageAttachment = {
       text: kaomojiText,
       callback_id: callback_id,
       actions: [
         {
-          name: interactionConstants.INTERACTION_LIST.SEND,
+          name: INTERACTION_LIST.SEND,
           text: 'Send',
           type: 'button',
           style: 'primary',
           value: kaomojiText
         },
         {
-          name: interactionConstants.INTERACTION_LIST.SAVE_SHORTCUT,
+          name: INTERACTION_LIST.SAVE_SHORTCUT,
           text: 'Save to Shortcuts',
           type: 'button',
           value: kaomojiText
         }
-      ];
-
-      return attachment
+      ]
     };
+
+    return attachment;
   });
 
   attachments.push({
@@ -39,13 +39,13 @@ function createListMessage(listCallbackInstance, kaomojiTexts: string[]) {
     callback_id: callback_id,
     actions: [
       {
-        name: interactionConstants.INTERACTION_LIST.NEXT_LIST,
+        name: INTERACTION_LIST.NEXT_LIST,
         text: 'Next',
         type: 'button',
         value: 'next'
       },
       {
-        name: interactionConstants.INTERACTION_LIST.CANCEL,
+        name: INTERACTION_LIST.CANCEL,
         text: 'Cancel',
         type: 'button',
         value: 'cancel'
@@ -53,7 +53,7 @@ function createListMessage(listCallbackInstance, kaomojiTexts: string[]) {
     ]
   });
 
-  var interactiveMessage = {
+  const interactiveMessage = {
     response_type: 'ephemeral',
     attachments: attachments
   };

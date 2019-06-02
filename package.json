@@ -7,8 +7,8 @@
     "npm": "^6.9.0"
   },
   "scripts": {
-    "start": "tsc && node ./build/bin/www",
-    "start-dev": "ts-node -T ./bin/www"
+    "start": "tsc && node  -r tsconfig-paths/register ./build/bin/www",
+    "start-dev": "ts-node -T  -r tsconfig-paths/register ./bin/www"
   },
   "dependencies": {
     "@slack/interactive-messages": "^1.1.1",
@@ -26,6 +26,7 @@
     "qs": "^6.7.0",
     "request": "^2.88.0",
     "static-favicon": "^1.0.0",
+    "tsconfig-paths": "^3.8.0",
     "typescript": "^3.5.1"
   },
   "repository": {

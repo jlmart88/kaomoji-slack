@@ -1,8 +1,10 @@
+import { AttachmentAction } from 'kaomoji/node_modules/@slack/types';
+import { Request, Response } from 'express';
 import _ from 'lodash';
 
-var shortcut = require('kaomoji/models/shortcut/service');
-var shortcutMessage = require('./message');
-var kaomojiCommands = require('kaomoji/commands');
+import shortcut from 'kaomoji/models/shortcut/service';
+import shortcutMessage from './message';
+import kaomojiCommands from 'kaomoji/components/commands';
 
 export default {
   saveShortcut: saveShortcut,
@@ -10,10 +12,10 @@ export default {
   sendShortcutsMessage: sendShortcutsMessage
 }
 
-function sendShortcutsMessage(req, res) {
-  return shortcut.getShortcutsForUser(req.db, req.user)
+function sendShortcutsMessage(req: Request, res: Response) {
+  return shortcut.getShortcutsForUser(req.user)
     .then(shortcuts => {
-      response = shortcutMessage.createShortcutsMessage(shortcuts);
+      let response = shortcutMessage.createShortcutsMessage(shortcuts);
 
       _.extend(response, {
         delete_original: true
@@ -27,9 +29,9 @@ function sendShortcutsMessage(req, res) {
     });
 }
 
-function saveShortcut(req, res, action) {
+function saveShortcut(req: Request, res: Response, action: AttachmentAction) {
 
-  shortcut.hasUserExceededShortcutLimit(req.db, req.user)
+  shortcut.hasUserExceededShortcutLimit(req.user)
     .then(hasExceeded => {
       if (hasExceeded) {
         return res.send({
@@ -40,7 +42,7 @@ function saveShortcut(req, res, action) {
         });
       }
 
-      return shortcut.createShortcut(req.db, req.user, action.value)
+      return shortcut.createShortcut(req.user, action.value)
         .then(shortcut => {
           return res.send({
             text: 'A kaomoji shortcut for ' + action.value + ' has been created.' + '\n' + kaomojiCommands.getShortcutsUsageText(),
@@ -70,8 +72,8 @@ function saveShortcut(req, res, action) {
     });
 }
 
-function removeShortcut(req, res, action) {
-  return shortcut.removeShortcut(req.db, action.value)
+function removeShortcut(req: Request, res: Response, action: AttachmentAction) {
+  return shortcut.removeShortcut(action.value)
     .then(result => {
       sendShortcutsMessage(req, res);
     });

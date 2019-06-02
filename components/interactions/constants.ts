@@ -1,12 +1,8 @@
-var INTERACTION_LIST = {
+export const INTERACTION_LIST = {
   SEND: 'send',
   CANCEL: 'cancel',
   NEXT_SEARCH: 'next_search',
   NEXT_LIST: 'next_list',
   SAVE_SHORTCUT: 'save_shortcut',
   REMOVE_SHORTCUT: 'remove_shortcut'
-};
-
-export default {
-  INTERACTION_LIST: INTERACTION_LIST,
 };

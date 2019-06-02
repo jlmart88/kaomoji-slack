@@ -1,4 +1,6 @@
-import { Request, Response } from 'kaomoji/node_modules/@types/express';
+import { ListCallbackModel } from 'kaomoji/models/interactionCallback/listCallback';
+import { KaomojiModel } from 'kaomoji/models/kaomoji';
+import { Request, Response } from 'express';
 import _ from 'lodash';
 
 import listMessage from './message';
@@ -14,10 +16,10 @@ export default {
 }
 
 function sendListMessage(req: Request, res: Response) {
-  var listParamsCallback;
+  let listParamsCallback;
   if (!_.isNil(req.payload)) {
-    var searchCallbackId = req.payload.callback_id;
-    listParamsCallback = interactionCallback.getListCallback(req.db, searchCallbackId)
+    const searchCallbackId = req.payload.callback_id;
+    listParamsCallback = interactionCallback.getListCallback(searchCallbackId)
       .then(listCallback => {
         if (_.isNil(listCallback)) throw 'Cannot interact with this message anymore';
         return [listCallback.limit, listCallback.offset];
@@ -26,27 +28,27 @@ function sendListMessage(req: Request, res: Response) {
     listParamsCallback = Promise.resolve([LIST_PAGE_LIMIT, 0]);
   }
 
-  return listParamsCallback.spread((limit: number, offset: number) => {
-    return [
-      interactionCallback.createListCallback(req.db, limit, offset + limit),
-      kaomoji.getSearchResults(
-        req.db,
-        null,
-        offset,
-        limit
-      )
-    ];
-  })
-    .spread((listCallback, kaomojis) => {
+  return listParamsCallback
+    .spread((limit: number, offset: number) => {
+      return [
+        interactionCallback.createListCallback(limit, offset + limit),
+        kaomoji.getSearchResults(
+          null,
+          offset,
+          limit
+        )
+      ];
+    })
+    .spread(((listCallback: ListCallbackModel, kaomojis: KaomojiModel[] | null) => {
       if (_.isNil(kaomojis)) throw 'No kaomoji found in the database.';
       if (_.isNil(listCallback)) throw 'Kaomoji App experienced an error handling your request';
 
-      var slackResponse = listMessage.createListMessage(listCallback, _.map(kaomojis, 'text'));
+      const slackResponse = listMessage.createListMessage(listCallback, _.map(kaomojis, 'text'));
       return slackResponse;
-    })
+    }) as any)
     .catch((err: any) => {
       console.log(err);
-      var slackResponse = {
+      const slackResponse = {
         text: err,
         response_type: 'ephemeral'
       };

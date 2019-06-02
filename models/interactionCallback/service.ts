@@ -11,14 +11,14 @@ export default {
 }
 
 
-function getSearchCallback(db: typeof mongoose, searchCallbackId: string) {
-  var SearchCallback = SearchCallbackModel(db);
+function getSearchCallback(searchCallbackId: string) {
+  const SearchCallback = SearchCallbackModel;
 
   return SearchCallback.findOne({_id: searchCallbackId}).exec();
 }
 
-function createSearchCallback(db: typeof mongoose, query: string, offset: number) {
-  var SearchCallback = SearchCallbackModel(db);
+function createSearchCallback(query: string, offset: number) {
+  const SearchCallback = SearchCallbackModel;
 
   return SearchCallback.create({
     offset: offset,
@@ -26,14 +26,14 @@ function createSearchCallback(db: typeof mongoose, query: string, offset: number
   });
 }
 
-function getListCallback(db: typeof mongoose, listCallbackId: string) {
-  var ListCallback = ListCallbackModel(db);
+function getListCallback(listCallbackId: string) {
+  const ListCallback = ListCallbackModel;
 
   return ListCallback.findOne({_id: listCallbackId}).exec();
 }
 
-function createListCallback(db: typeof mongoose, limit: number, offset: number) {
-  var ListCallback = ListCallbackModel(db);
+function createListCallback(limit: number, offset: number) {
+  const ListCallback = ListCallbackModel;
 
   return ListCallback.create({
     limit: limit,

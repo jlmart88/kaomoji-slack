@@ -1,6 +1,6 @@
 {
-  "watch": ["src"],
+  "watch": ["*"],
   "ext": "ts",
-  "ignore": ["skaomoji/*.spec.ts"],
+  "ignore": ["kaomoji/*.spec.ts"],
   "exec": "npm run start-dev"
 }

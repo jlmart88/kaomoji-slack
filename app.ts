@@ -1,5 +1,5 @@
 import express from 'express';
-import { ErrorRequestHandler } from 'kaomoji/node_modules/@types/express';
+import { ErrorRequestHandler } from 'express';
 import logger from 'morgan';
 import path from 'path';
 const favicon = require('static-favicon');
@@ -9,13 +9,13 @@ import mongoose from 'mongoose';
 import debuglib from 'debug';
 const debug = debuglib('kaomoji-slack');
 import bluebird from 'bluebird';
-mongoose.Promise = bluebird;
+(mongoose as any).Promise = bluebird;
 
 import kaomoji from 'kaomoji/routes/kaomoji';
 import oauth from 'kaomoji/routes/oauth';
 import site from 'kaomoji/routes/site';
-import bootstrap from 'kaomoji/models/kaomoji/bootstrap';
-var app = express();
+import { bootstrapDB } from 'kaomoji/models/kaomoji/bootstrap';
+const app = express();
 import { config } from 'kaomoji/config';
 
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
@@ -29,12 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
-var db: typeof mongoose;
-
-mongoose.connect(config.MONGODB_URI).then(function (result) {
-  db = result;
-  bootstrap(db);
-});
+mongoose.connect(config.MONGODB_URI).then(() => bootstrapDB());
 
 
 // force https in production
@@ -45,18 +40,13 @@ if (app.get('env') === 'production') {
   });
 }
 
-app.use(function (req, res, next) {
-  req.db = db;
-  next();
-});
-
 app.use('/kaomoji', kaomoji);
 app.use('/oauth', oauth);
 app.use('/', site);
 
 /// catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   (err as any).status = 404;
   next(err);
 });

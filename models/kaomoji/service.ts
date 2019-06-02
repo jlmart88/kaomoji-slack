@@ -1,6 +1,5 @@
-var KaomojiModel = require('.');
+import KaomojiModel from './index';
 import _ from 'lodash';
-import * as mongoose from 'mongoose';
 
 export default {
   getSearchResults: getSearchResults
@@ -8,14 +7,9 @@ export default {
 
 const MAX_PAGE_LIMIT = 10;
 
-// given an string of search terms, will return a Promise that resolves with a single kaomoji
-// if no kaomoji match, will return null
-function getSearchResults(db: typeof mongoose, searchTerms: string, offset: number, limit: number) {
-  var Kaomoji = KaomojiModel(db);
-
-  var queryPromise;
+const createSearchQuery = (searchTerms: string | null) => {
   if (!_.isNil(searchTerms)) {
-    queryPromise = Kaomoji.collection.find({
+    return KaomojiModel.find({
         $text: {
           $search: searchTerms
         }
@@ -34,21 +28,28 @@ function getSearchResults(db: typeof mongoose, searchTerms: string, offset: numb
         }
       });
   } else {
-    queryPromise = Kaomoji.collection.find({}, {}, {sort: {text: 1}});
+    return KaomojiModel.find({}, {}, { sort: { text: 1 } });
   }
+};
 
-  return queryPromise.count().then(count => {
-    if (_.isNil(limit)) limit = MAX_PAGE_LIMIT;
-    limit = _.min([limit, MAX_PAGE_LIMIT]);
-    queryPromise = queryPromise.limit(limit);
+// given an string of search terms, will return a Promise that resolves with a single kaomoji
+// if no kaomoji match, will return null
+function getSearchResults(searchTerms: string | null, offset: number, limit?: number) {
+  const queryPreview = createSearchQuery(searchTerms);
 
+  // first get the count matching this search, to determine how to apply the limit/offset
+  // such that the search can wrapp back to the beginning when out of results
+  return queryPreview.countDocuments().then(count => {
+    const queryLimit = _.min([limit, MAX_PAGE_LIMIT]) || MAX_PAGE_LIMIT;
+    let query = createSearchQuery(searchTerms).limit(queryLimit);
+
+    // modify the offset to always be valid based on the count
     if (_.isNil(offset)) offset = 0;
     offset = offset % count;
-    offset = offset - (offset % limit);
-    queryPromise = queryPromise.skip(offset);
+    offset = offset - (offset % queryLimit);
+    query = query.skip(offset);
 
-
-    return queryPromise.toArray()
+    return query.exec()
       .then(array => {
         console.log('query results', array);
         if (_.isEmpty(array)) return null;

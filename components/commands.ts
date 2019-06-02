@@ -1,8 +1,8 @@
-var KAOMOJI_SLASH = '/kaomoji';
+const KAOMOJI_SLASH = '/kaomoji';
 
-var COMMAND_PREFIX = '!';
+const COMMAND_PREFIX = '!';
 
-var COMMAND_LIST = {
+const COMMAND_LIST = {
   HELP: COMMAND_PREFIX + 'help',
   SHORTCUTS: COMMAND_PREFIX + 'shortcuts',
   EMPTY: '',
@@ -27,7 +27,7 @@ function getShortcutsUsageText() {
 }
 
 function getHelpText() {
-  var helpText = '' +
+  const helpText = '' +
     '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.HELP + '` - displays this text' + '\n' +
     '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.SHORTCUTS + '` or `' + KAOMOJI_SLASH + '` - display/manage your shortcuts' + '\n' +
     '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.LIST + '` - displays all kaomojis in the database' + '\n' +
@@ -36,7 +36,7 @@ function getHelpText() {
 }
 
 function getDefaultText(invalidCommand: string) {
-  var defaultText = '' +
+  const defaultText = '' +
     '"' + invalidCommand + '" is invalid. Please type ' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.HELP + ' for a list of valid commands.';
   return defaultText;
 }

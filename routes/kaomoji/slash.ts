@@ -1,9 +1,9 @@
 import express from 'express';
-import { Request, Response } from 'kaomoji/node_modules/@types/express';
-var router = express.Router();
+import { Request, Response } from 'express';
+const router = express.Router();
 
 import kaomojiCommands from 'kaomoji/components/commands';
-import searchInteractions from 'kaomoji/components/interactions/search';
+import { sendSearchMessage } from 'kaomoji/components/interactions/search';
 import shortcutInteractions from 'kaomoji/components/interactions/shortcut';
 import listInteractions from 'kaomoji/components/interactions/list';
 
@@ -11,17 +11,17 @@ import listInteractions from 'kaomoji/components/interactions/list';
 /* POST kaomoji-search. */
 router.post('/', (req, res) => {
   console.log('slash', req.body);
-  var query = req.body.text;
+  const query = req.body.text;
   if (kaomojiCommands.isCommandQuery(query)) {
     return _performCommand(req, res, query);
   } else {
-    return searchInteractions.sendSearchMessage(req, res, query);
+    return sendSearchMessage(req, res, query);
   }
 });
 
 function _performCommand(req: Request, res: Response, query: string) {
   console.log('performing command', query);
-  var response = '';
+  let response = {};
 
   switch (query) {
     case kaomojiCommands.COMMAND_LIST.EMPTY:

@@ -31,13 +31,12 @@ router.get('/', (req, res) => {
       } else {
         body = JSON.parse(body);
         console.log('oauth', body);
-        var query;
-        var UserToken = UserTokenModel(req.db);
+        let query;
         console.log('userToken', body.user_id);
         query = {'user_id': body.user_id};
 
         // Upsert this new token
-        UserToken.findOneAndUpdate(query, body, {upsert: true, new: true})
+        UserTokenModel.findOneAndUpdate(query, body, {upsert: true, new: true})
           .exec()
           .then((doc: any) => {
             return res.redirect('/success');
