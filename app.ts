@@ -1,19 +1,22 @@
-var express = require('express');
-var logger = require('morgan');
-var path = require('path');
-var favicon = require('static-favicon');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var debug = require('debug')('kaomoji-slack');
-mongoose.Promise = require('bluebird');
+import express from 'express';
+import { ErrorRequestHandler } from 'kaomoji/node_modules/@types/express';
+import logger from 'morgan';
+import path from 'path';
+const favicon = require('static-favicon');
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import debuglib from 'debug';
+const debug = debuglib('kaomoji-slack');
+import bluebird from 'bluebird';
+mongoose.Promise = bluebird;
 
-var kaomoji = require('./routes/kaomoji');
-var oauth = require('./routes/oauth');
-var site = require('./routes/site');
-
+import kaomoji from 'kaomoji/routes/kaomoji';
+import oauth from 'kaomoji/routes/oauth';
+import site from 'kaomoji/routes/site';
+import bootstrap from 'kaomoji/models/kaomoji/bootstrap';
 var app = express();
-var config = require('./config')();
+import { config } from 'kaomoji/config';
 
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(logger('dev'));
@@ -26,11 +29,11 @@ app.use((req, res, next) => {
   next();
 });
 
-var db;
+var db: typeof mongoose;
 
 mongoose.connect(config.MONGODB_URI).then(function (result) {
   db = result;
-  require('./models/kaomoji/bootstrap')(db);
+  bootstrap(db);
 });
 
 
@@ -44,7 +47,6 @@ if (app.get('env') === 'production') {
 
 app.use(function (req, res, next) {
   req.db = db;
-  req.config = config;
   next();
 });
 
@@ -55,7 +57,7 @@ app.use('/', site);
 /// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
-  err.status = 404;
+  (err as any).status = 404;
   next(err);
 });
 
@@ -64,7 +66,7 @@ app.use(function (req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function (err, req, res, next) {
+  app.use(((err, req, res, next) => {
     debug('Error while handling request:');
     debug(err);
     res.status(err.status || 500);
@@ -72,18 +74,18 @@ if (app.get('env') === 'development') {
       message: err.message,
       error: err
     });
-  });
+  }) as ErrorRequestHandler);
 }
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function (err, req, res, next) {
+app.use(((err, req, res, next) => {
   res.status(err.status || 500);
   res.send({
     message: err.message,
     error: {}
   });
-});
+}) as ErrorRequestHandler);
 
 
-module.exports = app;
+export default app;

@@ -1,6 +1,5 @@
-var express = require('express');
-var request = require('request');
-var router = express.Router();
+import express from 'express';
+const router = express.Router();
 
 router.get('/', (req, res) => {
   res.sendFile('home.html', {root: req.staticRoot});
@@ -16,6 +15,6 @@ router.get('/success', (req, res) => {
 
 router.get('/faq', (req, res) => {
   res.sendFile('faq.html', {root: req.staticRoot});
-})
+});
 
-module.exports = router;
+export default router;

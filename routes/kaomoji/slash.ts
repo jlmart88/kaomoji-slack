@@ -1,15 +1,11 @@
-var express = require('express');
-var request = require('request');
+import express from 'express';
+import { Request, Response } from 'kaomoji/node_modules/@types/express';
 var router = express.Router();
-var _ = require('lodash');
 
-var SearchCallbackModel = require('../../models/interactionCallback/searchCallback');
-
-var kaomojiCommands = require('../../components/commands');
-var kaomoji = require('../../models/kaomoji/service');
-var searchInteractions = require('../../components/interactions/search');
-var shortcutInteractions = require('../../components/interactions/shortcut');
-var listInteractions = require('../../components/interactions/list');
+import kaomojiCommands from 'kaomoji/components/commands';
+import searchInteractions from 'kaomoji/components/interactions/search';
+import shortcutInteractions from 'kaomoji/components/interactions/shortcut';
+import listInteractions from 'kaomoji/components/interactions/list';
 
 
 /* POST kaomoji-search. */
@@ -23,7 +19,7 @@ router.post('/', (req, res) => {
   }
 });
 
-function _performCommand(req, res, query) {
+function _performCommand(req: Request, res: Response, query: string) {
   console.log('performing command', query);
   var response = '';
 
@@ -44,11 +40,11 @@ function _performCommand(req, res, query) {
   return res.send(response);
 }
 
-function _composeEphemeralMessage(message) {
+function _composeEphemeralMessage(message: string) {
   return {
     text: message,
     response_type: 'ephemeral'
   };
 }
 
-module.exports = router;
+export default router;

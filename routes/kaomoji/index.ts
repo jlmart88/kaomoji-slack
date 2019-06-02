@@ -1,16 +1,16 @@
-var express = require('express');
-var crypto = require('crypto');
-var qs = require('qs');
-var moment = require('moment');
-var router = express.Router();
-var _ = require('lodash');
+import express from 'express';
+import crypto from 'crypto';
+import { config } from 'kaomoji/config';
+import qs from 'qs';
+import moment from 'moment';
+const router = express.Router();
+import _ from 'lodash';
 
-var config = require('../../config')();
-var slash = require('./slash');
-var interaction = require('./interaction');
+import slash from './slash';
+import interaction from './interaction';
 
-var UserTokenModel = require('../../models/oauth/userToken');
-var kaomojiCommands = require('../../components/commands');
+import UserTokenModel from 'kaomoji/models/oauth/userToken';
+import kaomojiCommands from 'kaomoji/components/commands';
 
 // parse out the user id and verification token
 router.use('/slash', (req, res, next) => {
@@ -34,8 +34,8 @@ router.use((req, res, next) => {
         return res.status(500).send('Missing SLACK_SIGNING_SECRET');
     }
 
-    var timestamp = req.header('X-Slack-Request-Timestamp');
-    if (moment.unix(timestamp).add(5, 'minutes').isBefore(moment())) {
+    var timestamp = req.header('X-Slack-Request-Timestamp') || '0';
+    if (moment.unix(Number.parseInt(timestamp)).add(5, 'minutes').isBefore(moment())) {
       // The request timestamp is more than five minutes from local time.
       // It could be a replay attack, so let's ignore it.
       return res.status(401).send('Ignoring old request');
@@ -49,7 +49,7 @@ router.use((req, res, next) => {
       .toString();
 
     var my_signature = Buffer.from('v0=' + hmac);
-    var received_signature = Buffer.from(req.header('X-Slack-Signature'));
+    var received_signature = Buffer.from(req.header('X-Slack-Signature') || '');
     var valid = crypto.timingSafeEqual(my_signature, received_signature);
     if (!valid) {
         return res.status(401).send('Invalid X-Slack-Signature header');
@@ -64,9 +64,9 @@ router.use((req, res, next) => {
     console.log('looking for user token');
     return UserToken.findOne({'user_id': req.user})
         .exec()
-        .then(token => {
+        .then((token: string | null)=> {
             if (_.isNil(token)) {
-                return res.send(kaomojiCommands.getNoUserTokenText(req.config.SERVER_URL));
+                return res.send(kaomojiCommands.getNoUserTokenText(config.SERVER_URL));
             }
             console.log('found user token');
             req.token = token;
@@ -78,4 +78,4 @@ router.use('/slash', slash);
 
 router.use('/interaction', interaction);
 
-module.exports = router;
+export default router;

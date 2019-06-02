@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 var Shortcut = new mongoose.Schema({
   user_id: String,
@@ -7,6 +7,6 @@ var Shortcut = new mongoose.Schema({
 
 Shortcut.index({user_id: 1, kaomoji_text: 1}, {unique: true});
 
-module.exports = function (db) {
+export default function (db: typeof mongoose) {
   return db.model('Shortcut', Shortcut);
 };

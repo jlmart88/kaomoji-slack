@@ -1,11 +1,12 @@
-var _ = require('lodash');
-var interactionConstants = require('../constants');
+import { MessageAttachment } from 'kaomoji/node_modules/@slack/types';
+import _ from 'lodash';
+import interactionConstants from 'kaomoji/components/interactions/constants';
 
-module.exports = {
+export default {
   createShortcutsMessage: createShortcutsMessage
 }
 
-function createShortcutsMessage(shortcuts) {
+function createShortcutsMessage(shortcuts: any[]) {
   if (_.isEmpty(shortcuts)) {
     return {
       text: 'You have no shortcuts set! Set a shortcut by clicking *Save to Shortcuts* on a kaomoji you like.',
@@ -13,16 +14,16 @@ function createShortcutsMessage(shortcuts) {
     };
   }
 
-  var callback_id = 0; // we don't need to create an interaction callback,
-                       // because this can only be interacted wtih by clicking send or cancel
+  var callback_id = '0'; // we don't need to create an interaction callback,
+                       // because this can only be interacted with by clicking send or cancel
 
   console.log('shortcuts', shortcuts);
-  var attachments = _.map(shortcuts, shortcut => {
+  var attachments: MessageAttachment[] = _.map(shortcuts, shortcut => {
     var kaomojiText = shortcut.kaomoji_text;
-    return {
+    const attachment: MessageAttachment = {
       text: kaomojiText,
+      fallback: '',
       callback_id: callback_id,
-      attachment_type: 'default',
       actions: [
         {
           name: interactionConstants.INTERACTION_LIST.SEND,
@@ -38,15 +39,14 @@ function createShortcutsMessage(shortcuts) {
           style: 'danger',
           value: shortcut._id
         }
-
       ]
     };
+    return attachment;
   });
 
   attachments.push({
     fallback: 'Close',
     callback_id: callback_id,
-    attachment_type: 'default',
     actions: [
       {
         name: interactionConstants.INTERACTION_LIST.CANCEL,
@@ -56,7 +56,7 @@ function createShortcutsMessage(shortcuts) {
       }
     ]
   });
-  var interactiveMessage = {
+  const interactiveMessage:  = {
     text: '*Your Kaomoji Shortcuts*',
     response_type: 'ephemeral',
     attachments: attachments

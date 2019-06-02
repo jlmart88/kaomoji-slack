@@ -1,14 +1,15 @@
-var express = require('express');
-var request = require('request');
+import express from 'express';
+import { config } from 'kaomoji/config';
+import { Request, Response } from 'kaomoji/node_modules/@types/express';
+import request from 'request';
 var router = express.Router();
-var _ = require('lodash');
 
-var shortcutInteractions = require('../../components/interactions/shortcut');
-var searchInteractions = require('../../components/interactions/search');
-var listInteractions = require('../../components/interactions/list');
-var interactionConstants = require('../../components/interactions/constants');
-var oauth = require('../../models/oauth/service');
-var kaomojiCommands = require('../../components/commands');
+import shortcutInteractions from 'kaomoji/components/interactions/shortcut';
+import searchInteractions from 'kaomoji/components/interactions/search';
+import listInteractions from 'kaomoji/components/interactions/list';
+import interactionConstants from 'kaomoji/components/interactions/constants';
+import oauth from 'kaomoji/models/oauth/service';
+import kaomojiCommands from 'kaomoji/components/commands';
 
 
 router.post('/', (req, res) => {
@@ -37,16 +38,16 @@ router.post('/', (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
 
-function _cancelInteractiveMessage(req, res) {
+function _cancelInteractiveMessage(req: Request, res: Response) {
   var slackResponse = {
     delete_original: true
   };
   return res.send(slackResponse);
 }
 
-function _sendMessageAsUser(req, res, text) {
+function _sendMessageAsUser(req: Request, res: Response, text: string) {
 
   return request({
     url: 'https://slack.com/api/chat.postMessage', //URL to hit
@@ -66,7 +67,7 @@ function _sendMessageAsUser(req, res, text) {
       body = JSON.parse(body);
       if (!body.ok) {
         return oauth.deleteUserToken(req.db, req.token.id).then(() => {
-          return res.send(kaomojiCommands.getNoUserTokenText(req.config.SERVER_URL));
+          return res.send(kaomojiCommands.getNoUserTokenText(config.SERVER_URL));
         });
       } else {
         var slackResponse = {

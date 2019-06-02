@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-var Kaomoji = new mongoose.Schema({
+const Kaomoji = new mongoose.Schema({
   text: {
     type: String,
     index: true,
@@ -11,6 +11,6 @@ var Kaomoji = new mongoose.Schema({
 
 Kaomoji.index({keywords: 'text'}, {default_language: 'english'});
 
-module.exports = function (db) {
+export default function (db: typeof mongoose) {
   return db.model('Kaomoji', Kaomoji);
 };

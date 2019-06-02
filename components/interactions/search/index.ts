@@ -1,16 +1,18 @@
-var _ = require('lodash');
+import { Request, Response } from 'kaomoji/node_modules/@types/express';
+
+import _ from 'lodash';
 
 var searchMessage = require('./message');
-var interactionCallback = require('../../../models/interactionCallback/service');
-var kaomoji = require('../../../models/kaomoji/service');
+var interactionCallback = require('kaomoji/models/interactionCallback/service');
+var kaomoji = require('kaomoji/models/kaomoji/service');
 
 var Promise = require('bluebird');
 
-module.exports = {
+export default {
   sendSearchMessage: sendSearchMessage
 }
 
-function sendSearchMessage(req, res, query) {
+function sendSearchMessage(req: Request, res: Response, query?: string) {
   var searchParamsCallback;
   if (_.isNil(query)) {
     var searchCallbackId = req.payload.callback_id;

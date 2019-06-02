@@ -1,18 +1,19 @@
-var _ = require('lodash');
+import { Request, Response } from 'kaomoji/node_modules/@types/express';
+import _ from 'lodash';
 
-var listMessage = require('./message');
-var interactionCallback = require('../../../models/interactionCallback/service');
-var kaomoji = require('../../../models/kaomoji/service');
+import listMessage from './message';
+import interactionCallback from 'kaomoji/models/interactionCallback/service';
+import kaomoji from 'kaomoji/models/kaomoji/service';
 
-var Promise = require('bluebird');
+import Promise from 'bluebird';
 
-var LIST_PAGE_LIMIT = 5;
+const LIST_PAGE_LIMIT = 5;
 
-module.exports = {
+export default {
   sendListMessage: sendListMessage
 }
 
-function sendListMessage(req, res) {
+function sendListMessage(req: Request, res: Response) {
   var listParamsCallback;
   if (!_.isNil(req.payload)) {
     var searchCallbackId = req.payload.callback_id;
@@ -25,7 +26,7 @@ function sendListMessage(req, res) {
     listParamsCallback = Promise.resolve([LIST_PAGE_LIMIT, 0]);
   }
 
-  return listParamsCallback.spread((limit, offset) => {
+  return listParamsCallback.spread((limit: number, offset: number) => {
     return [
       interactionCallback.createListCallback(req.db, limit, offset + limit),
       kaomoji.getSearchResults(
@@ -43,7 +44,7 @@ function sendListMessage(req, res) {
       var slackResponse = listMessage.createListMessage(listCallback, _.map(kaomojis, 'text'));
       return slackResponse;
     })
-    .catch(err => {
+    .catch((err: any) => {
       console.log(err);
       var slackResponse = {
         text: err,

@@ -1,10 +1,10 @@
-var interactionConstants = require('../constants');
+var interactionConstants = require('kaomoji/constants');
 
-module.exports = {
+export default {
   createSearchMessage: createSearchMessage
 };
 
-function createSearchMessage(searchCallbackInstance, kaomojiText) {
+function createSearchMessage(searchCallbackInstance, kaomojiText: string) {
   var callback_id = searchCallbackInstance.callback_id;
   var interactiveMessage = {
     response_type: 'ephemeral',

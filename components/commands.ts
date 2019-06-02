@@ -1,6 +1,3 @@
-var KaomojiModel = require('../models/kaomoji');
-var _ = require('lodash');
-
 var KAOMOJI_SLASH = '/kaomoji';
 
 var COMMAND_PREFIX = '!';
@@ -12,7 +9,7 @@ var COMMAND_LIST = {
   LIST: COMMAND_PREFIX + 'list',
 }
 
-module.exports = {
+export default {
   COMMAND_LIST: COMMAND_LIST,
   isCommandQuery: isCommandQuery,
   getShortcutsUsageText: getShortcutsUsageText,
@@ -21,7 +18,7 @@ module.exports = {
   getNoUserTokenText: getNoUserTokenText
 };
 
-function isCommandQuery(query) {
+function isCommandQuery(query: string) {
   return (query[0] === COMMAND_PREFIX || query === COMMAND_LIST.EMPTY);
 }
 
@@ -38,13 +35,13 @@ function getHelpText() {
   return helpText;
 }
 
-function getDefaultText(invalidCommand) {
+function getDefaultText(invalidCommand: string) {
   var defaultText = '' +
     '"' + invalidCommand + '" is invalid. Please type ' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.HELP + ' for a list of valid commands.';
   return defaultText;
 }
 
-function getNoUserTokenText(serverUrl) {
+function getNoUserTokenText(serverUrl: string) {
   return 'You must <' + serverUrl + '/oauth/signin|Sign in with Slack> to use the ' + KAOMOJI_SLASH + ' slash command. ' +
     'If this is not working for you, check our <' + serverUrl + '/faq|FAQ> for further help.';
 }

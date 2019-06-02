@@ -1,8 +1,9 @@
-var _ = require('lodash');
-var SearchCallbackModel = require('./searchCallback');
-var ListCallbackModel = require('./listCallback');
+import _ from 'lodash';
+import * as mongoose from 'mongoose';
+import SearchCallbackModel from './searchCallback';
+import ListCallbackModel from './listCallback';
 
-module.exports = {
+export default {
   getSearchCallback: getSearchCallback,
   createSearchCallback: createSearchCallback,
   getListCallback: getListCallback,
@@ -10,13 +11,13 @@ module.exports = {
 }
 
 
-function getSearchCallback(db, searchCallbackId) {
+function getSearchCallback(db: typeof mongoose, searchCallbackId: string) {
   var SearchCallback = SearchCallbackModel(db);
 
   return SearchCallback.findOne({_id: searchCallbackId}).exec();
 }
 
-function createSearchCallback(db, query, offset) {
+function createSearchCallback(db: typeof mongoose, query: string, offset: number) {
   var SearchCallback = SearchCallbackModel(db);
 
   return SearchCallback.create({
@@ -25,13 +26,13 @@ function createSearchCallback(db, query, offset) {
   });
 }
 
-function getListCallback(db, listCallbackId) {
+function getListCallback(db: typeof mongoose, listCallbackId: string) {
   var ListCallback = ListCallbackModel(db);
 
   return ListCallback.findOne({_id: listCallbackId}).exec();
 }
 
-function createListCallback(db, limit, offset) {
+function createListCallback(db: typeof mongoose, limit: number, offset: number) {
   var ListCallback = ListCallbackModel(db);
 
   return ListCallback.create({

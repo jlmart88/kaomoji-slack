@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-var UserToken = new mongoose.Schema({
+const UserToken = new mongoose.Schema({
   team_id: String,
   user_id: String,
   team_name: String,
@@ -14,6 +14,6 @@ var UserToken = new mongoose.Schema({
 
 UserToken.index({user_id: 1, team_id: 1}, {unique: true});
 
-module.exports = function (db) {
+export default function (db: typeof mongoose) {
   return db.model('UserToken', UserToken);
 };

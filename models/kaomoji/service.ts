@@ -1,15 +1,16 @@
 var KaomojiModel = require('.');
-var _ = require('lodash');
+import _ from 'lodash';
+import * as mongoose from 'mongoose';
 
-module.exports = {
+export default {
   getSearchResults: getSearchResults
 };
 
-var MAX_PAGE_LIMIT = 10;
+const MAX_PAGE_LIMIT = 10;
 
 // given an string of search terms, will return a Promise that resolves with a single kaomoji
 // if no kaomoji match, will return null
-function getSearchResults(db, searchTerms, offset, limit) {
+function getSearchResults(db: typeof mongoose, searchTerms: string, offset: number, limit: number) {
   var Kaomoji = KaomojiModel(db);
 
   var queryPromise;

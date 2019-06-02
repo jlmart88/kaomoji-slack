@@ -7,6 +7,6 @@ var INTERACTION_LIST = {
   REMOVE_SHORTCUT: 'remove_shortcut'
 };
 
-module.exports = {
+export default {
   INTERACTION_LIST: INTERACTION_LIST,
 };

@@ -1,19 +1,19 @@
-var _ = require('lodash');
+import { MessageAttachment } from 'kaomoji/node_modules/@slack/types';
+import _ from 'lodash';
 
-var interactionConstants = require('../constants');
+var interactionConstants = require('kaomoji/constants');
 
-module.exports = {
+export default {
   createListMessage: createListMessage
 };
 
-function createListMessage(listCallbackInstance, kaomojiTexts) {
+function createListMessage(listCallbackInstance, kaomojiTexts: string[]) {
   var callback_id = listCallbackInstance.callback_id;
 
-  var attachments = _.map(kaomojiTexts, kaomojiText => {
-    return {
+  var attachments: MessageAttachment[] = _.map(kaomojiTexts, kaomojiText => {
+    const attachment: MessageAttachment = {
       text: kaomojiText,
       callback_id: callback_id,
-      attachment_type: 'default',
       actions: [
         {
           name: interactionConstants.INTERACTION_LIST.SEND,
@@ -28,14 +28,15 @@ function createListMessage(listCallbackInstance, kaomojiTexts) {
           type: 'button',
           value: kaomojiText
         }
-      ]
+      ];
+
+      return attachment
     };
   });
 
   attachments.push({
     fallback: 'Next or Cancel',
     callback_id: callback_id,
-    attachment_type: 'default',
     actions: [
       {
         name: interactionConstants.INTERACTION_LIST.NEXT_LIST,

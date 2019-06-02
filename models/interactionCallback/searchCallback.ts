@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 var SearchCallback = new mongoose.Schema({
   offset: Number,
@@ -9,6 +9,6 @@ SearchCallback.virtual('callback_id').get(function () {
   return this._id;
 });
 
-module.exports = function (db) {
+export default function (db: typeof mongoose) {
   return db.model('SearchCallback', SearchCallback);
 };

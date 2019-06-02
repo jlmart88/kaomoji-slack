@@ -1,10 +1,10 @@
-var _ = require('lodash');
+import _ from 'lodash';
 
-var shortcut = require('../../../models/shortcut/service');
+var shortcut = require('kaomoji/models/shortcut/service');
 var shortcutMessage = require('./message');
-var kaomojiCommands = require('../../commands');
+var kaomojiCommands = require('kaomoji/commands');
 
-module.exports = {
+export default {
   saveShortcut: saveShortcut,
   removeShortcut: removeShortcut,
   sendShortcutsMessage: sendShortcutsMessage

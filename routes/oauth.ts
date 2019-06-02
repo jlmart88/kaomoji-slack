@@ -1,8 +1,8 @@
-var express = require('express');
-var request = require('request');
-var router = express.Router();
-var UserTokenModel = require('../models/oauth/userToken');
-var _ = require('lodash');
+import express from 'express';
+import { config } from 'kaomoji/config';
+import request from 'request';
+const router = express.Router();
+import UserTokenModel from 'kaomoji/models/oauth/userToken';
 
 /* GET oauth */
 router.get('/', (req, res) => {
@@ -18,8 +18,8 @@ router.get('/', (req, res) => {
       url: 'https://slack.com/api/oauth.access', //URL to hit
       qs: {
         code: req.query.code,
-        client_id: req.config.SLACK_CLIENT_ID,
-        client_secret: req.config.SLACK_CLIENT_SECRET
+        client_id: config.SLACK_CLIENT_ID,
+        client_secret: config.SLACK_CLIENT_SECRET
       }, //Query string data
       method: 'GET', //Specify the method
 
@@ -39,10 +39,10 @@ router.get('/', (req, res) => {
         // Upsert this new token
         UserToken.findOneAndUpdate(query, body, {upsert: true, new: true})
           .exec()
-          .then(doc => {
+          .then((doc: any) => {
             return res.redirect('/success');
           })
-          .catch(err => {
+          .catch((err: any) => {
             console.error(err);
             res.status(500);
             return res.send({Error: err});
@@ -53,7 +53,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/signin', (req, res) => {
-  res.redirect('https://slack.com/oauth/authorize?scope=commands+chat:write:user&client_id=' + req.config.SLACK_CLIENT_ID);
+  res.redirect('https://slack.com/oauth/authorize?scope=commands+chat:write:user&client_id=' + config.SLACK_CLIENT_ID);
 });
 
-module.exports = router;
+export default router;
