@@ -7,8 +7,8 @@
     "npm": "^6.9.0"
   },
   "scripts": {
-    "start": "tsc && node  -r tsconfig-paths/register ./build/bin/www",
-    "start-dev": "ts-node -T  -r tsconfig-paths/register ./bin/www"
+    "start": "tsc && node -r ./tsconfig-paths-bootstrap.js ./build/bin/www",
+    "start-dev": "ts-node -T -r tsconfig-paths/register ./bin/www"
   },
   "dependencies": {
     "@slack/interactive-messages": "^1.1.1",
