@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import debuglib from 'debug';
-const debug = debuglib('kaomoji-slack');
+import Debug from 'debug';
+const debug = Debug('kaomoji-slack');
 import app from 'kaomoji/app';
 
 app.set('port', process.env.PORT || 3000);

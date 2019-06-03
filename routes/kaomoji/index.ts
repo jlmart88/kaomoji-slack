@@ -1,7 +1,7 @@
 import express from 'express';
 import crypto from 'crypto';
 import { config } from 'kaomoji/config';
-import { Document } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 import qs from 'qs';
 import moment from 'moment';
 const router = express.Router();
@@ -12,22 +12,6 @@ import interaction from './interaction';
 
 import UserTokenModel from 'kaomoji/models/oauth/userToken';
 import kaomojiCommands from 'kaomoji/components/commands';
-
-// parse out the user id and verification token
-router.use('/slash', (req, res, next) => {
-    req.user = req.body.user_id;
-    req.token = req.body.token;
-    return next();
-});
-
-// parse out the user id and verification token
-router.use('/interaction', (req, res, next) => {
-    req.payload = JSON.parse(req.body.payload);
-    if (_.isNil(req.payload)) return res.status(400).send();
-    req.user = req.payload.user.id;
-    req.token = req.payload.token;
-    return next();
-})
 
 // check the signature
 router.use((req, res, next) => {
@@ -53,6 +37,22 @@ router.use((req, res, next) => {
     }
     return next();
 })
+
+// parse out the user id and verification token
+router.use('/slash', (req, res, next) => {
+    req.user = req.body.user_id;
+    req.token = req.body.token;
+    return next();
+});
+
+// parse out the user id and verification token
+router.use('/interaction', (req, res, next) => {
+    req.payload = JSON.parse(req.body.payload);
+    if (_.isNil(req.payload)) return res.status(400).send();
+    req.user = req.payload.user.id;
+    req.token = req.payload.token;
+    return next();
+});
 
 // attempt to get the user API token and attach it to the request
 router.use((req, res, next) => {

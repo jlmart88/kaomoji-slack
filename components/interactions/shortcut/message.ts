@@ -1,4 +1,4 @@
-import { INTERACTION_LIST } from 'kaomoji/components/interactions/constants';
+import { LEGACY_INTERACTION_LIST } from 'kaomoji/components/interactions/constants';
 import { MessageAttachment } from 'kaomoji/node_modules/@slack/types';
 import _ from 'lodash';
 
@@ -26,14 +26,14 @@ function createShortcutsMessage(shortcuts: any[] | null) {
       callback_id: callback_id,
       actions: [
         {
-          name: INTERACTION_LIST.SEND,
+          name: LEGACY_INTERACTION_LIST.SEND,
           text: 'Send',
           type: 'button',
           style: 'primary',
           value: kaomojiText
         },
         {
-          name: INTERACTION_LIST.REMOVE_SHORTCUT,
+          name: LEGACY_INTERACTION_LIST.REMOVE_SHORTCUT,
           text: 'Remove',
           type: 'button',
           style: 'danger',
@@ -49,7 +49,7 @@ function createShortcutsMessage(shortcuts: any[] | null) {
     callback_id: callback_id,
     actions: [
       {
-        name: INTERACTION_LIST.CANCEL,
+        name: LEGACY_INTERACTION_LIST.CANCEL,
         text: 'Close',
         type: 'button',
         value: 'cancel'

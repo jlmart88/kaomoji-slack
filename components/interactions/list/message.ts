@@ -1,4 +1,4 @@
-import { INTERACTION_LIST } from 'kaomoji/components/interactions/constants';
+import { LEGACY_INTERACTION_LIST } from 'kaomoji/components/interactions/constants';
 import { ListCallbackModel } from 'kaomoji/models/interactionCallback/listCallback';
 import { MessageAttachment } from 'kaomoji/node_modules/@slack/types';
 import _ from 'lodash';
@@ -16,14 +16,14 @@ function createListMessage(listCallbackInstance: ListCallbackModel, kaomojiTexts
       callback_id: callback_id,
       actions: [
         {
-          name: INTERACTION_LIST.SEND,
+          name: LEGACY_INTERACTION_LIST.SEND,
           text: 'Send',
           type: 'button',
           style: 'primary',
           value: kaomojiText
         },
         {
-          name: INTERACTION_LIST.SAVE_SHORTCUT,
+          name: LEGACY_INTERACTION_LIST.SAVE_SHORTCUT,
           text: 'Save to Shortcuts',
           type: 'button',
           value: kaomojiText
@@ -39,13 +39,13 @@ function createListMessage(listCallbackInstance: ListCallbackModel, kaomojiTexts
     callback_id: callback_id,
     actions: [
       {
-        name: INTERACTION_LIST.NEXT_LIST,
+        name: LEGACY_INTERACTION_LIST.NEXT_LIST,
         text: 'Next',
         type: 'button',
         value: 'next'
       },
       {
-        name: INTERACTION_LIST.CANCEL,
+        name: LEGACY_INTERACTION_LIST.CANCEL,
         text: 'Cancel',
         type: 'button',
         value: 'cancel'

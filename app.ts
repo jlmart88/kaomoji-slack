@@ -6,8 +6,8 @@ const favicon = require('static-favicon');
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import debuglib from 'debug';
-const debug = debuglib('kaomoji-slack');
+import Debug from 'debug';
+const debug = Debug('kaomoji-slack');
 import bluebird from 'bluebird';
 (mongoose as any).Promise = bluebird;
 
