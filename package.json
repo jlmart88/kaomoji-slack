@@ -7,7 +7,7 @@
     "npm": "^6.9.0"
   },
   "scripts": {
-    "build": "cp -r ./public ./build && tsc",
+    "build": "tsc && cp -r ./public ./build/public",
     "start": "node -r ./tsconfig-paths-bootstrap.js ./build/bin/www",
     "start-dev": "ts-node -T -r tsconfig-paths/register ./bin/www"
   },
