@@ -1,6 +1,6 @@
 import { LEGACY_INTERACTION_LIST } from 'kaomoji/components/interactions/constants';
 import { ListCallbackModel } from 'kaomoji/models/interactionCallback/listCallback';
-import { MessageAttachment } from 'kaomoji/node_modules/@slack/types';
+import { MessageAttachment } from '@slack/types';
 import _ from 'lodash';
 
 export default {

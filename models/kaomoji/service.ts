@@ -5,7 +5,7 @@ export default {
   getSearchResults: getSearchResults
 };
 
-const MAX_PAGE_LIMIT = 10;
+const MAX_PAGE_LIMIT = 100;
 
 const createSearchQuery = (searchTerms: string | null) => {
   if (!_.isNil(searchTerms)) {

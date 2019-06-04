@@ -6,7 +6,7 @@ import {
 } from 'kaomoji/components/interactions/constants';
 import { SearchCallbackModel } from 'kaomoji/models/interactionCallback/searchCallback';
 import { KaomojiModel } from 'kaomoji/models/kaomoji';
-import { Button, Option } from 'kaomoji/node_modules/@slack/types';
+import { Button, Option } from '@slack/types';
 import { ResponseMessage } from 'kaomoji/types/slack';
 
 

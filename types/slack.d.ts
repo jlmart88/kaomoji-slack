@@ -1,4 +1,4 @@
-import { KnownBlock, MessageAttachment } from 'kaomoji/node_modules/@slack/types';
+import { KnownBlock, MessageAttachment } from '@slack/types';
 
 export interface ResponseMessage {
   text: string;

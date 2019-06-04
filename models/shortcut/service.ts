@@ -1,10 +1,12 @@
 import ShortcutModel from './index';
 import _ from 'lodash';
 
-const MAX_SHORTCUTS_PER_USER = 10;
+const MAX_LEGACY_SHORTCUTS_PER_USER = 10;
+
+export const MAX_SHORTCUTS_PER_USER = 100;
 
 export default {
-  MAX_SHORTCUTS_PER_USER: MAX_SHORTCUTS_PER_USER,
+  MAX_LEGACY_SHORTCUTS_PER_USER: MAX_LEGACY_SHORTCUTS_PER_USER,
   createShortcut: createShortcut,
   removeShortcut: removeShortcut,
   getShortcutsForUser: getShortcutsForUser,
@@ -32,6 +34,6 @@ function getShortcutsForUser(userId: string) {
 function hasUserExceededShortcutLimit(userId: string) {
   return ShortcutModel.collection.count({user_id: userId})
     .then(count => {
-      return count >= MAX_SHORTCUTS_PER_USER;
+      return count >= MAX_LEGACY_SHORTCUTS_PER_USER;
     });
 }
