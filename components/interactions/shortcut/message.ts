@@ -28,21 +28,36 @@ export const createShortcutsMessage = (shortcuts: ShortcutModel[] | null, initia
   ];
 
   if (initialOption) {
-    buttonElements.unshift({
+    const selectedShortcut = _.find(shortcuts, shortcut => shortcut.kaomoji_text === initialOption.value);
+
+    if (selectedShortcut) {
+      buttonElements.unshift({
         type: 'button',
         text: {
           type: 'plain_text',
-          text: 'Send',
+          text: 'Remove'
         },
-        value: initialOption.value,
-        action_id: ACTION_IDS.SEND_KAOMOJI,
-        style: 'primary',
+        value: selectedShortcut._id,
+        action_id: ACTION_IDS.REMOVE_SHORTCUT,
+        style: 'danger',
       } as any);
+    }
+
+    buttonElements.unshift({
+      type: 'button',
+      text: {
+        type: 'plain_text',
+        text: 'Send',
+      },
+      value: initialOption.value,
+      action_id: ACTION_IDS.SEND_KAOMOJI,
+      style: 'primary',
+    } as any);
   }
 
   return {
     response_type: 'ephemeral',
-    replace_original: !!initialOption,
+    replace_original: true,
     text: `Here are your kaomoji shortcuts:`,
     blocks: [
       {

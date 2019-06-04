@@ -44,7 +44,7 @@ export const createSearchMessage = (query: string, kaomojis: KaomojiModel[], ini
 
   return {
     response_type: 'ephemeral',
-    replace_original: !!initialOption,
+    replace_original: true,
     text: `Here are the search results for "${query}":`,
     blocks: [
       {

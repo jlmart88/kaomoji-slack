@@ -1,7 +1,7 @@
 import express from 'express';
 import crypto from 'crypto';
 import { config } from 'kaomoji/config';
-import { Document, Schema } from 'mongoose';
+import { Document } from 'mongoose';
 import qs from 'qs';
 import moment from 'moment';
 const router = express.Router();

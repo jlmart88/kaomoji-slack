@@ -4,7 +4,7 @@ const router = express.Router();
 
 import kaomojiCommands from 'kaomoji/components/commands';
 import { sendSearchMessage } from 'kaomoji/components/interactions/search';
-import { sendLegacyShortcutsMessage, sendShortcutsMessage } from 'kaomoji/components/interactions/shortcut';
+import { sendShortcutsMessage } from 'kaomoji/components/interactions/shortcut';
 import listInteractions from 'kaomoji/components/interactions/list';
 
 

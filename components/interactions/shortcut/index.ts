@@ -1,6 +1,6 @@
 import { createLegacyShortcutsMessage, createShortcutsMessage } from 'kaomoji/components/interactions/shortcut/message';
 import { respondToInteractiveAction } from 'kaomoji/components/interactions/utils';
-import { AttachmentAction } from '@slack/types';
+import { AttachmentAction, Button } from '@slack/types';
 import { Request, Response } from 'express';
 import Debug from 'debug';
 import { ResponseMessage } from 'kaomoji/types/slack';
@@ -60,7 +60,7 @@ export const saveShortcut = async (req: Request, res: Response, kaomoji?: string
   return res.send({ text: message.text });
 };
 
-export const sendShortcutsMessage = async (req: Request, res: Response): Promise<Response | void> => {
+export const sendShortcutsMessage = async (req: Request, res: Response, shouldResetSelection?: boolean): Promise<Response | void> => {
   let slackResponse: ResponseMessage;
   const { payload } = req;
   const isInitialRequest = !payload;
@@ -72,10 +72,13 @@ export const sendShortcutsMessage = async (req: Request, res: Response): Promise
       // this is the initial shortcuts request
       slackResponse = createShortcutsMessage(shortcuts);
     } else {
-      const { actions } = payload;
       // this is a follow up interaction, so parse out the selection and send an updated message
-      const action = actions[0];
-      const selectedOption = action.selected_option;
+      let selectedOption;
+      if (!shouldResetSelection) {
+        const { actions } = payload;
+        const action = actions[0];
+        selectedOption = action.selected_option;
+      }
       slackResponse = createShortcutsMessage(shortcuts, selectedOption);
     }
   } catch (err) {
@@ -92,6 +95,25 @@ export const sendShortcutsMessage = async (req: Request, res: Response): Promise
     await respondToInteractiveAction(req, slackResponse);
   }
 };
+
+export const removeShortcut = async (req: Request, res: Response) => {
+  const { payload } = req;
+  const { actions } = payload;
+  const action: Button = actions[0];
+  let slackResponse: ResponseMessage;
+  try {
+    await shortcut.removeShortcut(action.value);
+    await sendShortcutsMessage(req, res, true);
+  } catch (err) {
+    debug(err);
+    slackResponse = {
+      text: err.message,
+      response_type: 'ephemeral'
+    };
+    res.send({ text: 'OK' });
+    await respondToInteractiveAction(req, slackResponse);
+  }
+}
 
 export function sendLegacyShortcutsMessage(req: Request, res: Response) {
   return shortcut.getShortcutsForUser(req.user)

@@ -8,15 +8,15 @@ import {
 import listInteractions from 'kaomoji/components/interactions/list';
 import { sendSearchMessage } from 'kaomoji/components/interactions/search';
 import {
-  removeLegacyShortcut,
+  removeLegacyShortcut, removeShortcut,
   saveLegacyShortcut,
   saveShortcut,
-  sendLegacyShortcutsMessage, sendShortcutsMessage
+  sendShortcutsMessage
 } from 'kaomoji/components/interactions/shortcut';
 import { cancelInteractiveMessage, respondToInteractiveAction } from 'kaomoji/components/interactions/utils';
 import { config } from 'kaomoji/config';
 import oauth from 'kaomoji/models/oauth/service';
-import { AttachmentAction, Button, KnownAction } from '@slack/types';
+import { AttachmentAction, Button } from '@slack/types';
 import request from 'request';
 
 const router = express.Router();
@@ -36,12 +36,11 @@ router.post('/', (req, res) => {
         return _cancelLegacyInteractiveMessage(req, res);
 
       case LEGACY_INTERACTION_LIST.SAVE_SHORTCUT:
-        console.log('interaction: saving shortcut');
         return saveLegacyShortcut(req, res, attachmentAction);
 
       case LEGACY_INTERACTION_LIST.REMOVE_SHORTCUT:
-        console.log('interaction: removing shortcut');
-        return removeLegacyShortcut(req, res, attachmentAction);
+        // this has been deprecated, so just cancel the legacy interactive message that triggered it
+        return _cancelLegacyInteractiveMessage(req, res);
 
       case LEGACY_INTERACTION_LIST.NEXT_SEARCH:
         // this has been deprecated, so just cancel the legacy interactive message that triggered it
@@ -60,8 +59,11 @@ router.post('/', (req, res) => {
           case BLOCK_IDS.KAOMOJI_SEARCH_SELECT:
             return sendSearchMessage(req, res);
           case BLOCK_IDS.KAOMOJI_SHORTCUTS_SELECT:
+          default:
             return sendShortcutsMessage(req, res);
         }
+      case ACTION_IDS.REMOVE_SHORTCUT:
+        return removeShortcut(req, res);
       case ACTION_IDS.CANCEL:
         return cancelInteractiveMessage(req, res);
       case ACTION_IDS.SEND_KAOMOJI:

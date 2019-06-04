@@ -12,6 +12,7 @@ export const ACTION_IDS = {
   SEND_KAOMOJI: 'send_kaomoji',
   CANCEL: 'cancel',
   SAVE_SHORTCUT: 'save_shortcut',
+  REMOVE_SHORTCUT: 'remove_shortcut',
 };
 
 export const BLOCK_IDS = {
