@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import kaomojiCommands from 'kaomoji/components/commands';
 import { ACTION_IDS, LEGACY_INTERACTION_LIST } from 'kaomoji/components/interactions/constants';
 import listInteractions from 'kaomoji/components/interactions/list';
-import { sendLegacySearchMessage, sendSearchMessage } from 'kaomoji/components/interactions/search';
+import { sendSearchMessage } from 'kaomoji/components/interactions/search';
 import { removeLegacyShortcut, saveLegacyShortcut, saveShortcut } from 'kaomoji/components/interactions/shortcut';
 import { cancelInteractiveMessage, respondToInteractiveAction } from 'kaomoji/components/interactions/utils';
 import { config } from 'kaomoji/config';
@@ -35,7 +35,8 @@ router.post('/', (req, res) => {
         return removeLegacyShortcut(req, res, attachmentAction);
 
       case LEGACY_INTERACTION_LIST.NEXT_SEARCH:
-        return sendLegacySearchMessage(req, res);
+        // this has been deprecated, so just cancel the legacy interactive message that triggered it
+        return _cancelLegacyInteractiveMessage(req, res);
 
       case LEGACY_INTERACTION_LIST.NEXT_LIST:
         return listInteractions.sendListMessage(req, res);
