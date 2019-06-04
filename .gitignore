@@ -44,3 +44,5 @@ env_files/*
 
 # transpiled files
 build
+
+.npmrc
