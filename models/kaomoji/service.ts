@@ -1,5 +1,6 @@
 import KaomojiModel from './index';
 import _ from 'lodash';
+import sanitize from 'mongo-sanitize';
 
 export default {
   getSearchResults: getSearchResults
@@ -9,23 +10,24 @@ const MAX_PAGE_LIMIT = 100;
 
 const createSearchQuery = (searchTerms: string | null) => {
   if (!_.isNil(searchTerms)) {
+    const sanitizedSearch = sanitize(searchTerms);
     return KaomojiModel.find({
         $text: {
-          $search: searchTerms
-        }
+          $search: sanitizedSearch,
+        },
       },
       {
         text: 1,
         textScore: {
-          $meta: 'textScore'
-        }
+          $meta: 'textScore',
+        },
       },
       {
         sort: {
           textScore: {
-            $meta: 'textScore'
-          }
-        }
+            $meta: 'textScore',
+          },
+        },
       });
   } else {
     return KaomojiModel.find({}, {}, { sort: { text: 1 } });
@@ -38,7 +40,7 @@ function getSearchResults(searchTerms: string | null, offset: number, limit?: nu
   const queryPreview = createSearchQuery(searchTerms);
 
   // first get the count matching this search, to determine how to apply the limit/offset
-  // such that the search can wrapp back to the beginning when out of results
+  // such that the search can wrap back to the beginning when out of results
   return queryPreview.countDocuments().then(count => {
     const queryLimit = _.min([limit, MAX_PAGE_LIMIT]) || MAX_PAGE_LIMIT;
     let query = createSearchQuery(searchTerms).limit(queryLimit);
