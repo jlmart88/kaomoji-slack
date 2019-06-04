@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import request from 'request';
 import { ResponseMessage } from 'kaomoji/types/slack';
+import request from 'request';
 
 export const respondToInteractiveAction = (req: Request, message: Partial<ResponseMessage>) => {
   const { response_url: url } = req.payload;

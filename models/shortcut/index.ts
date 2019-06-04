@@ -1,7 +1,7 @@
 import { Document, Model } from 'mongoose';
 import * as mongoose from 'mongoose';
 
-interface ShortcutModel extends Document {
+export interface ShortcutModel extends Document {
   user_id: string;
   kaomoji_text: string;
 }

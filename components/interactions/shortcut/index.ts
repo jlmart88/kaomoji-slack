@@ -1,12 +1,15 @@
+import { createLegacyShortcutsMessage, createShortcutsMessage } from 'kaomoji/components/interactions/shortcut/message';
 import { respondToInteractiveAction } from 'kaomoji/components/interactions/utils';
 import { AttachmentAction } from '@slack/types';
 import { Request, Response } from 'express';
+import Debug from 'debug';
 import { ResponseMessage } from 'kaomoji/types/slack';
 import _ from 'lodash';
 
-import shortcut, { MAX_SHORTCUTS_PER_USER } from 'kaomoji/models/shortcut/service';
-import shortcutMessage from './message';
+import shortcut, { hasUserExceededShortcutLimit, MAX_SHORTCUTS_PER_USER } from 'kaomoji/models/shortcut/service';
 import kaomojiCommands from 'kaomoji/components/commands';
+
+const debug = Debug('interactions:search');
 
 export const saveShortcut = async (req: Request, res: Response, kaomoji?: string) => {
   let message: ResponseMessage;
@@ -20,7 +23,7 @@ export const saveShortcut = async (req: Request, res: Response, kaomoji?: string
     return res.send({ text: message.text });
   }
 
-  const hasExceeded = await shortcut.hasUserExceededShortcutLimit(req.user);
+  const hasExceeded = await hasUserExceededShortcutLimit(req.user);
   if (hasExceeded) {
     message = {
       text: 'You have reached the shortcut limit of ' + MAX_SHORTCUTS_PER_USER + ', remove one to add ' + kaomoji + ' as a shortcut.' + '\n' + kaomojiCommands.getShortcutsUsageText(),
@@ -57,10 +60,43 @@ export const saveShortcut = async (req: Request, res: Response, kaomoji?: string
   return res.send({ text: message.text });
 };
 
-export function sendShortcutsMessage(req: Request, res: Response) {
+export const sendShortcutsMessage = async (req: Request, res: Response): Promise<Response | void> => {
+  let slackResponse: ResponseMessage;
+  const { payload } = req;
+  const isInitialRequest = !payload;
+  console.log('isInitialRequest', isInitialRequest);
+  console.log('payload', payload);
+  try {
+    const shortcuts = await shortcut.getShortcutsForUser(req.user);
+    if (isInitialRequest) {
+      // this is the initial shortcuts request
+      slackResponse = createShortcutsMessage(shortcuts);
+    } else {
+      const { actions } = payload;
+      // this is a follow up interaction, so parse out the selection and send an updated message
+      const action = actions[0];
+      const selectedOption = action.selected_option;
+      slackResponse = createShortcutsMessage(shortcuts, selectedOption);
+    }
+  } catch (err) {
+    debug(err);
+    slackResponse = {
+      text: err.message,
+      response_type: 'ephemeral'
+    };
+  }
+  if (isInitialRequest) {
+    return res.send(slackResponse);
+  } else {
+    res.send({ text: 'OK' });
+    await respondToInteractiveAction(req, slackResponse);
+  }
+};
+
+export function sendLegacyShortcutsMessage(req: Request, res: Response) {
   return shortcut.getShortcutsForUser(req.user)
     .then(shortcuts => {
-      let response = shortcutMessage.createShortcutsMessage(shortcuts);
+      let response = createLegacyShortcutsMessage(shortcuts);
 
       _.extend(response, {
         delete_original: true
@@ -76,7 +112,7 @@ export function sendShortcutsMessage(req: Request, res: Response) {
 
 export function saveLegacyShortcut(req: Request, res: Response, action: AttachmentAction) {
 
-  shortcut.hasUserExceededShortcutLimit(req.user)
+  shortcut.hasUserExceededLegacyShortcutLimit(req.user)
     .then(hasExceeded => {
       if (hasExceeded) {
         return res.send({
@@ -120,6 +156,6 @@ export function saveLegacyShortcut(req: Request, res: Response, action: Attachme
 export function removeLegacyShortcut(req: Request, res: Response, action: AttachmentAction) {
   return shortcut.removeShortcut(action.value)
     .then(result => {
-      sendShortcutsMessage(req, res);
+      sendLegacyShortcutsMessage(req, res);
     });
 }          

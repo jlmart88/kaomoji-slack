@@ -1,9 +1,18 @@
 import express, { Request, Response } from 'express';
 import kaomojiCommands from 'kaomoji/components/commands';
-import { ACTION_IDS, LEGACY_INTERACTION_LIST } from 'kaomoji/components/interactions/constants';
+import {
+  ACTION_IDS,
+  BLOCK_ID_PREFIX_DELIMITER, BLOCK_IDS,
+  LEGACY_INTERACTION_LIST
+} from 'kaomoji/components/interactions/constants';
 import listInteractions from 'kaomoji/components/interactions/list';
 import { sendSearchMessage } from 'kaomoji/components/interactions/search';
-import { removeLegacyShortcut, saveLegacyShortcut, saveShortcut } from 'kaomoji/components/interactions/shortcut';
+import {
+  removeLegacyShortcut,
+  saveLegacyShortcut,
+  saveShortcut,
+  sendLegacyShortcutsMessage, sendShortcutsMessage
+} from 'kaomoji/components/interactions/shortcut';
 import { cancelInteractiveMessage, respondToInteractiveAction } from 'kaomoji/components/interactions/utils';
 import { config } from 'kaomoji/config';
 import oauth from 'kaomoji/models/oauth/service';
@@ -44,10 +53,15 @@ router.post('/', (req, res) => {
   }
   // then try treating the action as a KnownAction
   else if (req.payload.type === 'block_actions') {
-    const action: KnownAction = req.payload.actions[0];
+    const action: any = req.payload.actions[0];
     switch (action.action_id) {
       case ACTION_IDS.SELECT_KAOMOJI:
-        return sendSearchMessage(req, res);
+        switch (action.block_id.split(BLOCK_ID_PREFIX_DELIMITER)[0]) {
+          case BLOCK_IDS.KAOMOJI_SEARCH_SELECT:
+            return sendSearchMessage(req, res);
+          case BLOCK_IDS.KAOMOJI_SHORTCUTS_SELECT:
+            return sendShortcutsMessage(req, res);
+        }
       case ACTION_IDS.CANCEL:
         return cancelInteractiveMessage(req, res);
       case ACTION_IDS.SEND_KAOMOJI:

@@ -1,15 +1,15 @@
-import { BLOCK_ID_PREFIX_DELIMITER, BLOCK_IDS } from 'kaomoji/components/interactions/constants';
-import { KaomojiModel } from 'kaomoji/models/kaomoji';
-import { Request, Response } from 'express';
 import Debug from 'debug';
-import request from 'request';
+import { Request, Response } from 'express';
+import { BLOCK_ID_PREFIX_DELIMITER, BLOCK_IDS } from 'kaomoji/components/interactions/constants';
+import { respondToInteractiveAction } from 'kaomoji/components/interactions/utils';
+import { KaomojiModel } from 'kaomoji/models/kaomoji';
+import kaomoji from 'kaomoji/models/kaomoji/service';
 import { ResponseMessage } from 'kaomoji/types/slack';
-const debug = Debug('interactions:search');
-
 import _ from 'lodash';
 
 import { createSearchMessage } from './message';
-import kaomoji from 'kaomoji/models/kaomoji/service';
+
+const debug = Debug('interactions:search');
 
 const SEARCH_LIMIT = 100;
 
@@ -49,15 +49,7 @@ export const sendSearchMessage = async (req: Request, res: Response, query?: str
       slackResponse = createSearchMessage(query, kaomojis, selectedOption);
     }
     res.send({ text: 'OK'});
-    await _updateSelectMessage(payload.response_url, slackResponse);
+    await respondToInteractiveAction(req, slackResponse);
   }
 };
 
-const _updateSelectMessage = (url: string, updatedMessage: ResponseMessage) => {
-  return request({
-    url,
-    body: updatedMessage,
-    json: true,
-    method: 'POST',
-  });
-};
