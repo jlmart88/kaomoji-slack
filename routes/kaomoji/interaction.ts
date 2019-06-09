@@ -2,21 +2,20 @@ import express, { Request, Response } from 'express';
 import kaomojiCommands from 'kaomoji/components/commands';
 import {
   ACTION_IDS,
-  BLOCK_ID_PREFIX_DELIMITER, BLOCK_IDS,
-  LEGACY_INTERACTION_LIST
+  BLOCK_ID_PREFIX_DELIMITER,
+  BLOCK_IDS,
 } from 'kaomoji/components/interactions/constants';
-import { sendLegacyListMessage, sendListMessage } from 'kaomoji/components/interactions/list';
+import { sendListMessage } from 'kaomoji/components/interactions/list';
 import { sendSearchMessage } from 'kaomoji/components/interactions/search';
 import {
   removeShortcut,
-  saveLegacyShortcut,
   saveShortcut,
   sendShortcutsMessage
 } from 'kaomoji/components/interactions/shortcut';
 import { cancelInteractiveMessage, respondToInteractiveAction } from 'kaomoji/components/interactions/utils';
 import { config } from 'kaomoji/config';
 import oauth from 'kaomoji/models/oauth/service';
-import { AttachmentAction, Button } from '@slack/types';
+import { Button } from '@slack/types';
 import request from 'request';
 
 const router = express.Router();
@@ -27,28 +26,8 @@ router.post('/', (req, res) => {
 
   // first try treating the action as a legacy AttachmentAction
   if (req.payload.type === 'interactive_message') {
-    const attachmentAction: AttachmentAction = req.payload.actions[0];
-    switch (attachmentAction.name) {
-      case LEGACY_INTERACTION_LIST.SEND:
-        return _sendLegacyMessageAsUser(req, res, attachmentAction.value);
-
-      case LEGACY_INTERACTION_LIST.CANCEL:
-        return _cancelLegacyInteractiveMessage(req, res);
-
-      case LEGACY_INTERACTION_LIST.SAVE_SHORTCUT:
-        return saveLegacyShortcut(req, res, attachmentAction);
-
-      case LEGACY_INTERACTION_LIST.REMOVE_SHORTCUT:
-        // this has been deprecated, so just cancel the legacy interactive message that triggered it
-        return _cancelLegacyInteractiveMessage(req, res);
-
-      case LEGACY_INTERACTION_LIST.NEXT_SEARCH:
-        // this has been deprecated, so just cancel the legacy interactive message that triggered it
-        return _cancelLegacyInteractiveMessage(req, res);
-
-      case LEGACY_INTERACTION_LIST.NEXT_LIST:
-        return sendLegacyListMessage(req, res);
-    }
+    // these have all been deprecated, so just cancel the legacy interactive message that triggered this
+    return _cancelLegacyInteractiveMessage(req, res);
   }
   // then try treating the action as a KnownAction
   else if (req.payload.type === 'block_actions') {

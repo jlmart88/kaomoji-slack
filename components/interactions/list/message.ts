@@ -1,13 +1,12 @@
-import { ACTION_IDS, BLOCK_IDS, LEGACY_INTERACTION_LIST } from 'kaomoji/components/interactions/constants';
-import { ListCallbackModel } from 'kaomoji/models/interactionCallback/listCallback';
-import { Button, MessageAttachment, Option } from '@slack/types';
+import { ACTION_IDS, BLOCK_IDS } from 'kaomoji/components/interactions/constants';
+import { Button, Option } from '@slack/types';
 import { KaomojiModel } from 'kaomoji/models/kaomoji';
 import { ResponseMessage } from 'kaomoji/types/slack';
 import _ from 'lodash';
 
 export const createOptionsList = (kaomojis: KaomojiModel[]): { options: Option[] } => {
   return {
-    options: kaomojis.map(kaomoji => ({
+    options: _.map(kaomojis, kaomoji => ({
       text: {
         type: 'plain_text',
         text: kaomoji.text,
@@ -87,57 +86,3 @@ export const createListMessage = (initialOption?: Option): ResponseMessage => {
   };
 
 };
-
-export function createLegacyListMessage(listCallbackInstance: ListCallbackModel, kaomojiTexts: string[]) {
-  const callback_id = listCallbackInstance.callback_id;
-
-  const attachments: MessageAttachment[] = _.map(kaomojiTexts, kaomojiText => {
-    const attachment: MessageAttachment = {
-      text: kaomojiText,
-      callback_id: callback_id,
-      actions: [
-        {
-          name: LEGACY_INTERACTION_LIST.SEND,
-          text: 'Send',
-          type: 'button',
-          style: 'primary',
-          value: kaomojiText
-        },
-        {
-          name: LEGACY_INTERACTION_LIST.SAVE_SHORTCUT,
-          text: 'Save to Shortcuts',
-          type: 'button',
-          value: kaomojiText
-        }
-      ]
-    };
-
-    return attachment;
-  });
-
-  attachments.push({
-    fallback: 'Next or Cancel',
-    callback_id: callback_id,
-    actions: [
-      {
-        name: LEGACY_INTERACTION_LIST.NEXT_LIST,
-        text: 'Next',
-        type: 'button',
-        value: 'next'
-      },
-      {
-        name: LEGACY_INTERACTION_LIST.CANCEL,
-        text: 'Cancel',
-        type: 'button',
-        value: 'cancel'
-      },
-    ]
-  });
-
-  const interactiveMessage = {
-    response_type: 'ephemeral',
-    attachments: attachments
-  };
-
-  return interactiveMessage;
-}

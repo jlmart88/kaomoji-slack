@@ -10,7 +10,6 @@ export default {
   createShortcut: createShortcut,
   removeShortcut: removeShortcut,
   getShortcutsForUser: getShortcutsForUser,
-  hasUserExceededLegacyShortcutLimit: hasUserExceededLegacyShortcutLimit
 };
 
 function createShortcut(userId: string, kaomojiText?: string) {
@@ -36,11 +35,4 @@ export const hasUserExceededShortcutLimit = (userId: string) => {
     .then(count => {
       return count >= MAX_SHORTCUTS_PER_USER;
     });
-}
-
-function hasUserExceededLegacyShortcutLimit(userId: string) {
-  return ShortcutModel.collection.count({user_id: userId})
-    .then(count => {
-      return count >= MAX_LEGACY_SHORTCUTS_PER_USER;
-    });
-}
+};

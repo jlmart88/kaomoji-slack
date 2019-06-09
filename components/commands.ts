@@ -7,7 +7,7 @@ const COMMAND_LIST = {
   SHORTCUTS: COMMAND_PREFIX + 'shortcuts',
   EMPTY: '',
   LIST: COMMAND_PREFIX + 'list',
-}
+};
 
 export default {
   COMMAND_LIST: COMMAND_LIST,
