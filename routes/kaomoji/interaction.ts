@@ -5,10 +5,10 @@ import {
   BLOCK_ID_PREFIX_DELIMITER, BLOCK_IDS,
   LEGACY_INTERACTION_LIST
 } from 'kaomoji/components/interactions/constants';
-import listInteractions from 'kaomoji/components/interactions/list';
+import { sendLegacyListMessage, sendListMessage } from 'kaomoji/components/interactions/list';
 import { sendSearchMessage } from 'kaomoji/components/interactions/search';
 import {
-  removeLegacyShortcut, removeShortcut,
+  removeShortcut,
   saveLegacyShortcut,
   saveShortcut,
   sendShortcutsMessage
@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
         return _cancelLegacyInteractiveMessage(req, res);
 
       case LEGACY_INTERACTION_LIST.NEXT_LIST:
-        return listInteractions.sendListMessage(req, res);
+        return sendLegacyListMessage(req, res);
     }
   }
   // then try treating the action as a KnownAction
@@ -56,6 +56,8 @@ router.post('/', (req, res) => {
     switch (action.action_id) {
       case ACTION_IDS.SELECT_KAOMOJI:
         switch (action.block_id.split(BLOCK_ID_PREFIX_DELIMITER)[0]) {
+          case BLOCK_IDS.KAOMOJI_LIST_SELECT:
+            return sendListMessage(req, res);
           case BLOCK_IDS.KAOMOJI_SEARCH_SELECT:
             return sendSearchMessage(req, res);
           case BLOCK_IDS.KAOMOJI_SHORTCUTS_SELECT:

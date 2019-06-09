@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 const router = express.Router();
 
 import kaomojiCommands from 'kaomoji/components/commands';
+import { sendListMessage } from 'kaomoji/components/interactions/list';
 import { sendSearchMessage } from 'kaomoji/components/interactions/search';
 import { sendShortcutsMessage } from 'kaomoji/components/interactions/shortcut';
-import listInteractions from 'kaomoji/components/interactions/list';
 
 
 /* POST kaomoji-search. */
@@ -28,7 +28,7 @@ function _performCommand(req: Request, res: Response, query: string) {
     case kaomojiCommands.COMMAND_LIST.SHORTCUTS:
       return sendShortcutsMessage(req, res);
     case kaomojiCommands.COMMAND_LIST.LIST:
-      return listInteractions.sendListMessage(req, res);
+      return sendListMessage(req, res);
     case kaomojiCommands.COMMAND_LIST.HELP:
       response = _composeEphemeralMessage(kaomojiCommands.getHelpText());
       break;

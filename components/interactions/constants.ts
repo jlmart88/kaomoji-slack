@@ -16,6 +16,8 @@ export const ACTION_IDS = {
 };
 
 export const BLOCK_IDS = {
+  KAOMOJI_LIST_SELECT: 'kaomoji_list_select',
+  KAOMOJI_LIST_BUTTONS: 'kaomoji_list_buttons',
   KAOMOJI_SEARCH_SELECT: 'kaomoji_search_select',
   KAOMOJI_SEARCH_BUTTONS: 'kaomoji_search_buttons',
   KAOMOJI_SHORTCUTS_SELECT: 'kaomoji_shortcuts_select',

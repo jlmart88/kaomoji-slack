@@ -9,6 +9,7 @@ import _ from 'lodash';
 
 import slash from './slash';
 import interaction from './interaction';
+import optionsLoad from './options-load';
 
 import UserTokenModel from 'kaomoji/models/oauth/userToken';
 import kaomojiCommands from 'kaomoji/components/commands';
@@ -46,7 +47,7 @@ router.use('/slash', (req, res, next) => {
 });
 
 // parse out the user id and verification token
-router.use('/interaction', (req, res, next) => {
+router.use('(/interaction|/options-load)', (req, res, next) => {
     req.payload = JSON.parse(req.body.payload);
     if (_.isNil(req.payload)) return res.status(400).send();
     req.user = req.payload.user.id;
@@ -73,5 +74,7 @@ router.use((req, res, next) => {
 router.use('/slash', slash);
 
 router.use('/interaction', interaction);
+
+router.use('/options-load', optionsLoad);
 
 export default router;
