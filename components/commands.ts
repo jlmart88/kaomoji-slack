@@ -29,8 +29,9 @@ function getShortcutsUsageText() {
 function getHelpText() {
   const helpText = '' +
     '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.HELP + '` - displays this text' + '\n' +
-    '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.SHORTCUTS + '` or `' + KAOMOJI_SLASH + '` - display/manage your shortcuts' + '\n' +
-    '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.LIST + '` - displays all kaomojis in the database' + '\n' +
+    '`' + KAOMOJI_SLASH + ' table` - returns a list of kaomojis matching the search "table"' + '\n' +
+    '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.SHORTCUTS + '` or `' + KAOMOJI_SLASH + '` - allows you to send/manage your shortcuts' + '\n' +
+    '`' + KAOMOJI_SLASH + ' ' + COMMAND_LIST.LIST + '` - opens a search over all available kaomojis' + '\n' +
     '';
   return helpText;
 }
