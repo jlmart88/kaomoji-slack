@@ -12,9 +12,13 @@ const createSearchQuery = (searchTerms: string | null) => {
   if (!_.isNil(searchTerms)) {
     const sanitizedSearch = sanitize(searchTerms);
     return KaomojiModel.find({
-        $text: {
-          $search: sanitizedSearch,
-        },
+        $or: [{
+          $text: {
+            $search: sanitizedSearch,
+          }
+        }, {
+          keywords: new RegExp(`.*${sanitizedSearch}.*`),
+        }],
       },
       {
         text: 1,

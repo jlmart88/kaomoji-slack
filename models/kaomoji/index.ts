@@ -12,7 +12,10 @@ const Kaomoji = new mongoose.Schema({
     index: true,
     unique: true
   },
-  keywords: String
+  keywords: {
+    type: String,
+    index: true,
+  }
 });
 
 Kaomoji.index({keywords: 'text'}, {default_language: 'english'});
