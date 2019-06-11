@@ -2,11 +2,10 @@
     font-family: "Arial";
 }
 
-.slack_mark {
-    width: 1.4em;
-    position: absolute;
-    margin-left: -.6em;
-    margin-top: -.25em;
+.ui.button.learn_more_button {
+    /* match the size of the add to slack button*/
+    padding: .78571429em 0.9em;
+    font-size: 1.555rem;
 }
 
 .masthead.segment {
