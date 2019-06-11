@@ -7,20 +7,18 @@ import { KaomojiModel } from 'kaomoji/models/kaomoji';
 import { Request, Response } from 'express';
 import { Option } from '@slack/types';
 import Debug from 'debug';
+import { getSearchResults } from 'kaomoji/models/kaomoji/service';
 import { ResponseMessage } from 'kaomoji/types/slack';
 import _ from 'lodash';
 
-import kaomoji from 'kaomoji/models/kaomoji/service';
 
 const debug = Debug('interactions:list');
-
-const LIST_LIMIT = 100;
 
 export const sendListOptions = async (req: Request, res: Response): Promise<Response | void> => {
   const query = req.payload.value;
   let optionsResponse: { options: Option[] };
   // this is the initial search request, so respond with a message
-  const kaomojis: KaomojiModel[] | null = await kaomoji.getSearchResults(query, 0, LIST_LIMIT);
+  const kaomojis: KaomojiModel[] | null = await getSearchResults(query);
   if (_.isNil(kaomojis)) {
     const err = Error('No kaomoji found for "' + query + '".');
     debug(err);

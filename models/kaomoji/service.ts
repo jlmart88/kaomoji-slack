@@ -2,10 +2,6 @@ import KaomojiModel from './index';
 import _ from 'lodash';
 import sanitize from 'mongo-sanitize';
 
-export default {
-  getSearchResults: getSearchResults
-};
-
 const MAX_PAGE_LIMIT = 100;
 
 const createSearchQuery = (searchTerms: string | null) => {
@@ -40,7 +36,7 @@ const createSearchQuery = (searchTerms: string | null) => {
 
 // given an string of search terms, will return a Promise that resolves with a single kaomoji
 // if no kaomoji match, will return null
-function getSearchResults(searchTerms: string | null, offset: number, limit?: number) {
+export function getSearchResults(searchTerms: string | null, offset: number = 0, limit: number = MAX_PAGE_LIMIT) {
   const queryPreview = createSearchQuery(searchTerms);
 
   // first get the count matching this search, to determine how to apply the limit/offset
@@ -50,7 +46,6 @@ function getSearchResults(searchTerms: string | null, offset: number, limit?: nu
     let query = createSearchQuery(searchTerms).limit(queryLimit);
 
     // modify the offset to always be valid based on the count
-    if (_.isNil(offset)) offset = 0;
     offset = offset % count;
     offset = offset - (offset % queryLimit);
     query = query.skip(offset);
