@@ -31,7 +31,7 @@
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "jsonminify": "^0.4.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "moment": "^2.24.0",
     "mongo-sanitize": "^1.0.1",
     "mongoose": "^5.7.5",
