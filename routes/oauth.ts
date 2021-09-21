@@ -13,9 +13,9 @@ router.get('/', (req, res) => {
   } else {
     // If it's there...
 
-    // We'll do a GET call to Slack's `oauth.access` endpoint, passing our app's client ID, client secret, and the code we just got as query parameters.
+    // We'll do a GET call to Slack's `oauth.v2.access` endpoint, passing our app's client ID, client secret, and the code we just got as query parameters.
     request({
-      url: 'https://slack.com/api/oauth.access', //URL to hit
+      url: 'https://slack.com/api/oauth.v2.access', //URL to hit
       qs: {
         code: req.query.code,
         client_id: config.SLACK_CLIENT_ID,
@@ -52,7 +52,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/signin', (req, res) => {
-  res.redirect('https://slack.com/oauth/authorize?scope=commands+chat:write:user&client_id=' + config.SLACK_CLIENT_ID);
+  res.redirect(`https://slack.com/oauth/v2/authorize?client_id=${config.SLACK_CLIENT_ID}&scope=chat:write,chat:write.public,commands`);
 });
 
 export default router;
