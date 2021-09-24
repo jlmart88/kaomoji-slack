@@ -54,7 +54,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/signin', (req, res) => {
-  res.redirect(`https://slack.com/oauth/v2/authorize?client_id=${config.SLACK_CLIENT_ID}&scope=chat:write,chat:write.public,commands&user_scope=chat:write`);
+  res.redirect(`https://slack.com/oauth/v2/authorize?client_id=${config.SLACK_CLIENT_ID}&scope=commands&user_scope=chat:write`);
 });
 
 export default router;
