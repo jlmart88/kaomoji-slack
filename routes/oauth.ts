@@ -34,8 +34,8 @@ router.get('/', (req, res) => {
         let token = body.authed_user;
         console.log('token', token);
         let query;
-        console.log('user_id', token.user_id);
-        query = {'user_id': token.user_id};
+        console.log('user_id', token.id);
+        query = {'user_id': token.id};
 
         // Upsert this new token
         UserTokenModel.findOneAndUpdate(query, token, {upsert: true, new: true})
