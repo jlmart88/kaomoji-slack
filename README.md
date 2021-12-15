@@ -10,8 +10,7 @@ A Slack app for kaomoji
 1. Create and fill out `env_files/compose.env` using the credentials from **App Settings** > **Basic Information**
 1. `docker-compose up`
 1. In a separate tab, `ngrok http 3000`
-1. Copy the domain given by `ngrok` into the Slack Development App, into the
-   **Interactivity & Shortcuts**, **Slash Commands**, and **OAuth & Permissions** sections.
+1. Copy the domain given by `ngrok` into the `manifest/manifest.yaml`, and copy/paste the manifest into the Slack Development App.
 1. Changes will be applied from tear down + restarting docker.
 1. Teardown: `docker-compose down`
 
