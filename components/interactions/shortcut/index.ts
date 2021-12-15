@@ -41,7 +41,7 @@ export const saveShortcut = async (req: Request, res: Response, kaomoji?: string
       replace_original: false,
     };
   } catch (err) {
-    if (err.code === 11000) {
+    if (err?.code === 11000) {
       message = {
         text: 'A kaomoji shortcut for ' + kaomoji + ' already exists.' + '\n' + kaomojiCommands.getShortcutsUsageText(),
         response_type: 'ephemeral',
@@ -83,7 +83,7 @@ export const sendShortcutsMessage = async (req: Request, res: Response, shouldRe
   } catch (err) {
     debug(err);
     slackResponse = {
-      text: err.message,
+      text: err?.message,
       response_type: 'ephemeral'
     };
   }
@@ -106,7 +106,7 @@ export const removeShortcut = async (req: Request, res: Response) => {
   } catch (err) {
     debug(err);
     slackResponse = {
-      text: err.message,
+      text: err?.message,
       response_type: 'ephemeral'
     };
     res.send({ text: 'OK' });

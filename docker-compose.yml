@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   mongo:
-    image: mongo:3.6.12-xenial
+    image: mongo:4.4.10-focal
     ports:
     - "27017:27017"
     restart: always
@@ -15,7 +15,7 @@ services:
     - kaomoji
 
   kaomoji:
-    image: node:8.16.0-jessie
+    image: node:16.13.1
     volumes:
     - .:/app
     ports:

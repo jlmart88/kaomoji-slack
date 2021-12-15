@@ -1,12 +1,12 @@
-import { Document, Model } from 'mongoose';
 import * as mongoose from 'mongoose';
 
-export interface KaomojiModel extends Document {
+export interface KaomojiModel {
+  _id: mongoose.ObjectId;
   text: string;
   keywords: string;
 }
 
-const Kaomoji = new mongoose.Schema({
+const Kaomoji = new mongoose.Schema<KaomojiModel>({
   text: {
     type: String,
     index: true,
@@ -20,4 +20,4 @@ const Kaomoji = new mongoose.Schema({
 
 Kaomoji.index({keywords: 'text'}, {default_language: 'english'});
 
-export default mongoose.model('Kaomoji', Kaomoji) as Model<KaomojiModel>;
+export default mongoose.model<KaomojiModel>('Kaomoji', Kaomoji);
