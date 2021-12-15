@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
-import { Document, Model } from 'mongoose';
 
-interface UserTokenModel extends Document {
+interface UserTokenModel {
   team_id: string;
   user_id: string;
   team_name: string;
@@ -13,7 +12,7 @@ interface UserTokenModel extends Document {
   }
 }
 
-const UserToken = new mongoose.Schema({
+const UserToken = new mongoose.Schema<UserTokenModel>({
   team_id: String,
   user_id: String,
   team_name: String,
@@ -27,4 +26,4 @@ const UserToken = new mongoose.Schema({
 
 UserToken.index({ user_id: 1, team_id: 1 }, { unique: true });
 
-export default mongoose.model('UserToken', UserToken) as Model<UserTokenModel>;
+export default mongoose.model('UserToken', UserToken);

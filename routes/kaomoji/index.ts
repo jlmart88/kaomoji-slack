@@ -20,7 +20,9 @@ router.use((req, res, next) => {
     if (moment.unix(Number.parseInt(timestamp)).add(5, 'minutes').isBefore(moment())) {
       // The request timestamp is more than five minutes from local time.
       // It could be a replay attack, so let's ignore it.
-      return res.status(401).send('Ignoring old request');
+      const msg = 'Ignoring old request';
+      console.log(msg);
+      return res.status(401).send(msg);
     }
 
     const body = qs.stringify(req.body, { format:'RFC1738' });
@@ -34,7 +36,9 @@ router.use((req, res, next) => {
     const received_signature = Buffer.from(req.header('X-Slack-Signature') || '');
     const valid = crypto.timingSafeEqual(my_signature, received_signature);
     if (!valid) {
-        return res.status(401).send('Invalid X-Slack-Signature header');
+        const msg = 'Invalid X-Slack-Signature header';
+        console.log(msg)
+        return res.status(401).send(msg);
     }
     return next();
 })
