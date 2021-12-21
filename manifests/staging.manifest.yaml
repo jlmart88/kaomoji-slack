@@ -7,6 +7,10 @@ display_information:
   background_color: "#000000"
   long_description: The Kaomoji App makes it easy to send kaomoji (Japanese emoji) from within Slack, without having to copy-paste or type out the complicated characters that often make up kaomoji. You can search for kaomoji using descriptive words, such as 'angry' or 'table flip', and the app will let you choose one to send before sending it. Additionally, you can save kaomoji that you like to your shortcuts, allowing you to easily reuse your favorite kaomoji.
 features:
+  app_home:
+    home_tab_enabled: false
+    messages_tab_enabled: false
+    messages_tab_read_only_enabled: false
   bot_user:
     display_name: Kaomoji
     always_online: true
