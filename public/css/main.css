@@ -80,6 +80,10 @@
     display: none;
 }
 
+video.ui.bordered {
+    border: 1px solid rgba(0,0,0,.1);
+}
+
 @media only screen and (max-width: 700px) {
     .ui.fixed.menu {
         display: none !important;
