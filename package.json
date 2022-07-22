@@ -51,7 +51,7 @@
   },
   "homepage": "https://github.com/jlmart88/kaomoji-slack#readme",
   "devDependencies": {
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.19",
     "ts-node": "^8.2.0"
   }
 }
