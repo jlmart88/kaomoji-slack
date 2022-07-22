@@ -31,7 +31,7 @@
     "express": "^4.17.1",
     "jsonminify": "^0.4.1",
     "lodash": "^4.17.21",
-    "moment": "^2.29.2",
+    "moment": "^2.29.4",
     "mongo-sanitize": "^1.0.1",
     "mongoose": "^6.1.2",
     "morgan": "^1.9.1",
