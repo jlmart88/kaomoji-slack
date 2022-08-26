@@ -33,7 +33,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "mongo-sanitize": "^1.0.1",
-    "mongoose": "^6.1.2",
+    "mongoose": "^6.4.6",
     "morgan": "^1.9.1",
     "qs": "^6.7.0",
     "request": "^2.88.0",
