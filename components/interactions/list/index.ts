@@ -1,20 +1,22 @@
 import {
   createListMessage,
-  createOptionsList
-} from 'kaomoji/components/interactions/list/message';
-import { respondToInteractiveAction } from 'kaomoji/components/interactions/utils';
-import { KaomojiModel } from 'kaomoji/models/kaomoji';
-import { Request, Response } from 'express';
-import { Option } from '@slack/types';
-import Debug from 'debug';
-import { getSearchResults } from 'kaomoji/models/kaomoji/service';
-import { ResponseMessage } from 'kaomoji/types/slack';
-import _ from 'lodash';
+  createOptionsList,
+} from "@/components/interactions/list/message";
+import { respondToInteractiveAction } from "@/components/interactions/utils";
+import { KaomojiModel } from "@/models/kaomoji";
+import { Request, Response } from "express";
+import { Option } from "@slack/types";
+import Debug from "debug";
+import { getSearchResults } from "@/models/kaomoji/service";
+import { ResponseMessage } from "@/types/slack";
+import _ from "lodash";
 
+const debug = Debug("interactions:list");
 
-const debug = Debug('interactions:list');
-
-export const sendListOptions = async (req: Request, res: Response): Promise<Response | void> => {
+export const sendListOptions = async (
+  req: Request,
+  res: Response
+): Promise<Response | void> => {
   const query = req.payload.value;
   let optionsResponse: { options: Option[] };
   // this is the initial search request, so respond with a message
@@ -23,14 +25,16 @@ export const sendListOptions = async (req: Request, res: Response): Promise<Resp
     const err = Error('No kaomoji found for "' + query + '".');
     debug(err);
     optionsResponse = createOptionsList([]);
-  }
-  else {
+  } else {
     optionsResponse = createOptionsList(kaomojis);
   }
   return res.send(optionsResponse);
 };
 
-export const sendListMessage = async (req: Request, res: Response): Promise<Response | void> => {
+export const sendListMessage = async (
+  req: Request,
+  res: Response
+): Promise<Response | void> => {
   let slackResponse: ResponseMessage;
   const { payload } = req;
   const isInitialRequest = !payload;
@@ -44,7 +48,7 @@ export const sendListMessage = async (req: Request, res: Response): Promise<Resp
     const action = actions[0];
     const selectedOption = action.selected_option;
     slackResponse = createListMessage(selectedOption);
-    res.send({ text: 'OK'});
+    res.send({ text: "OK" });
     await respondToInteractiveAction(req, slackResponse);
   }
 };

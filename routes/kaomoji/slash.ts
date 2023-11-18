@@ -1,16 +1,15 @@
-import express from 'express';
-import { Request, Response } from 'express';
+import express from "express";
+import { Request, Response } from "express";
 const router = express.Router();
 
-import kaomojiCommands from 'kaomoji/components/commands';
-import { sendListMessage } from 'kaomoji/components/interactions/list';
-import { sendSearchMessage } from 'kaomoji/components/interactions/search';
-import { sendShortcutsMessage } from 'kaomoji/components/interactions/shortcut';
-
+import kaomojiCommands from "@/components/commands";
+import { sendListMessage } from "@/components/interactions/list";
+import { sendSearchMessage } from "@/components/interactions/search";
+import { sendShortcutsMessage } from "@/components/interactions/shortcut";
 
 /* POST kaomoji-search. */
-router.post('/', (req, res) => {
-  console.log('slash', req.body);
+router.post("/", (req, res) => {
+  console.log("slash", req.body);
   const query = req.body.text;
   if (kaomojiCommands.isCommandQuery(query)) {
     return _performCommand(req, res, query);
@@ -20,7 +19,7 @@ router.post('/', (req, res) => {
 });
 
 function _performCommand(req: Request, res: Response, query: string) {
-  console.log('performing command', query);
+  console.log("performing command", query);
   let response = {};
 
   switch (query) {
@@ -33,17 +32,19 @@ function _performCommand(req: Request, res: Response, query: string) {
       response = _composeEphemeralMessage(kaomojiCommands.getHelpText());
       break;
     default:
-      response = _composeEphemeralMessage(kaomojiCommands.getDefaultText(query));
+      response = _composeEphemeralMessage(
+        kaomojiCommands.getDefaultText(query)
+      );
       break;
   }
-  console.log('command response', response);
+  console.log("command response", response);
   return res.send(response);
 }
 
 function _composeEphemeralMessage(message: string) {
   return {
     text: message,
-    response_type: 'ephemeral'
+    response_type: "ephemeral",
   };
 }
 
