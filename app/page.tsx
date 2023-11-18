@@ -1,113 +1,153 @@
-import Image from 'next/image'
+import { ChevronRightIcon } from "@heroicons/react/20/solid";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="relative isolate pt-14">
+      <div className="pb-12 pt-24 sm:pt-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <div className="w-full p-4 flex flex-col gap-6 items-center text-center justify-center">
+              <h1 className="text-4xl font-bold">Kaomoji App</h1>
+              <h2 className="text-2xl font-mono">
+                (╮°-°)╮┳━━┳ &nbsp;&nbsp;( ╯°□°)╯ ┻━━┻
+              </h2>
+
+              <div className="mt-4 flex flex-row items-center gap-4">
+                <a
+                  className="rounded-md shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  href="/oauth/signin"
+                  target="_blank"
+                >
+                  <Image
+                    alt="Add to Slack"
+                    width={140}
+                    height={41}
+                    src="/images/btn-add-to-slack.svg"
+                  />
+                </a>
+                <a
+                  className="p-2.5 rounded-md bg-sky-500 shadow-sm hover:bg-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                  href="#learnmore"
+                >
+                  <div className="flex flex-row items-center gap-2">
+                    <span className="pl-1 text-sm">Learn More</span>
+                    <ChevronRightIcon width={20} height={20} />
+                  </div>
+                </a>
+              </div>
+              <a
+                className="p-2.5 rounded-md bg-white shadow-sm hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                href="https://github.com/jlmart88/kaomoji-slack"
+              >
+                <div className="flex flex-row items-center gap-2">
+                  <Image
+                    alt="GitHub Icon"
+                    width={19}
+                    height={19}
+                    src="/images/github-mark.svg"
+                  />
+                  <span className="text-sm tracking-tight text-black">
+                    View on <span className="font-semibold">GitHub</span>
+                  </span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div
+            id="learnmore"
+            className="bg-slate-700 rounded-lg mt-8 mx-auto p-8 max-w-2xl text-center"
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            <h3 className="text-3xl font-semibold">What is a Kaomoji?</h3>
+            <p className="mt-6 text-left">
+              A Kaomoji is a Japanese style of emoji, often using a creative
+              combination of Japanese characters and punctuation to create
+              unique faces. Traditional English keyboards make these kaomoji
+              hard to reproduce without resorting to copy-pasting, so this app
+              makes it easy to find and send Kaomoji, without having to leave
+              Slack.
+            </p>
+          </div>
+
+          <div className="bg-slate-800 rounded-lg mx-auto mt-8 max-w-2xl p-12 text-center md:mt-16 md:max-w-4xl">
+            <div className="grid grid-cols-1 grid-rows-none gap-y-6 gap-x-8 items-center md:grid-cols-[3fr_5fr] md:grid-rows-2 md:gap-y-10">
+              <div className="">
+                <h3 className="text-2xl font-semibold">
+                  Send Kaomoji Effortlessly
+                </h3>
+                <p className="mt-6 text-left">
+                  Simply type in a search that expresses how you&apos;re
+                  feeling, and find one in the returned list that you like. No
+                  need to copy-paste or type out complex characters; the Kaomoji
+                  App will send the kaomoji for you.
+                </p>
+              </div>
+              <div>
+                <video className="border" autoPlay loop muted playsInline>
+                  <source
+                    src="/images/kaomoji_example.webm"
+                    type="video/webm"
+                  />
+                  <source src="/images/kaomoji_example.mp4" type="video/mp4" />
+                </video>
+              </div>
+
+              <div className="">
+                <h3 className="text-2xl font-semibold">
+                  Save Kaomoji For Easy Access
+                </h3>
+                <p className="mt-6 text-left">
+                  Found a kaomoji that fits every situation? Rather than
+                  searching for it everytime you want to use it, save it to your
+                  shortcuts and pull it up quickly any time you need it.
+                </p>
+              </div>
+              <div>
+                <video className="border" autoPlay loop muted playsInline>
+                  <source
+                    src="/images/kaomoji_shortcut_example.webm"
+                    type="video/webm"
+                  />
+                  <source
+                    src="/images/kaomoji_shortcut_example.mp4"
+                    type="video/mp4"
+                  />
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-16 text-center">
+            <h4 className="text-xl">
+              Have further questions? Having trouble with Kaomoji App? Check out
+              our{" "}
+              <a className="text-blue-400 hover:text-blue-500" href="/faq">
+                FAQ
+              </a>
+              .
+            </h4>
+          </div>
+
+          <footer className="">
+            <div className="mx-auto max-w-7xl px-6 py-12 flex flex-col items-center lg:px-8">
+              <div className="mt-8 md:mt-0">
+                <p className="text-center text-xs leading-5 text-gray-500">
+                  &copy; 2023 Justin Martinez. All rights reserved.{" "}
+                </p>
+                <p className="text-center text-xs leading-5 text-gray-500">
+                  <a
+                    className="text-gray-400 hover:text-gray-500"
+                    href="/privacy"
+                  >
+                    Privacy Policy
+                  </a>
+                </p>
+              </div>
+            </div>
+          </footer>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </div>
+  );
 }
