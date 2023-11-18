@@ -14,17 +14,18 @@ export async function GET(request: NextRequest) {
   // If it's there...
 
   // We'll do a GET call to Slack's `oauth.v2.access` endpoint, passing our app's client ID, client secret, and the code we just got as query parameters.
-  const params = new URLSearchParams({
-    code,
-    client_id: config.SLACK_CLIENT_ID,
-    client_secret: config.SLACK_CLIENT_SECRET,
-  });
-  const url = new URL(
-    `https://slack.com/api/oauth.v2.access?${params.toString()}`
-  );
+  const data = new FormData();
+  data.append("code", code);
+  data.append("client_id", config.SLACK_CLIENT_ID);
+  data.append("client_secret", config.SLACK_CLIENT_SECRET);
   try {
-    const response = await fetch(url);
+    const response = await fetch("https://slack.com/api/oauth.v2.access", {
+      body: data,
+      method: "POST",
+      cache: "no-cache",
+    });
     const body = await response.json();
+    console.log("body", body);
     let token = body.authed_user;
     if (token) {
       let query = { user_id: token.id };
