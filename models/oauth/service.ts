@@ -1,9 +1,9 @@
-import UserTokenModel from './userToken';
+import UserTokenModel from "./userToken";
 
 export default {
-  deleteUserToken: deleteUserToken
-}
+  deleteUserToken: deleteUserToken,
+};
 
 function deleteUserToken(userTokenId: string) {
-  return UserTokenModel.remove({'_id': userTokenId});
+  return UserTokenModel.deleteOne({ _id: userTokenId });
 }
