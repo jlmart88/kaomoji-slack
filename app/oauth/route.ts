@@ -26,14 +26,18 @@ export async function GET(request: NextRequest) {
     const response = await fetch(url);
     const body = await response.json();
     let token = body.authed_user;
-    let query = { user_id: token.id };
-    // Upsert this new token
-    await clientPromise;
-    await UserTokenModel.findOneAndUpdate(query, token, {
-      upsert: true,
-      new: true,
-    }).exec();
-    return NextResponse.redirect("/success");
+    if (token) {
+      let query = { user_id: token.id };
+      // Upsert this new token
+      await clientPromise;
+      await UserTokenModel.findOneAndUpdate(query, token, {
+        upsert: true,
+        new: true,
+      }).exec();
+      return NextResponse.redirect("/success");
+    } else {
+      throw new Error(`Failed to get a token id: ${JSON.stringify(body)}`);
+    }
   } catch (err: any) {
     console.error(err);
     return NextResponse.json({ Error: err }, { status: 500 });

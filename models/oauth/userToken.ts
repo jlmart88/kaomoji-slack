@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 
 interface UserTokenModel {
   team_id: string;
@@ -9,7 +9,7 @@ interface UserTokenModel {
   bot: {
     bot_user_id: string;
     bot_access_token: string;
-  }
+  };
 }
 
 const UserToken = new mongoose.Schema<UserTokenModel>({
@@ -20,10 +20,11 @@ const UserToken = new mongoose.Schema<UserTokenModel>({
   scope: String,
   bot: {
     bot_user_id: String,
-    bot_access_token: String
-  }
+    bot_access_token: String,
+  },
 });
 
 UserToken.index({ user_id: 1, team_id: 1 }, { unique: true });
 
-export default mongoose.model('UserToken', UserToken);
+export default mongoose.models.UserToken ||
+  mongoose.model("UserToken", UserToken);
