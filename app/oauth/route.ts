@@ -8,7 +8,8 @@ export async function GET(request: NextRequest) {
   // When a user authorizes an app, a code query parameter is passed on the oAuth endpoint. If that code is not there, we respond with an error message
   if (!code) {
     console.log("Looks like we're not getting a code.");
-    return NextResponse.redirect("/");
+    const redirectUrl = new URL("/", request.nextUrl);
+    return NextResponse.redirect(redirectUrl);
   }
 
   // If it's there...
@@ -25,7 +26,6 @@ export async function GET(request: NextRequest) {
       cache: "no-cache",
     });
     const body = await response.json();
-    console.log("body", body);
     let token = body.authed_user;
     if (token) {
       let query = { user_id: token.id };
@@ -35,7 +35,8 @@ export async function GET(request: NextRequest) {
         upsert: true,
         new: true,
       }).exec();
-      return NextResponse.redirect("/success");
+      const redirectUrl = new URL("/success", request.nextUrl);
+      return NextResponse.redirect(redirectUrl);
     } else {
       throw new Error(`Failed to get a token id: ${JSON.stringify(body)}`);
     }
