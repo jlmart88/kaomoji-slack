@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { config } from "@/config";
 import UserTokenModel from "@/models/oauth/userToken";
+import clientPromise from "@/lib/mongodb";
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get("code");
@@ -27,6 +28,7 @@ export async function GET(request: NextRequest) {
     let token = body.authed_user;
     let query = { user_id: token.id };
     // Upsert this new token
+    await clientPromise;
     await UserTokenModel.findOneAndUpdate(query, token, {
       upsert: true,
       new: true,
