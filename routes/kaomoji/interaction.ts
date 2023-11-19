@@ -80,7 +80,7 @@ const _sendKaomojiAsUser = (req: Request, res: Response, text?: string) => {
             },
           ],
           null,
-          0
+          0,
         ),
         as_user: true,
       }, //Query string data
@@ -103,7 +103,7 @@ const _sendKaomojiAsUser = (req: Request, res: Response, text?: string) => {
           cancelInteractiveMessage(req);
         }
       }
-    }
+    },
   );
 };
 
@@ -136,7 +136,7 @@ function _sendLegacyMessageAsUser(req: Request, res: Response, text?: string) {
         if (!body.ok) {
           return oauth.deleteUserToken(req.token.id).then(() => {
             return res.send(
-              kaomojiCommands.getNoUserTokenText(config.SERVER_URL)
+              kaomojiCommands.getNoUserTokenText(config.SERVER_URL),
             );
           });
         } else {
@@ -146,6 +146,6 @@ function _sendLegacyMessageAsUser(req: Request, res: Response, text?: string) {
           return res.send(slackResponse);
         }
       }
-    }
+    },
   );
 }

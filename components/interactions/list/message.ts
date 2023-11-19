@@ -5,7 +5,7 @@ import { ResponseMessage } from "@/types/slack";
 import _ from "lodash";
 
 export const createOptionsList = (
-  kaomojis: KaomojiModel[]
+  kaomojis: KaomojiModel[],
 ): { options: Option[] } => {
   return {
     options: _.map(kaomojis, (kaomoji) => ({
@@ -51,7 +51,7 @@ export const createListMessage = (initialOption?: Option): ResponseMessage => {
         },
         value: initialOption.value,
         action_id: ACTION_IDS.SAVE_SHORTCUT,
-      }
+      },
     );
   }
 

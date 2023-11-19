@@ -10,7 +10,7 @@ import { ResponseMessage } from "@/types/slack";
 export const createSearchMessage = (
   query: string,
   kaomojis: KaomojiModel[],
-  initialOption?: Option
+  initialOption?: Option,
 ): ResponseMessage => {
   const buttonElements: Button[] = [
     {
@@ -43,7 +43,7 @@ export const createSearchMessage = (
         },
         value: initialOption.value,
         action_id: ACTION_IDS.SAVE_SHORTCUT,
-      }
+      },
     );
   }
 

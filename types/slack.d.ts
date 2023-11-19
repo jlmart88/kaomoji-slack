@@ -1,8 +1,8 @@
-import { KnownBlock, MessageAttachment } from '@slack/types';
+import { KnownBlock, MessageAttachment } from "@slack/types";
 
 export interface ResponseMessage {
   text: string;
-  response_type?: 'ephemeral' | 'in_channel';
+  response_type?: "ephemeral" | "in_channel";
   replace_original?: boolean;
   delete_original?: boolean;
   blocks?: KnownBlock[];

@@ -1,130 +1,174 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
     <title>Kaomoji Slack App</title>
     <script
-            src="//code.jquery.com/jquery-3.1.1.min.js"
-            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.css">
+      src="//code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.css"
+    />
     <script src="//cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.js"></script>
-    <link rel="stylesheet" href="/css/main.css">
-</head>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
 
-<body>
-<!-- Page Contents -->
-<div class="pusher">
-    <div class="ui inverted vertical masthead center aligned segment">
-
+  <body>
+    <!-- Page Contents -->
+    <div class="pusher">
+      <div class="ui inverted vertical masthead center aligned segment">
         <div class="ui text container">
-            <h1 class="ui inverted header">
-                Kaomoji App
-            </h1>
-            <h2 class="kaomoji">(╮°-°)╮┳━━┳ &nbsp;&nbsp;( ╯°□°)╯ ┻━━┻</h2>
+          <h1 class="ui inverted header">Kaomoji App</h1>
+          <h2 class="kaomoji">(╮°-°)╮┳━━┳ &nbsp;&nbsp;( ╯°□°)╯ ┻━━┻</h2>
 
-            <div class="ui stackable centered grid container">
-                <div class="row">
-                    <div class="five wide center aligned column">
-                        <a href="/oauth/signin" target="_blank">
-                            <img src="/images/btn-add-to-slack.svg" />
-                        </a>
-                    </div>
-                    <div class="five wide center aligned column">
-                        <a href="#learnmore" class="ui huge primary fluid button learn_more_button">
-                            Learn More
-                            <i class="right arrow icon"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="four wide center aligned column">
-                        <a href="https://github.com/jlmart88/kaomoji-slack" class="ui large github fluid button">
-                            <i class="github icon"></i>
-                            GitHub
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="learnmore" class="ui vertical stripe segment">
-        <div class="ui centered middle aligned stackable grid container">
+          <div class="ui stackable centered container grid">
             <div class="row">
-                <div class="ten wide center aligned column">
-                    <h3 class="ui header">What is a Kaomoji?</h3>
-                    <p>A Kaomoji is a Japanese style of emoji, often using a creative combination of Japanese characters
-                        and punctuation to create unique faces. Traditional English keyboards make these kaomoji hard to
-                        reproduce without resorting to copy-pasting, so this app makes it easy to find and send Kaomoji,
-                        without having to leave Slack.</p>
-                </div>
+              <div class="five wide center aligned column">
+                <a href="/oauth/signin" target="_blank">
+                  <img src="/images/btn-add-to-slack.svg" />
+                </a>
+              </div>
+              <div class="five wide center aligned column">
+                <a
+                  href="#learnmore"
+                  class="ui huge primary fluid button learn_more_button"
+                >
+                  Learn More
+                  <i class="right arrow icon"></i>
+                </a>
+              </div>
             </div>
-        </div>
-    </div>
-
-    <div class="ui vertical stripe segment">
-        <div class="ui middle aligned stackable vertically divided grid container">
             <div class="row">
-                <div class="six wide column">
-                    <h3 class="ui header">Send Kaomoji Effortlessly</h3>
-                    <p>Simply type in a search that expresses how you're feeling, and find one in the returned list
-                        that you like. No need to copy-paste or type out complex characters; the Kaomoji
-                        App will send the kaomoji for you.</p>
-                </div>
-                <div class="ten wide right floated column">
-                    <video class="ui massive bordered image" autoplay loop muted playsinline>
-                        <source src="/images/kaomoji_example.webm" type="video/webm">
-                        <source src="/images/kaomoji_example.mp4" type="video/mp4">
-                    </video>
-                </div>
+              <div class="four wide center aligned column">
+                <a
+                  href="https://github.com/jlmart88/kaomoji-slack"
+                  class="ui large github fluid button"
+                >
+                  <i class="github icon"></i>
+                  GitHub
+                </a>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="ui vertical stripe segment">
-        <div class="ui middle aligned stackable vertically divided grid container">
-            <div class="row">
-                <div class="six wide column">
-                    <h3 class="ui header">Save Kaomoji For Easy Access</h3>
-                    <p>Found a kaomoji that fits every situation? Rather than searching for it everytime you want to use
-                        it, save it to your shortcuts and pull it up quickly any time you need it.</p>
-                </div>
-                <div class="ten wide right floated column">
-                    <video class="ui massive bordered image" autoplay loop muted playsinline>
-                        <source src="/images/kaomoji_shortcut_example.webm" type="video/webm">
-                        <source src="/images/kaomoji_shortcut_example.mp4" type="video/mp4">
-                    </video>
-                </div>
+      <div id="learnmore" class="ui vertical stripe segment">
+        <div class="ui centered middle aligned stackable container grid">
+          <div class="row">
+            <div class="ten wide center aligned column">
+              <h3 class="ui header">What is a Kaomoji?</h3>
+              <p>
+                A Kaomoji is a Japanese style of emoji, often using a creative
+                combination of Japanese characters and punctuation to create
+                unique faces. Traditional English keyboards make these kaomoji
+                hard to reproduce without resorting to copy-pasting, so this app
+                makes it easy to find and send Kaomoji, without having to leave
+                Slack.
+              </p>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="ui vertical stripe segment">
-        <div class="ui middle aligned stackable vertically divided grid container">
-            <div class="row">
-                <div class="twelve wide center aligned centered column">
-                    <h4>Have further questions? Having trouble with Kaomoji App? Check out our <a href="/faq">FAQ</a>.
-                    </h4>
-                </div>
+      <div class="ui vertical stripe segment">
+        <div
+          class="ui middle aligned stackable vertically divided container grid"
+        >
+          <div class="row">
+            <div class="six wide column">
+              <h3 class="ui header">Send Kaomoji Effortlessly</h3>
+              <p>
+                Simply type in a search that expresses how you're feeling, and
+                find one in the returned list that you like. No need to
+                copy-paste or type out complex characters; the Kaomoji App will
+                send the kaomoji for you.
+              </p>
             </div>
+            <div class="ten wide right floated column">
+              <video
+                class="ui massive bordered image"
+                autoplay
+                loop
+                muted
+                playsinline
+              >
+                <source src="/images/kaomoji_example.webm" type="video/webm" />
+                <source src="/images/kaomoji_example.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="ui inverted vertical footer segment">
+      <div class="ui vertical stripe segment">
+        <div
+          class="ui middle aligned stackable vertically divided container grid"
+        >
+          <div class="row">
+            <div class="six wide column">
+              <h3 class="ui header">Save Kaomoji For Easy Access</h3>
+              <p>
+                Found a kaomoji that fits every situation? Rather than searching
+                for it everytime you want to use it, save it to your shortcuts
+                and pull it up quickly any time you need it.
+              </p>
+            </div>
+            <div class="ten wide right floated column">
+              <video
+                class="ui massive bordered image"
+                autoplay
+                loop
+                muted
+                playsinline
+              >
+                <source
+                  src="/images/kaomoji_shortcut_example.webm"
+                  type="video/webm"
+                />
+                <source
+                  src="/images/kaomoji_shortcut_example.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui vertical stripe segment">
+        <div
+          class="ui middle aligned stackable vertically divided container grid"
+        >
+          <div class="row">
+            <div class="twelve wide center aligned centered column">
+              <h4>
+                Have further questions? Having trouble with Kaomoji App? Check
+                out our <a href="/faq">FAQ</a>.
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui inverted vertical footer segment">
         <div class="ui container">
-            <div class="ui stackable inverted divided equal height grid">
-                <div class="center aligned centered column">
-                    Copyright © 2021 Justin Martinez | <a href="/privacy">Privacy Policy</a>
-                </div>
+          <div class="ui stackable inverted divided equal height grid">
+            <div class="center aligned centered column">
+              Copyright © 2021 Justin Martinez |
+              <a href="/privacy">Privacy Policy</a>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</body>
-
+  </body>
 </html>

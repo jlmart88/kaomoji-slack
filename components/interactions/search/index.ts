@@ -17,7 +17,7 @@ const debug = Debug("interactions:search");
 export const sendSearchMessage = async (
   req: Request,
   res: Response,
-  query?: string
+  query?: string,
 ): Promise<Response | void> => {
   let slackResponse: ResponseMessage;
   if (query) {
@@ -40,7 +40,7 @@ export const sendSearchMessage = async (
     const { actions } = payload;
     const action = actions[0];
     const query = action.block_id.slice(
-      BLOCK_IDS.KAOMOJI_SEARCH_SELECT.length + BLOCK_ID_PREFIX_DELIMITER.length
+      BLOCK_IDS.KAOMOJI_SEARCH_SELECT.length + BLOCK_ID_PREFIX_DELIMITER.length,
     );
     const kaomojis: KaomojiModel[] | null = await getSearchResults(query);
     if (_.isNil(kaomojis)) {

@@ -15,7 +15,7 @@ const debug = Debug("interactions:list");
 
 export const sendListOptions = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<Response | void> => {
   const query = req.payload.value;
   let optionsResponse: { options: Option[] };
@@ -33,7 +33,7 @@ export const sendListOptions = async (
 
 export const sendListMessage = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<Response | void> => {
   let slackResponse: ResponseMessage;
   const { payload } = req;

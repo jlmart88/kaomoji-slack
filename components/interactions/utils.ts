@@ -4,7 +4,7 @@ import request from "request";
 
 export const respondToInteractiveAction = (
   req: Request,
-  message: Partial<ResponseMessage>
+  message: Partial<ResponseMessage>,
 ) => {
   const { response_url: url } = req.payload;
   return request({

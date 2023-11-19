@@ -3,31 +3,31 @@ services:
   mongo:
     image: mongo:4.4.10-focal
     ports:
-    - "27017:27017"
+      - "27017:27017"
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
       MONGO_INITDB_DATABASE: kaomoji-slack
     volumes:
-    - kaomoji-db-data:/data/db
+      - kaomoji-db-data:/data/db
     networks:
-    - kaomoji
+      - kaomoji
 
   kaomoji:
     image: node:16.13.1
     volumes:
-    - .:/app
+      - .:/app
     ports:
-    - "3000:3000"
+      - "3000:3000"
     depends_on:
-    - mongo
+      - mongo
     command:
-    - /app/entrypoint.sh
+      - /app/entrypoint.sh
     networks:
-    - kaomoji
+      - kaomoji
     env_file:
-    - env_files/compose.env
+      - env_files/compose.env
 
 volumes:
   kaomoji-db-data:

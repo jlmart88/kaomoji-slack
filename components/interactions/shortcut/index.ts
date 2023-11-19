@@ -16,7 +16,7 @@ const debug = Debug("interactions:search");
 export const saveShortcut = async (
   req: Request,
   res: Response,
-  kaomoji?: string
+  kaomoji?: string,
 ) => {
   let message: ResponseMessage;
   if (!kaomoji) {
@@ -86,7 +86,7 @@ export const saveShortcut = async (
 export const sendShortcutsMessage = async (
   req: Request,
   res: Response,
-  shouldResetSelection?: boolean
+  shouldResetSelection?: boolean,
 ): Promise<Response | void> => {
   let slackResponse: ResponseMessage;
   const { payload } = req;

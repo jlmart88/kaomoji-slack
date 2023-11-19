@@ -33,7 +33,7 @@ function _performCommand(req: Request, res: Response, query: string) {
       break;
     default:
       response = _composeEphemeralMessage(
-        kaomojiCommands.getDefaultText(query)
+        kaomojiCommands.getDefaultText(query),
       );
       break;
   }

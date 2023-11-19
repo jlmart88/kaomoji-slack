@@ -53,14 +53,14 @@ router.get("/", (req, res) => {
               return res.send({ Error: err });
             });
         }
-      }
+      },
     );
   }
 });
 
 router.get("/signin", (req, res) => {
   res.redirect(
-    `https://slack.com/oauth/v2/authorize?client_id=${config.SLACK_CLIENT_ID}&scope=commands&user_scope=chat:write`
+    `https://slack.com/oauth/v2/authorize?client_id=${config.SLACK_CLIENT_ID}&scope=commands&user_scope=chat:write`,
   );
 });
 

@@ -6,7 +6,7 @@ import _ from "lodash";
 
 export const createShortcutsMessage = (
   shortcuts: ShortcutModel[] | null,
-  initialOption?: Option
+  initialOption?: Option,
 ): ResponseMessage => {
   if (_.isEmpty(shortcuts) || _.isNil(shortcuts)) {
     return {
@@ -29,7 +29,7 @@ export const createShortcutsMessage = (
   if (initialOption) {
     const selectedShortcut = _.find(
       shortcuts,
-      (shortcut) => shortcut.kaomoji_text === initialOption.value
+      (shortcut) => shortcut.kaomoji_text === initialOption.value,
     );
 
     if (selectedShortcut) {
