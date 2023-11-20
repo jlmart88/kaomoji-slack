@@ -1,32 +1,25 @@
-_metadata:
-  major_version: 1
-  minor_version: 1
 display_information:
-  name: Kaomoji
+  name: Kaomoji Dev
   description: Easily send kaomoji (Japanese emoji) from within Slack
   background_color: "#000000"
   long_description: The Kaomoji App makes it easy to send kaomoji (Japanese emoji) from within Slack, without having to copy-paste or type out the complicated characters that often make up kaomoji. You can search for kaomoji using descriptive words, such as 'angry' or 'table flip', and the app will let you choose one to send before sending it. Additionally, you can save kaomoji that you like to your shortcuts, allowing you to easily reuse your favorite kaomoji.
 features:
-  app_home:
-    home_tab_enabled: false
-    messages_tab_enabled: false
-    messages_tab_read_only_enabled: false
   bot_user:
-    display_name: Kaomoji
+    display_name: Kaomoji Dev
     always_online: true
   slash_commands:
     - command: /kaomoji
-      url: https://kaomoji-slack-staging.herokuapp.com/kaomoji/slash
+      url: https://3a0c-98-51-141-182.ngrok-free.app/kaomoji/slash
       description: Select a kaomoji to send
       usage_hint: "[text] [or !help, !list, ...]"
       should_escape: true
     - command: /kao
-      url: https://kaomoji-slack-staging.herokuapp.com/kaomoji/slash
+      url: https://3a0c-98-51-141-182.ngrok-free.app/kaomoji/slash
       description: Alias for /kaomoji
       should_escape: true
 oauth_config:
   redirect_urls:
-    - https://kaomoji-slack-staging.herokuapp.com/oauth
+    - https://3a0c-98-51-141-182.ngrok-free.app/oauth
   scopes:
     user:
       - chat:write
@@ -35,8 +28,8 @@ oauth_config:
 settings:
   interactivity:
     is_enabled: true
-    request_url: https://kaomoji-slack-staging.herokuapp.com/kaomoji/interaction
-    message_menu_options_url: https://kaomoji-slack-staging.herokuapp.com/kaomoji/options-load
+    request_url: https://3a0c-98-51-141-182.ngrok-free.app/kaomoji/interaction
+    message_menu_options_url: https://3a0c-98-51-141-182.ngrok-free.app/kaomoji/options-load
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false

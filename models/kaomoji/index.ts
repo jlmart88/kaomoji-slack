@@ -20,4 +20,7 @@ const Kaomoji = new mongoose.Schema<KaomojiModel>({
 
 Kaomoji.index({ keywords: "text" }, { default_language: "english" });
 
-export default mongoose.model<KaomojiModel>("Kaomoji", Kaomoji);
+const registerModel = () => mongoose.model<KaomojiModel>("Kaomoji", Kaomoji);
+
+export default (mongoose.models.Kaomoji as ReturnType<typeof registerModel>) ||
+  registerModel();

@@ -1,35 +1,36 @@
 import { createShortcutsMessage } from "@/components/interactions/shortcut/message";
 import { respondToInteractiveAction } from "@/components/interactions/utils";
 import { Button } from "@slack/types";
-import { Request, Response } from "express";
 import Debug from "debug";
 import { ResponseMessage } from "@/types/slack";
 
-import shortcut, {
+import {
+  createShortcut,
+  getShortcutsForUser,
   hasUserExceededShortcutLimit,
+  deleteShortcut,
   MAX_SHORTCUTS_PER_USER,
 } from "@/models/shortcut/service";
 import kaomojiCommands from "@/components/commands";
+import { Command } from "../Command";
+import { BlockAction } from "../BlockAction";
 
 const debug = Debug("interactions:search");
 
-export const saveShortcut = async (
-  req: Request,
-  res: Response,
-  kaomoji?: string,
-) => {
+export const saveShortcut = async (blockAction: BlockAction) => {
   let message: ResponseMessage;
+  const kaomoji = blockAction.actions[0].value;
   if (!kaomoji) {
     message = {
       text: "An unknown error occurred while creating your kaomoji shortcut.",
       response_type: "ephemeral",
       replace_original: false,
     };
-    respondToInteractiveAction(req, message);
-    return res.send({ text: message.text });
+    respondToInteractiveAction(blockAction, message);
+    return { text: message.text };
   }
 
-  const hasExceeded = await hasUserExceededShortcutLimit(req.user);
+  const hasExceeded = await hasUserExceededShortcutLimit(blockAction.user.id);
   if (hasExceeded) {
     message = {
       text:
@@ -43,12 +44,12 @@ export const saveShortcut = async (
       response_type: "ephemeral",
       replace_original: false,
     };
-    respondToInteractiveAction(req, message);
-    return res.send({ text: message.text });
+    respondToInteractiveAction(blockAction, message);
+    return { text: message.text };
   }
 
   try {
-    await shortcut.createShortcut(req.user, kaomoji);
+    await createShortcut(blockAction.user.id, kaomoji);
     message = {
       text:
         "A kaomoji shortcut for " +
@@ -79,35 +80,18 @@ export const saveShortcut = async (
       };
     }
   }
-  respondToInteractiveAction(req, message);
-  return res.send({ text: message.text });
+  respondToInteractiveAction(blockAction, message);
+  return { text: message.text };
 };
 
 export const sendShortcutsMessage = async (
-  req: Request,
-  res: Response,
-  shouldResetSelection?: boolean,
-): Promise<Response | void> => {
+  command: Command,
+): Promise<ResponseMessage | void> => {
   let slackResponse: ResponseMessage;
-  const { payload } = req;
-  const isInitialRequest = !payload;
-  console.log("isInitialRequest", isInitialRequest);
-  console.log("payload", payload);
+  const user = command.user_id;
   try {
-    const shortcuts = await shortcut.getShortcutsForUser(req.user);
-    if (isInitialRequest) {
-      // this is the initial shortcuts request
-      slackResponse = createShortcutsMessage(shortcuts);
-    } else {
-      // this is a follow up interaction, so parse out the selection and send an updated message
-      let selectedOption;
-      if (!shouldResetSelection) {
-        const { actions } = payload;
-        const action = actions[0];
-        selectedOption = action.selected_option;
-      }
-      slackResponse = createShortcutsMessage(shortcuts, selectedOption);
-    }
+    const shortcuts = await getShortcutsForUser(user);
+    slackResponse = createShortcutsMessage(shortcuts);
   } catch (err: any) {
     debug(err);
     slackResponse = {
@@ -115,29 +99,49 @@ export const sendShortcutsMessage = async (
       response_type: "ephemeral",
     };
   }
-  if (isInitialRequest) {
-    return res.send(slackResponse);
-  } else {
-    res.send({ text: "OK" });
-    await respondToInteractiveAction(req, slackResponse);
-  }
+  return slackResponse;
 };
 
-export const removeShortcut = async (req: Request, res: Response) => {
-  const { payload } = req;
-  const { actions } = payload;
+export const sendFollowUpShortcutsMessage = async (
+  blockAction: BlockAction,
+  shouldResetSelection?: boolean,
+) => {
+  let slackResponse: ResponseMessage;
+  try {
+    const shortcuts = await getShortcutsForUser(blockAction.user.id);
+    // this is a follow up interaction, so parse out the selection and send an updated message
+    let selectedOption;
+    if (!shouldResetSelection) {
+      const { actions } = blockAction;
+      const action = actions[0];
+      selectedOption = action.selected_option;
+    }
+    slackResponse = createShortcutsMessage(shortcuts, selectedOption);
+  } catch (err: any) {
+    debug(err);
+    slackResponse = {
+      text: err?.message,
+      response_type: "ephemeral",
+    };
+  }
+  await respondToInteractiveAction(blockAction, slackResponse);
+  return { text: "OK" };
+};
+
+export const removeShortcut = async (blockAction: BlockAction) => {
+  const { actions } = blockAction;
   const action: Button = actions[0];
   let slackResponse: ResponseMessage;
   try {
-    await shortcut.removeShortcut(action.value);
-    await sendShortcutsMessage(req, res, true);
+    await deleteShortcut(action.value);
+    await sendFollowUpShortcutsMessage(blockAction, true);
   } catch (err: any) {
     debug(err);
     slackResponse = {
       text: err?.message,
       response_type: "ephemeral",
     };
-    res.send({ text: "OK" });
-    await respondToInteractiveAction(req, slackResponse);
+    await respondToInteractiveAction(blockAction, slackResponse);
   }
+  return { text: "OK" };
 };

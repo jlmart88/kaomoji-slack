@@ -8,7 +8,7 @@ import {
 import { sendListMessage } from "@/components/interactions/list";
 import { sendSearchMessage } from "@/components/interactions/search";
 import {
-  removeShortcut,
+  deleteShortcut,
   saveShortcut,
   sendShortcutsMessage,
 } from "@/components/interactions/shortcut";
@@ -46,7 +46,7 @@ router.post("/", (req, res) => {
             return sendShortcutsMessage(req, res);
         }
       case ACTION_IDS.REMOVE_SHORTCUT:
-        return removeShortcut(req, res);
+        return deleteShortcut(req, res);
       case ACTION_IDS.CANCEL:
         return cancelInteractiveMessage(req, res);
       case ACTION_IDS.SEND_KAOMOJI:

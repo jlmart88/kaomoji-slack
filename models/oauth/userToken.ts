@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 
-interface UserTokenModel {
+export interface UserTokenModel {
   team_id: string;
   user_id: string;
   team_name: string;
@@ -26,5 +26,8 @@ const UserToken = new mongoose.Schema<UserTokenModel>({
 
 UserToken.index({ user_id: 1, team_id: 1 }, { unique: true });
 
-export default mongoose.models.UserToken ||
-  mongoose.model("UserToken", UserToken);
+const registerModel = () => mongoose.model("UserToken", UserToken);
+
+export default (mongoose.models.UserToken as ReturnType<
+  typeof registerModel
+>) || registerModel();
