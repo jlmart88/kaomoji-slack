@@ -1,3 +1,6 @@
+import { redirect } from "next/navigation";
+
 export default function FAQ() {
-  return null;
+  // TODO: rewrite this page
+  return redirect("/faq.html");
 }
