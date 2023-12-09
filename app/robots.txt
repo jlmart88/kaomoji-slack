@@ -1,4 +1,4 @@
-Sitemap: https://kaomoji.io/sitemap.xml
+Sitemap: https://www.kaomoji.io/sitemap.xml
 
 User-Agent: *
 Disallow: /kaomoji
