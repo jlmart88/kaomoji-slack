@@ -1,21 +1,22 @@
-import { Request, Response } from 'express';
-import { ResponseMessage } from 'kaomoji/types/slack';
-import request from 'request';
+import { ResponseMessage } from "@/types/slack";
+import { BlockAction } from "./BlockAction";
 
-export const respondToInteractiveAction = (req: Request, message: Partial<ResponseMessage>) => {
-  const { response_url: url } = req.payload;
-  return request({
-    url,
-    body: message,
-    json: true,
-    method: 'POST',
+export const respondToInteractiveAction = async (
+  blockAction: BlockAction,
+  message: Partial<ResponseMessage>,
+) => {
+  const url = blockAction.response_url;
+  await fetch(url, {
+    body: JSON.stringify(message),
+    method: "POST",
   });
+  return { text: "Responded to Interactive Action" };
 };
 
-export const cancelInteractiveMessage = (req: Request, res?: Response) => {
+export const cancelInteractiveMessage = async (blockAction: BlockAction) => {
   const slackResponse: Partial<ResponseMessage> = {
     delete_original: true,
   };
-  res && res.send({ text: 'Cancelling message' });
-  return respondToInteractiveAction(req, slackResponse);
+  await respondToInteractiveAction(blockAction, slackResponse);
+  return { text: "Cancelled Interactive Message" };
 };

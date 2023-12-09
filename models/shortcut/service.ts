@@ -1,38 +1,31 @@
-import Shortcut, { ShortcutModel } from './index';
-import _ from 'lodash';
-
-const MAX_LEGACY_SHORTCUTS_PER_USER = 10;
+import clientPromise from "@/lib/mongodb";
+import Shortcut, { ShortcutModel } from "./index";
+import _ from "lodash";
 
 export const MAX_SHORTCUTS_PER_USER = 100;
 
-export default {
-  MAX_LEGACY_SHORTCUTS_PER_USER: MAX_LEGACY_SHORTCUTS_PER_USER,
-  createShortcut: createShortcut,
-  removeShortcut: removeShortcut,
-  getShortcutsForUser: getShortcutsForUser,
-};
-
-function createShortcut(userId: string, kaomojiText?: string) {
-  return Shortcut.create({user_id: userId, kaomoji_text: kaomojiText});
+export async function createShortcut(userId: string, kaomojiText?: string) {
+  await clientPromise;
+  return Shortcut.create({ user_id: userId, kaomoji_text: kaomojiText });
 }
 
-function removeShortcut(id?: string) {
-  return Shortcut.remove({_id: id});
+export async function deleteShortcut(id?: string) {
+  await clientPromise;
+  return Shortcut.deleteOne({ _id: id }).exec();
 }
 
 // given an userId, will return all of the shortcuts set by that user, or null if there are no shortcuts set
-function getShortcutsForUser(userId: string) {
-  return Shortcut.collection.find<ShortcutModel>({user_id: userId})
-    .toArray()
-    .then(array => {
-      if (_.isEmpty(array)) return null;
-      return array;
-    });
+export async function getShortcutsForUser(userId: string) {
+  await clientPromise;
+  const shortcuts = await Shortcut.collection
+    .find<ShortcutModel>({ user_id: userId })
+    .toArray();
+  if (_.isEmpty(shortcuts)) return null;
+  return shortcuts;
 }
 
-export const hasUserExceededShortcutLimit = (userId: string) => {
-  return Shortcut.collection.count({user_id: userId})
-    .then(count => {
-      return count >= MAX_SHORTCUTS_PER_USER;
-    });
+export const hasUserExceededShortcutLimit = async (userId: string) => {
+  await clientPromise;
+  const count = await Shortcut.collection.countDocuments({ user_id: userId });
+  return count >= MAX_SHORTCUTS_PER_USER;
 };

@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 
 export interface ShortcutModel {
   _id: mongoose.ObjectId;
@@ -8,9 +8,12 @@ export interface ShortcutModel {
 
 const Shortcut = new mongoose.Schema<ShortcutModel>({
   user_id: String,
-  kaomoji_text: String
+  kaomoji_text: String,
 });
 
-Shortcut.index({user_id: 1, kaomoji_text: 1}, {unique: true});
+Shortcut.index({ user_id: 1, kaomoji_text: 1 }, { unique: true });
 
-export default mongoose.model<ShortcutModel>('Shortcut', Shortcut);
+const registerModel = () => mongoose.model<ShortcutModel>("Shortcut", Shortcut);
+
+export default (mongoose.models.Shortcut as ReturnType<typeof registerModel>) ||
+  registerModel();

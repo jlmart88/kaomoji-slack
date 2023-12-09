@@ -7,10 +7,10 @@ let configVars = {
   MONGODB_URI: process.env.MONGODB_URI,
 };
 
-Object.keys(configVars).forEach(key => {
-  if (configVars[(key as keyof typeof configVars)] === undefined) {
+Object.keys(configVars).forEach((key) => {
+  if (configVars[key as keyof typeof configVars] === undefined) {
     throw new Error(`Missing configuration value ${key}`);
   }
 });
 
-export const config = (configVars as { [k in keyof typeof configVars]: string; });
+export const config = configVars as { [k in keyof typeof configVars]: string };

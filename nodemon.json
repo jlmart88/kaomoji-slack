@@ -1,6 +1,0 @@
-{
-  "watch": ["*"],
-  "ext": "ts",
-  "ignore": ["kaomoji/*.spec.ts"],
-  "exec": "npm run start-dev"
-}
