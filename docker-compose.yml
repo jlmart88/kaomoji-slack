@@ -15,7 +15,7 @@ services:
       - kaomoji
 
   kaomoji:
-    image: node:16.13.1
+    image: node:18
     volumes:
       - .:/app
     ports:
