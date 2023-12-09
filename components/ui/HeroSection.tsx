@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
+import Link from "next/link";
 
 export const HeroSection = ({
   withButtons = false,
@@ -18,7 +19,7 @@ export const HeroSection = ({
           {withButtons && (
             <>
               <div className="mt-4 flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-6">
-                <a
+                <Link
                   className="rounded-lg shadow-sm hover:brightness-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   href="/oauth/signin"
                   target="_blank"
@@ -29,8 +30,8 @@ export const HeroSection = ({
                     height={56}
                     src="/images/btn-add-to-slack.svg"
                   />
-                </a>
-                <a
+                </Link>
+                <Link
                   className="rounded-lg border border-sky-600 bg-sky-500 p-3 text-xl leading-8 shadow-sm hover:bg-sky-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                   href="#learnmore"
                 >
@@ -38,9 +39,9 @@ export const HeroSection = ({
                     <span className="pl-1">Learn More</span>
                     <ChevronRightIcon width={25} height={25} />
                   </div>
-                </a>
+                </Link>
               </div>
-              <a
+              <Link
                 className="rounded-lg border border-neutral-400 bg-neutral-300 p-3 text-neutral-800 shadow-sm hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 href="https://github.com/jlmart88/kaomoji-slack"
               >
@@ -55,7 +56,7 @@ export const HeroSection = ({
                     View on <span className="font-semibold">GitHub</span>
                   </span>
                 </div>
-              </a>
+              </Link>
             </>
           )}
         </div>

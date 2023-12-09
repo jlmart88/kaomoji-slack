@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const Footer = () => {
   return (
     <footer className="">
@@ -5,9 +7,9 @@ export const Footer = () => {
         <div className="mt-8 md:mt-0">
           <p className="text-center text-xs leading-5 text-gray-500">
             &copy; 2023 Justin Martinez. All rights reserved. &emsp;|&emsp;
-            <a className="text-gray-400 hover:text-gray-500" href="/privacy">
+            <Link className="text-gray-400 hover:text-gray-500" href="/privacy">
               Privacy Policy
-            </a>
+            </Link>
           </p>
         </div>
       </div>

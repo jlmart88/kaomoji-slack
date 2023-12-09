@@ -1,5 +1,6 @@
 import { Footer } from "@/components/ui/Footer";
 import { Header } from "@/components/ui/Header";
+import Link from "next/link";
 
 export default function Privacy() {
   return (
@@ -26,28 +27,28 @@ export default function Privacy() {
             <p className="text-md mt-6 text-left">
               <p>
                 Kaomoji App is an{" "}
-                <a
+                <Link
                   className="text-blue-600 hover:text-blue-500"
                   href="https://github.com/jlmart88/kaomoji-slack"
                 >
                   open source project
-                </a>
+                </Link>
                 . <br />
                 <br />
                 If you have any questions/concerns/suggestions, please{" "}
-                <a
+                <Link
                   className="text-blue-600 hover:text-blue-500"
                   href="https://github.com/jlmart88/kaomoji-slack/issues"
                 >
                   submit an issue
-                </a>
+                </Link>
                 , or{" "}
-                <a
+                <Link
                   className="text-blue-600 hover:text-blue-500"
                   href="mailto:kaomoji.slack.team@gmail.com"
                 >
                   email
-                </a>{" "}
+                </Link>{" "}
                 the Kaomoji App team.
               </p>
             </p>

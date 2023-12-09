@@ -1,5 +1,6 @@
 import { Footer } from "@/components/ui/Footer";
 import { HeroSection } from "@/components/ui/HeroSection";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -99,9 +100,9 @@ export default function Home() {
               <h4 className="text-xl">
                 Have further questions? Having trouble with Kaomoji App? Check
                 out our{" "}
-                <a className="text-blue-400 hover:text-blue-500" href="/faq">
+                <Link className="text-blue-400 hover:text-blue-500" href="/faq">
                   FAQ
-                </a>
+                </Link>
                 .
               </h4>
             </div>
