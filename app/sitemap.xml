@@ -4,7 +4,7 @@
 
     <url>
 
-        <loc>https://www.kaomoji.io/</loc>
+        <loc>https://kaomoji.io/</loc>
 
         <changefreq>monthly</changefreq>
 
@@ -14,7 +14,7 @@
 
     <url>
 
-        <loc>https://www.kaomoji.io/privacy/</loc>
+        <loc>https://kaomoji.io/privacy/</loc>
 
         <changefreq>monthly</changefreq>
 
@@ -22,7 +22,7 @@
 
     <url>
 
-        <loc>https://www.kaomoji.io/faq/</loc>
+        <loc>https://kaomoji.io/faq/</loc>
 
         <changefreq>monthly</changefreq>
 
@@ -32,7 +32,7 @@
 
     <url>
 
-        <loc>https://www.kaomoji.io/success/</loc>
+        <loc>https://kaomoji.io/success/</loc>
 
         <changefreq>never</changefreq>
 
