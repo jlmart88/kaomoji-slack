@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@conform-to/zod": "^0.9.1",
+    "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@slack/interactive-messages": "^1.1.1",
     "@slack/types": "^1.0.0",
