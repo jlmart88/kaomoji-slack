@@ -19,6 +19,18 @@ export default function Privacy() {
               indication that you wish to send a message, and you will always
               see the kaomoji that is about to be posted.
             </p>
+            <p className="text-md mt-2">
+              Kaomoji App retains necessary account data such as User ID and saved shortcuts 
+              indefinitely until a user requests deletion via the support email address.
+              Kaomoji App does not archive data outside the scope of the retention policy, 
+              and data removal is available through manual request via the support <Link
+                  className="text-blue-600 hover:text-blue-500"
+                  href="mailto:kaomoji.slack.team@gmail.com"
+                >
+                  email
+                </Link>{" "} 
+              address.
+            </p>
           </div>
         </div>
         <div className="flex w-full flex-grow flex-col justify-center bg-slate-50 px-8 py-20 text-center text-black md:px-20">
